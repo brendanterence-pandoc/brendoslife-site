@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
-<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22%230A1628%22/><text x=%2216%22 y=%2222%22 font-family=%22Georgia,serif%22 font-size=%2218%22 fill=%22%23C4973B%22 text-anchor=%22middle%22>M</text></svg>">
+<link rel="icon" href="/marcela-emblem.png" type="image/png">
 <style>
   :root {
     --navy: #0A1628;
@@ -30,7 +30,8 @@
   .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 28px 64px; }
   header.site { background: var(--navy); color: var(--cream); padding: 28px 0; border-bottom: 3px solid var(--gold); }
   header.site .wrap { padding-top: 0; padding-bottom: 0; display: flex; align-items: center; gap: 18px; }
-  header.site .logo { width: 44px; height: 44px; background: var(--gold); color: var(--navy); display: grid; place-items: center; font-family: "Cormorant Garamond", serif; font-size: 1.6rem; font-weight: 700; flex-shrink: 0; }
+  header.site .logo { width: 56px; height: 56px; background: var(--cream); display: grid; place-items: center; flex-shrink: 0; border-radius: 4px; padding: 4px; }
+  header.site .logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
   header.site h1 { color: var(--cream); font-size: 1.6rem; }
   header.site .sub { color: rgba(245,241,232,0.7); font-size: 0.85rem; margin-top: 2px; letter-spacing: 0.03em; }
   .badge { display: inline-block; padding: 3px 10px; background: var(--gold); color: var(--navy); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
@@ -97,7 +98,7 @@
 </head>
 <body>
 <header class="site"><div class="wrap">
-  <div class="logo">M</div>
+  <div class="logo" aria-label="Marcela Arenas"><img src="/marcela-emblem.png" alt="Marcela Arenas"></div>
   <div>
     <h1>Marcela Pool Loan</h1>
     <div class="sub">Private Loan Ledger · 5146 Adega Way</div>

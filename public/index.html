@@ -43,26 +43,6 @@
       min-height: 100vh;
     }
 
-    .nav {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 28px 40px 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .brand {
-      font-family: var(--font-heading);
-      font-style: italic;
-      font-weight: 500;
-      font-size: 1.35rem;
-      letter-spacing: 0.01em;
-      color: var(--text-primary);
-    }
-
-    .brand span { color: var(--accent-gold); }
-
     .wrap {
       max-width: 1280px;
       margin: 0 auto;
@@ -71,7 +51,7 @@
       grid-template-columns: 1.05fr 1fr;
       gap: 72px;
       align-items: center;
-      min-height: calc(100vh - 96px);
+      min-height: 100vh;
     }
 
     .content { max-width: 600px; }
@@ -206,27 +186,19 @@
     .portrait {
       position: relative;
       align-self: center;
-    }
-
-    .portrait::before {
-      content: "";
-      position: absolute;
-      inset: -22px -22px 22px 22px;
-      border: 1px solid rgba(196, 151, 59, 0.35);
-      border-radius: 4px;
-      pointer-events: none;
+      justify-self: end;
     }
 
     .portrait img {
       display: block;
       width: 100%;
-      max-width: 520px;
+      max-width: 364px;
       height: auto;
-      border-radius: 4px;
-      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6);
       filter: saturate(1.02);
       position: relative;
       z-index: 1;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.15) 12%, rgba(0,0,0,0.55) 26%, rgba(0,0,0,0.92) 45%, #000 65%);
+              mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.15) 12%, rgba(0,0,0,0.55) 26%, rgba(0,0,0,0.92) 45%, #000 65%);
     }
 
     .caption {
@@ -250,8 +222,8 @@
       }
       .nav { padding: 24px 24px 0; }
       .content { max-width: 100%; order: 2; }
-      .portrait { order: 1; max-width: 420px; margin: 0 auto; }
-      .portrait::before { inset: -14px -14px 14px 14px; }
+      .portrait { order: 1; max-width: 320px; margin: 0 auto; justify-self: center; }
+      .portrait img { max-width: 320px; }
       h1 { font-size: clamp(2.2rem, 8vw, 3.2rem); }
       .intro { margin-bottom: 32px; }
     }
@@ -263,17 +235,12 @@
   </style>
 </head>
 <body>
-  <header class="nav">
-    <div class="brand"><span>Brendo</span>'s Life</div>
-  </header>
-
   <main class="wrap">
     <section class="content">
       <div class="eyebrow">Personal Hub</div>
       <h1>Welcome to <em>Brendo's Life</em></h1>
       <p class="intro">
         A small corner of the internet for the things and people that matter most.
-        Pick a door below.
       </p>
 
       <nav class="links" aria-label="Primary links">
@@ -312,7 +279,6 @@
 
     <aside class="portrait" aria-label="Photograph">
       <img src="/Betsy-with-Rose.jpg" alt="Betsy the dog holding a red rose" loading="eager" />
-      <p class="caption"><span>Betsy</span>, holding court</p>
     </aside>
   </main>
 </body>

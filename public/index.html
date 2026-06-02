@@ -139,6 +139,16 @@
       display: block;
     }
 
+    /* Wide icon variant for logos that include a wordmark (no tile, fully transparent). */
+    .link-card-icon--wide {
+      width: 96px;
+      height: 68px;
+      border-radius: 0;
+      background: transparent;
+      border: none;
+      overflow: visible;
+    }
+
     .link-card-icon--placeholder {
       background: rgba(196, 151, 59, 0.10);
       border-color: rgba(196, 151, 59, 0.25);
@@ -270,7 +280,9 @@
         </a>
 
         <a class="link-card" href="/marcela">
-          <span class="link-card-icon link-card-icon--placeholder" aria-hidden="true">M</span>
+          <span class="link-card-icon link-card-icon--wide" aria-hidden="true">
+            <img src="/marcela-logo-darkbg.png" alt="" />
+          </span>
           <span class="link-card-text">
             <span class="link-card-title">Marcela Arenas</span>
             <span class="link-card-host">brendoslife.com/marcela</span>

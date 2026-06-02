@@ -1,395 +1,232 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Personal Loan Status — Marcela Arenas</title>
-  <link rel="icon" type="image/png" href="/favicon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&family=Inter:wght@400;500;600;700&display=swap"
-  />
-  <style>
-    :root {
-      --bg-navy: #0a1628;
-      --bg-navy-2: #0d1a30;
-      --accent-gold: #c4973b;
-      --accent-gold-dark: #a67d2e;
-      --accent-steel: #3a6b8c;
-      --bg-cream: #f7f6f2;
-      --border-light: rgba(212, 209, 202, 0.18);
-      --border-strong: rgba(212, 209, 202, 0.28);
-      --surface: rgba(255, 255, 255, 0.025);
-      --surface-strong: rgba(255, 255, 255, 0.04);
-      --text-primary: #f7f6f2;
-      --text-muted: #b9b6ad;
-      --font-heading: "Source Serif 4", Georgia, "Times New Roman", serif;
-      --font-body: "Inter", system-ui, -apple-system, sans-serif;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { min-height: 100%; }
-
-    body {
-      font-family: var(--font-body);
-      background: var(--bg-navy);
-      color: var(--text-primary);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      background-image:
-        radial-gradient(1200px 600px at 85% -10%, rgba(196, 151, 59, 0.10), transparent 70%),
-        radial-gradient(900px 500px at -10% 30%, rgba(58, 107, 140, 0.12), transparent 70%);
-      min-height: 100vh;
-    }
-
-    .wrap {
-      max-width: 920px;
-      margin: 0 auto;
-      padding: 56px 32px 80px;
-    }
-
-    header { margin-bottom: 40px; }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 14px;
-      font-family: var(--font-body);
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent-gold);
-      margin-bottom: 22px;
-    }
-    .eyebrow::before {
-      content: "";
-      width: 36px;
-      height: 1px;
-      background: var(--accent-gold);
-    }
-
-    h1 {
-      font-family: var(--font-heading);
-      font-weight: 500;
-      font-size: clamp(2.1rem, 4vw, 3rem);
-      line-height: 1.1;
-      letter-spacing: -0.015em;
-      color: var(--text-primary);
-      margin-bottom: 14px;
-    }
-    h1 em { font-style: italic; color: var(--accent-gold); font-weight: 500; }
-
-    .subtitle {
-      font-size: 1.02rem;
-      color: var(--text-muted);
-      max-width: 60ch;
-    }
-
-    main { display: grid; gap: 20px; }
-
-    section {
-      background: var(--surface);
-      border: 1px solid var(--border-light);
-      border-radius: 6px;
-      padding: 28px 30px;
-    }
-
-    h2 {
-      font-family: var(--font-heading);
-      font-weight: 500;
-      font-size: 1.4rem;
-      letter-spacing: -0.005em;
-      color: var(--text-primary);
-      margin-bottom: 20px;
-    }
-
-    .section-eyebrow {
-      display: block;
-      font-family: var(--font-body);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--accent-gold);
-      margin-bottom: 6px;
-    }
-
-    dl {
-      margin: 0;
-      display: grid;
-      grid-template-columns: minmax(180px, 220px) 1fr;
-      gap: 14px 24px;
-    }
-    dt {
-      font-family: var(--font-body);
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      align-self: center;
-    }
-    dd {
-      font-family: var(--font-body);
-      font-size: 1rem;
-      color: var(--text-primary);
-      font-weight: 400;
-    }
-    dd.num { font-variant-numeric: tabular-nums; }
-    dd strong { font-weight: 600; color: var(--accent-gold); font-size: 1.08rem; }
-
-    .pill {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 999px;
-      background: rgba(196, 151, 59, 0.12);
-      border: 1px solid rgba(196, 151, 59, 0.35);
-      color: var(--accent-gold);
-      font-family: var(--font-body);
-      font-size: 0.74rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .hist-wrap { overflow-x: auto; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-variant-numeric: tabular-nums;
-    }
-    th, td {
-      text-align: left;
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border-light);
-      font-size: 0.95rem;
-    }
-    th {
-      font-family: var(--font-body);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      border-bottom-color: var(--border-strong);
-    }
-    td.num { font-variant-numeric: tabular-nums; }
-    tr:last-child td { border-bottom: 0; }
-    tbody tr:hover { background: rgba(196, 151, 59, 0.04); }
-
-    .download-row {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 18px;
-    }
-
-    .btn-download {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 22px;
-      background: rgba(196, 151, 59, 0.10);
-      border: 1px solid rgba(196, 151, 59, 0.45);
-      border-radius: 4px;
-      color: var(--accent-gold);
-      text-decoration: none;
-      font-family: var(--font-body);
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      transition: all 220ms cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .btn-download:hover {
-      background: rgba(196, 151, 59, 0.18);
-      border-color: var(--accent-gold);
-      transform: translateY(-1px);
-    }
-    .btn-download svg {
-      width: 16px;
-      height: 16px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .updated {
-      margin-top: 32px;
-      font-family: var(--font-body);
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      text-align: center;
-      letter-spacing: 0.04em;
-    }
-
-    @media (max-width: 640px) {
-      .wrap { padding: 36px 20px 64px; }
-      section { padding: 22px 20px; }
-      dl { grid-template-columns: 1fr; gap: 4px 0; }
-      dt { margin-top: 12px; }
-      dt:first-child { margin-top: 0; }
-      table { min-width: 520px; }
-      .download-row { justify-content: stretch; }
-      .btn-download { width: 100%; justify-content: center; }
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Marcela Pool Loan · Statement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22%230A1628%22/><text x=%2216%22 y=%2222%22 font-family=%22Georgia,serif%22 font-size=%2218%22 fill=%22%23C4973B%22 text-anchor=%22middle%22>M</text></svg>">
+<style>
+  :root {
+    --navy: #0A1628;
+    --gold: #C4973B;
+    --cream: #F5F1E8;
+    --paper: #FAF7F0;
+    --ink: #1A2433;
+    --muted: #5C6577;
+    --line: #D8D1BD;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); }
+  body { font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 15px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; color: var(--navy); margin: 0; letter-spacing: -0.01em; }
+  h1 { font-size: 2.2rem; line-height: 1.15; }
+  h2 { font-size: 1.5rem; line-height: 1.2; }
+  h3 { font-size: 1.15rem; font-family: "Inter", sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--navy); }
+  a { color: var(--navy); text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+  a:hover { color: var(--gold); }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 28px 64px; }
+  header.site { background: var(--navy); color: var(--cream); padding: 28px 0; border-bottom: 3px solid var(--gold); }
+  header.site .wrap { padding-top: 0; padding-bottom: 0; display: flex; align-items: center; gap: 18px; }
+  header.site .logo { width: 44px; height: 44px; background: var(--gold); color: var(--navy); display: grid; place-items: center; font-family: "Cormorant Garamond", serif; font-size: 1.6rem; font-weight: 700; flex-shrink: 0; }
+  header.site h1 { color: var(--cream); font-size: 1.6rem; }
+  header.site .sub { color: rgba(245,241,232,0.7); font-size: 0.85rem; margin-top: 2px; letter-spacing: 0.03em; }
+  .badge { display: inline-block; padding: 3px 10px; background: var(--gold); color: var(--navy); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+  .hero { background: var(--cream); border: 1px solid var(--line); padding: 36px; margin-bottom: 32px; }
+  .hero .label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); font-weight: 600; }
+  .hero .number { font-family: "Cormorant Garamond", serif; font-size: 3.5rem; font-weight: 600; color: var(--navy); line-height: 1; margin: 10px 0 6px; font-variant-numeric: tabular-nums; }
+  .hero .sub { color: var(--muted); font-size: 0.95rem; }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: end; }
+  .progress { background: rgba(10,22,40,0.08); height: 10px; border-radius: 0; overflow: hidden; margin-top: 18px; }
+  .progress .bar { background: var(--gold); height: 100%; transition: width 0.6s ease; }
+  .progress-meta { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted); margin-top: 6px; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .card { background: white; border: 1px solid var(--line); padding: 20px 22px; }
+  .card .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 600; }
+  .card .value { font-family: "Cormorant Garamond", serif; font-size: 1.8rem; font-weight: 600; color: var(--navy); margin-top: 6px; font-variant-numeric: tabular-nums; }
+  .card .meta { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+  .card.accent { background: var(--navy); color: var(--cream); border-color: var(--navy); }
+  .card.accent .label { color: rgba(245,241,232,0.7); }
+  .card.accent .value { color: var(--gold); }
+  .card.accent .meta { color: rgba(245,241,232,0.7); }
+  section.block { margin-bottom: 36px; }
+  section.block > h2 { display: flex; align-items: center; gap: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line); margin-bottom: 18px; }
+  section.block > h2::after { content: ""; flex: 1; height: 1px; background: linear-gradient(to right, var(--gold), transparent); margin-left: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; background: white; border: 1px solid var(--line); }
+  th { text-align: left; padding: 11px 14px; background: var(--navy); color: var(--cream); font-weight: 600; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  td { padding: 11px 14px; border-top: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+  td.num, th.num { text-align: right; }
+  tr:hover td { background: rgba(196,151,59,0.06); }
+  .terms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; border: 1px solid var(--line); background: white; }
+  .terms-grid .item { padding: 16px 20px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .terms-grid .item:last-child { border-right: none; }
+  .terms-grid .item .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
+  .terms-grid .item .value { font-size: 1.05rem; color: var(--navy); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .note { background: var(--cream); border-left: 3px solid var(--gold); padding: 16px 20px; font-size: 0.9rem; color: var(--ink); margin: 20px 0; display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+  .note strong { color: var(--navy); }
+  .note .note-text { flex: 1 1 320px; }
+  .btn-download {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 10px 18px; background: var(--navy); color: var(--cream) !important;
+    font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    text-decoration: none; border: 1px solid var(--navy);
+    transition: background 180ms ease, color 180ms ease;
+    flex-shrink: 0;
+  }
+  .btn-download:hover { background: var(--gold); color: var(--navy) !important; border-color: var(--gold); }
+  .btn-download svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  footer.site { margin-top: 60px; padding: 28px 0; background: var(--navy); color: rgba(245,241,232,0.7); font-size: 0.82rem; border-top: 3px solid var(--gold); }
+  footer.site .wrap { padding-top: 0; padding-bottom: 0; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  footer.site a { color: var(--gold); }
+  .pill { display: inline-block; padding: 2px 8px; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; background: rgba(196,151,59,0.18); color: var(--navy); }
+  @media (max-width: 720px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero { padding: 24px; }
+    .hero .number { font-size: 2.6rem; }
+    .wrap { padding: 24px 18px; }
+    header.site .wrap { flex-wrap: wrap; }
+    table { font-size: 0.85rem; }
+    th, td { padding: 8px 10px; }
+    .note { flex-direction: column; align-items: stretch; }
+    .btn-download { justify-content: center; }
+  }
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="eyebrow">Private &middot; Loan Status</div>
-      <h1>Personal Loan Status for <em>Marcela Arenas</em></h1>
-      <p class="subtitle">A live record of the private pool loan from Brendan O&#39;Connor, refreshed monthly after the Bank of America statement posts.</p>
-    </header>
-
-    <main>
-      <section aria-labelledby="loan-summary">
-        <span class="section-eyebrow">Loan Summary</span>
-        <h2 id="loan-summary">Terms &amp; current standing</h2>
-        <dl>
-          <dt>Borrower</dt>
-          <dd>Marcela Arenas</dd>
-
-          <dt>Lender</dt>
-          <dd>Brendan O&#39;Connor</dd>
-
-          <dt>Loan type</dt>
-          <dd>Private</dd>
-
-          <dt>Original principal</dt>
-          <dd class="num">$50,000</dd>
-
-          <dt>Interest rate</dt>
-          <dd class="num">5% APR fixed</dd>
-
-          <dt>Term</dt>
-          <dd>84 months</dd>
-
-          <dt>Monthly payment</dt>
-          <dd class="num">$706.70</dd>
-
-          <dt>Current balance</dt>
-          <dd class="num"><strong>$45,439.21</strong></dd>
-
-          <dt>Payments made</dt>
-          <dd class="num">9 of 84</dd>
-
-          <dt>Next due date</dt>
-          <dd><time datetime="2026-07-05">July 5, 2026</time></dd>
-
-          <dt>Status</dt>
-          <dd><span class="pill">Current</span></dd>
-        </dl>
-      </section>
-
-      <section aria-labelledby="latest-payment">
-        <span class="section-eyebrow">Latest Activity</span>
-        <h2 id="latest-payment">Latest verified payment</h2>
-        <dl>
-          <dt>Amount received</dt>
-          <dd class="num">$706.70</dd>
-
-          <dt>Date received</dt>
-          <dd><time datetime="2026-06-01">June 1, 2026</time></dd>
-
-          <dt>Payment method</dt>
-          <dd>Zelle to Brendan's Bank of America</dd>
-        </dl>
-      </section>
-
-      <section aria-labelledby="history">
-        <span class="section-eyebrow">Ledger</span>
-        <h2 id="history">Payment history</h2>
-        <div class="hist-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Type</th>
-                <th scope="col">Balance After</th>
-              </tr>
-            </thead>
-            <tbody>
-          <tr>
-            <td><time datetime="2026-06-01">Jun 1, 2026</time></td>
-            <td class="num">$706.70</td>
-            <td>Regular</td>
-            <td class="num">$45,439.21</td>
-          </tr>
-          <tr>
-            <td><time datetime="2026-05-01">May 1, 2026</time></td>
-            <td class="num">$706.70</td>
-            <td>Regular</td>
-            <td class="num">$45,954.43</td>
-          </tr>
-          <tr>
-            <td><time datetime="2026-04-01">Apr 1, 2026</time></td>
-            <td class="num">$706.70</td>
-            <td>Regular</td>
-            <td class="num">$46,467.52</td>
-          </tr>
-          <tr>
-            <td><time datetime="2026-03-02">Mar 2, 2026</time></td>
-            <td class="num">$706.70</td>
-            <td>Regular</td>
-            <td class="num">$46,978.48</td>
-          </tr>
-          <tr>
-            <td><time datetime="2026-02-02">Feb 2, 2026</time></td>
-            <td class="num">$706.70</td>
-            <td>Regular</td>
-            <td class="num">$47,487.32</td>
-          </tr>
-          <tr>
-            <td><time datetime="2026-01-02">Jan 2, 2026</time></td>
-            <td class="num">$706.70</td>
-            <td>Regular</td>
-            <td class="num">$47,994.04</td>
-          </tr>
-          <tr>
-            <td><time datetime="2025-12-01">Dec 1, 2025</time></td>
-            <td class="num">$706.70</td>
-            <td>Regular</td>
-            <td class="num">$48,498.66</td>
-          </tr>
-          <tr>
-            <td><time datetime="2025-11-03">Nov 3, 2025</time></td>
-            <td class="num">$706.70</td>
-            <td>Regular</td>
-            <td class="num">$49,001.19</td>
-          </tr>
-          <tr>
-            <td><time datetime="2025-10-01">Oct 1, 2025</time></td>
-            <td class="num">$706.70</td>
-            <td>Regular</td>
-            <td class="num">$49,501.63</td>
-          </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="download-row">
-          <a class="btn-download" href="/marcela/Marcela_Loan_Tracker.xlsx" download>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16" />
-            </svg>
-            Download canonical tracker (.xlsx)
-          </a>
-        </div>
-      </section>
-
-    </main>
-
-    <p class="updated">
-      Last updated:
-      <time datetime="2026-06-02">June 2, 2026</time>
-    </p>
-
+<header class="site"><div class="wrap">
+  <div class="logo">M</div>
+  <div>
+    <h1>Marcela Pool Loan</h1>
+    <div class="sub">Private Loan Ledger · 5146 Adega Way</div>
   </div>
+  <div style="margin-left:auto;"><span class="badge">Borrower</span></div>
+</div></header>
+
+<main class="wrap">
+  <div class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="label">Current Principal Balance</div>
+        <div class="number">$45,439.21</div>
+        <div class="sub">Down $4,560.79 from the original $50,000 principal</div>
+      </div>
+      <div>
+        <div class="label">Next Payment Due</div>
+        <div class="number" style="font-size:2.2rem">$706.70</div>
+        <div class="sub">Sunday, July 5, 2026</div>
+      </div>
+    </div>
+    <div class="progress"><div class="bar" style="width:9.1%"></div></div>
+    <div class="progress-meta">
+      <span>9 of 84 payments made</span>
+      <span>9.1% paid off</span>
+    </div>
+  </div>
+
+  <section class="block">
+    <h2>Loan Terms</h2>
+    <div class="terms-grid">
+      <div class="item"><div class="label">Original Principal</div><div class="value">$50,000.00</div></div>
+      <div class="item"><div class="label">Interest Rate</div><div class="value">5.0% APR fixed</div></div>
+      <div class="item"><div class="label">Term</div><div class="value">84 months</div></div>
+      <div class="item"><div class="label">Monthly Payment</div><div class="value">$706.70</div></div>
+      <div class="item"><div class="label">Funded</div><div class="value">Apr 16, 2025</div></div>
+      <div class="item"><div class="label">Maturity</div><div class="value">May 2, 2032</div></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Progress to Date</h2>
+    <div class="card-grid">
+      <div class="card"><div class="label">Total Paid</div><div class="value">$6,360.30</div><div class="meta">9 payments</div></div>
+      <div class="card"><div class="label">Principal Paid</div><div class="value">$4,560.79</div><div class="meta">Reduces balance</div></div>
+      <div class="card"><div class="label">Interest Paid</div><div class="value">$1,799.51</div><div class="meta">At 5.0% APR</div></div>
+      <div class="card accent"><div class="label">Payments Remaining</div><div class="value">75</div><div class="meta">Through May 2, 2032</div></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Payment History</h2>
+    <table>
+      <thead><tr>
+        <th>#</th>
+        <th>Date</th>
+        <th class="num">Amount</th>
+        <th>Notes</th>
+      </tr></thead>
+      <tbody>
+    <tr>
+      <td>9</td>
+      <td>Jun 1, 2026</td>
+      <td class="num">$706.70</td>
+      <td>Memo &#39;Loan payment&#39;. Conf# 0K6GDYWCK.</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>May 1, 2026</td>
+      <td class="num">$706.70</td>
+      <td>Memo &#39;Pool payment&#39;. Conf# 0K5LIHSOY.</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Apr 1, 2026</td>
+      <td class="num">$706.70</td>
+      <td>No memo. Conf# 022RBAIMR.</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Mar 2, 2026</td>
+      <td class="num">$706.70</td>
+      <td>Memo &#39;Pool loan payment&#39;. Conf# 021XHGEY7.</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Feb 2, 2026</td>
+      <td class="num">$706.70</td>
+      <td>Memo &#39;Loan payment&#39;. Conf# 0215E4F30.</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Jan 2, 2026</td>
+      <td class="num">$706.70</td>
+      <td>Memo &#39;Loan payment&#39;. Conf# 007AM25CP.</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Dec 1, 2025</td>
+      <td class="num">$706.70</td>
+      <td>Memo &#39;Loan payment&#39;. Conf# 0JJRGLOB7.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Nov 3, 2025</td>
+      <td class="num">$706.70</td>
+      <td>Memo &#39;Pool&#39;. Conf# 0JIZRC3U8.</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Oct 1, 2025</td>
+      <td class="num">$706.70</td>
+      <td>First payment. Begins clean monthly accrual cycle. Memo &#39;Loan payment&#39;. Pre-payment interest absorbed via credit (see Dashboard).</td>
+    </tr>
+      </tbody>
+    </table>
+    <div class="note">
+      <div class="note-text"><strong>How to pay:</strong> Zelle $706.70 to Brendan's Bank of America account by the 5th of each month. Conf# is logged automatically when received.</div>
+      <a class="btn-download" href="/marcela/Marcela_Loan_Tracker.xlsx" download>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+        Download tracker (.xlsx)
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="site"><div class="wrap">
+  <div>Lender: Brendan T. O'Connor · Borrower: Marcela Arenas</div>
+  <div>Effective May 2, 2025 · Maturity May 2, 2032 · Last updated June 2, 2026</div>
+</div></footer>
 </body>
 </html>

@@ -20,7 +20,8 @@
   // The ASSETS binding lets the Worker script fall through to them.
   "assets": {
     "directory": "./public",
-    "binding": "ASSETS"
+    "binding": "ASSETS",
+"run_worker_first": ["/marcela", "/marcela/*"]
   },
 
   // ── Observability ─────────────────────────────────────────────────────────

@@ -1,0 +1,41 @@
+/**
+ * Wrangler configuration for brendoslife-site
+ *
+ * Deploy:  npx wrangler deploy
+ * Dev:     npx wrangler dev
+ *
+ * Docs: https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+  // ── Identity ─────────────────────────────────────────────────────────────
+  "name": "brendoslife-site",
+  "main": "src/index.ts",
+
+  // ── Compatibility ─────────────────────────────────────────────────────────
+  "compatibility_date": "2025-01-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // ── Static Assets (Workers Assets) ───────────────────────────────────────
+  // All files under public/ are uploaded and served as static assets.
+  // The ASSETS binding lets the Worker script fall through to them.
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS"
+  },
+
+  // ── Observability ─────────────────────────────────────────────────────────
+  "observability": {
+    "enabled": true
+  }
+
+  // ── Future bindings (uncomment as needed) ─────────────────────────────────
+  // "kv_namespaces": [
+  //   { "binding": "KV", "id": "<KV_NAMESPACE_ID>" }
+  // ],
+  // "d1_databases": [
+  //   { "binding": "DB", "database_name": "brendoslife", "database_id": "<D1_DATABASE_ID>" }
+  // ],
+  // "r2_buckets": [
+  //   { "binding": "BUCKET", "bucket_name": "brendoslife-assets" }
+  // ]
+}

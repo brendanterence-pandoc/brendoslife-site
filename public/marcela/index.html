@@ -3,10 +3,234 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Marcela</title>
+  <title>Marcela Loan Information</title>
+  <style>
+    :root {
+      --bg: #f7f4ee;
+      --surface: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --accent: #0f766e;
+      --accent-soft: #ecfdf5;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+      --max: 860px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: linear-gradient(180deg, #f8f5ef 0%, #f5f1ea 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 40px 20px 64px;
+    }
+
+    header {
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font: 600 13px/1.2 Arial, sans-serif;
+      letter-spacing: 0.02em;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.1;
+    }
+
+    .intro {
+      max-width: 62ch;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    main {
+      display: grid;
+      gap: 22px;
+    }
+
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 1.35rem;
+      line-height: 1.2;
+    }
+
+    dl {
+      margin: 0;
+      display: grid;
+      grid-template-columns: minmax(160px, 220px) 1fr;
+      gap: 12px 18px;
+    }
+
+    dt {
+      margin: 0;
+      font-weight: 700;
+    }
+
+    dd {
+      margin: 0;
+      color: #111827;
+    }
+
+    .note,
+    .small {
+      color: var(--muted);
+    }
+
+    .note {
+      margin: 0;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    li + li {
+      margin-top: 8px;
+    }
+
+    .updated {
+      margin-top: 20px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    @media (max-width: 640px) {
+      .wrap {
+        padding: 28px 16px 48px;
+      }
+
+      section {
+        padding: 20px;
+      }
+
+      dl {
+        grid-template-columns: 1fr;
+        gap: 6px 0;
+      }
+
+      dd {
+        margin-bottom: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Protected Marcela page</h1>
-  <p>If you can see this, the password protection works.</p>
+  <div class="wrap">
+    <header>
+      <div class="eyebrow">Private page</div>
+      <h1>Marcela Loan Information</h1>
+      <p class="intro">
+        This private page contains the current loan summary, latest verified payment information,
+        and any notes or next steps.
+      </p>
+    </header>
+
+    <main>
+      <section aria-labelledby="loan-summary">
+        <h2 id="loan-summary">Loan Summary</h2>
+        <dl>
+          <dt>Borrower</dt>
+          <dd>Marcela</dd>
+
+          <dt>Loan type</dt>
+          <dd>Private loan</dd>
+
+          <dt>Original amount</dt>
+          <dd>$0.00</dd>
+
+          <dt>Current balance</dt>
+          <dd>$0.00</dd>
+
+          <dt>Monthly payment</dt>
+          <dd>$0.00</dd>
+
+          <dt>Status</dt>
+          <dd>Current</dd>
+
+          <dt>Next due date</dt>
+          <dd><time datetime="2026-07-01">July 1, 2026</time></dd>
+        </dl>
+      </section>
+
+      <section aria-labelledby="latest-payment">
+        <h2 id="latest-payment">Latest Verified Payment</h2>
+        <dl>
+          <dt>Payment received</dt>
+          <dd>$0.00</dd>
+
+          <dt>Date received</dt>
+          <dd><time datetime="2026-06-01">June 1, 2026</time></dd>
+
+          <dt>Payment method</dt>
+          <dd>Confirmed by Brendan</dd>
+
+          <dt>Confirmation note</dt>
+          <dd>Payment verified and applied to balance.</dd>
+        </dl>
+      </section>
+
+      <section aria-labelledby="notes">
+        <h2 id="notes">Notes</h2>
+        <p class="note">
+          Use this section for any brief update, clarification, or reminder related to the loan.
+        </p>
+      </section>
+
+      <section aria-labelledby="next-steps">
+        <h2 id="next-steps">Next Steps</h2>
+        <ul>
+          <li>Continue monthly payment verification.</li>
+          <li>Update the page after each confirmed payment.</li>
+          <li>Revise the current balance and next due date as needed.</li>
+        </ul>
+      </section>
+    </main>
+
+    <p class="updated">
+      Last updated:
+      <time datetime="2026-06-02">June 2, 2026</time>
+    </p>
+
+    <footer>
+      Questions or corrections should be sent directly to Brendan.
+    </footer>
+  </div>
 </body>
 </html>

@@ -17,7 +17,6 @@
       --radius: 18px;
       --max: 860px;
     }
-
     * { box-sizing: border-box; }
     body {
       margin: 0;
@@ -26,128 +25,56 @@
       color: var(--text);
       line-height: 1.6;
     }
-
-    .wrap {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 40px 20px 64px;
-    }
-
-    header {
-      margin-bottom: 28px;
-    }
-
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 40px 20px 64px; }
+    header { margin-bottom: 28px; }
     .eyebrow {
-      display: inline-block;
-      margin-bottom: 10px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font: 600 13px/1.2 Arial, sans-serif;
-      letter-spacing: 0.02em;
+      display: inline-block; margin-bottom: 10px;
+      padding: 6px 10px; border-radius: 999px;
+      background: var(--accent-soft); color: var(--accent);
+      font: 600 13px/1.2 Arial, sans-serif; letter-spacing: 0.02em;
     }
-
-    h1 {
-      margin: 0 0 12px;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      line-height: 1.1;
-    }
-
-    .intro {
-      max-width: 62ch;
-      margin: 0;
-      color: var(--muted);
-      font-size: 1.05rem;
-    }
-
-    main {
-      display: grid;
-      gap: 22px;
-    }
-
+    h1 { margin: 0 0 12px; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.1; }
+    .intro { max-width: 62ch; margin: 0; color: var(--muted); font-size: 1.05rem; }
+    main { display: grid; gap: 22px; }
     section {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 24px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow); padding: 24px;
     }
-
-    h2 {
-      margin: 0 0 16px;
-      font-size: 1.35rem;
-      line-height: 1.2;
+    h2 { margin: 0 0 16px; font-size: 1.35rem; line-height: 1.2; }
+    dl { margin: 0; display: grid; grid-template-columns: minmax(180px, 240px) 1fr; gap: 12px 18px; }
+    dt { margin: 0; font-weight: 700; }
+    dd { margin: 0; color: #111827; }
+    .num { font-variant-numeric: tabular-nums; }
+    .pill {
+      display: inline-block; padding: 4px 10px; border-radius: 999px;
+      background: var(--accent-soft); color: var(--accent);
+      font: 600 13px/1.2 Arial, sans-serif;
     }
-
-    dl {
-      margin: 0;
-      display: grid;
-      grid-template-columns: minmax(160px, 220px) 1fr;
-      gap: 12px 18px;
+    table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+    th, td {
+      text-align: left; padding: 10px 12px;
+      border-bottom: 1px solid var(--border); font-size: 0.97rem;
     }
-
-    dt {
-      margin: 0;
-      font-weight: 700;
-    }
-
-    dd {
-      margin: 0;
-      color: #111827;
-    }
-
-    .note,
-    .small {
+    th {
+      font: 600 13px/1.2 Arial, sans-serif;
+      letter-spacing: 0.04em; text-transform: uppercase;
       color: var(--muted);
     }
-
-    .note {
-      margin: 0;
-    }
-
-    ul {
-      margin: 0;
-      padding-left: 20px;
-    }
-
-    li + li {
-      margin-top: 8px;
-    }
-
-    .updated {
-      margin-top: 20px;
-      font-size: 0.95rem;
-      color: var(--muted);
-    }
-
-    footer {
-      margin-top: 28px;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    a {
-      color: var(--accent);
-    }
-
+    tr:last-child td { border-bottom: 0; }
+    .note, .small { color: var(--muted); }
+    .note { margin: 0; }
+    ul { margin: 0; padding-left: 20px; }
+    li + li { margin-top: 8px; }
+    .updated { margin-top: 20px; font-size: 0.95rem; color: var(--muted); }
+    footer { margin-top: 28px; color: var(--muted); font-size: 0.95rem; }
+    a { color: var(--accent); }
     @media (max-width: 640px) {
-      .wrap {
-        padding: 28px 16px 48px;
-      }
-
-      section {
-        padding: 20px;
-      }
-
-      dl {
-        grid-template-columns: 1fr;
-        gap: 6px 0;
-      }
-
-      dd {
-        margin-bottom: 10px;
-      }
+      .wrap { padding: 28px 16px 48px; }
+      section { padding: 20px; }
+      dl { grid-template-columns: 1fr; gap: 6px 0; }
+      dd { margin-bottom: 10px; }
+      .hist-wrap { overflow-x: auto; }
+      table { min-width: 520px; }
     }
   </style>
 </head>
@@ -157,8 +84,8 @@
       <div class="eyebrow">Private page</div>
       <h1>Marcela Loan Information</h1>
       <p class="intro">
-        This private page contains the current loan summary, latest verified payment information,
-        and any notes or next steps.
+        Current loan summary, the most recent verified payment, and full payment history for the
+        private pool loan. This page updates automatically each month.
       </p>
     </header>
 
@@ -167,59 +94,136 @@
         <h2 id="loan-summary">Loan Summary</h2>
         <dl>
           <dt>Borrower</dt>
-          <dd>Marcela</dd>
+          <dd>Marcela Arenas</dd>
+
+          <dt>Lender</dt>
+          <dd>Brendan</dd>
 
           <dt>Loan type</dt>
-          <dd>Private loan</dd>
+          <dd>Private pool loan</dd>
 
-          <dt>Original amount</dt>
-          <dd>$0.00</dd>
+          <dt>Original principal</dt>
+          <dd class="num">—</dd>
 
-          <dt>Current balance</dt>
-          <dd>$0.00</dd>
+          <dt>Interest rate</dt>
+          <dd class="num">NaN% APR fixed</dd>
+
+          <dt>Term</dt>
+          <dd>84 months</dd>
 
           <dt>Monthly payment</dt>
-          <dd>$0.00</dd>
+          <dd class="num">—</dd>
 
-          <dt>Status</dt>
-          <dd>Current</dd>
+          <dt>Current balance</dt>
+          <dd class="num"><strong>$45,439.21</strong></dd>
+
+          <dt>Payments made</dt>
+          <dd class="num">9 of 84</dd>
 
           <dt>Next due date</dt>
-          <dd><time datetime="2026-07-01">July 1, 2026</time></dd>
+          <dd><time datetime="2026-07-05">July 5, 2026</time></dd>
+
+          <dt>Status</dt>
+          <dd><span class="pill">Current</span></dd>
         </dl>
       </section>
 
       <section aria-labelledby="latest-payment">
         <h2 id="latest-payment">Latest Verified Payment</h2>
         <dl>
-          <dt>Payment received</dt>
-          <dd>$0.00</dd>
+          <dt>Amount received</dt>
+          <dd class="num">$706.70</dd>
 
           <dt>Date received</dt>
           <dd><time datetime="2026-06-01">June 1, 2026</time></dd>
 
           <dt>Payment method</dt>
-          <dd>Confirmed by Brendan</dd>
+          <dd>Zelle to Brendan's Bank of America</dd>
 
-          <dt>Confirmation note</dt>
-          <dd>Payment verified and applied to balance.</dd>
+          <dt>Confirmation</dt>
+          <dd>Verified by Brendan and applied to balance.</dd>
         </dl>
+      </section>
+
+      <section aria-labelledby="history">
+        <h2 id="history">Payment History</h2>
+        <div class="hist-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Type</th>
+                <th scope="col">Balance After</th>
+              </tr>
+            </thead>
+            <tbody>
+          <tr>
+            <td><time datetime="2026-06-01">Jun 1, 2026</time></td>
+            <td>$706.70</td>
+            <td>Regular</td>
+            <td>$45,439.21</td>
+          </tr>
+          <tr>
+            <td><time datetime="2026-05-01">May 1, 2026</time></td>
+            <td>$706.70</td>
+            <td>Regular</td>
+            <td>$45,954.43</td>
+          </tr>
+          <tr>
+            <td><time datetime="2026-04-01">Apr 1, 2026</time></td>
+            <td>$706.70</td>
+            <td>Regular</td>
+            <td>$46,467.52</td>
+          </tr>
+          <tr>
+            <td><time datetime="2026-03-02">Mar 2, 2026</time></td>
+            <td>$706.70</td>
+            <td>Regular</td>
+            <td>$46,978.48</td>
+          </tr>
+          <tr>
+            <td><time datetime="2026-02-02">Feb 2, 2026</time></td>
+            <td>$706.70</td>
+            <td>Regular</td>
+            <td>$47,487.32</td>
+          </tr>
+          <tr>
+            <td><time datetime="2026-01-02">Jan 2, 2026</time></td>
+            <td>$706.70</td>
+            <td>Regular</td>
+            <td>$47,994.04</td>
+          </tr>
+          <tr>
+            <td><time datetime="2025-12-01">Dec 1, 2025</time></td>
+            <td>$706.70</td>
+            <td>Regular</td>
+            <td>$48,498.66</td>
+          </tr>
+          <tr>
+            <td><time datetime="2025-11-03">Nov 3, 2025</time></td>
+            <td>$706.70</td>
+            <td>Regular</td>
+            <td>$49,001.19</td>
+          </tr>
+          <tr>
+            <td><time datetime="2025-10-01">Oct 1, 2025</time></td>
+            <td>$706.70</td>
+            <td>Regular</td>
+            <td>$49,501.63</td>
+          </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <section aria-labelledby="notes">
         <h2 id="notes">Notes</h2>
         <p class="note">
-          Use this section for any brief update, clarification, or reminder related to the loan.
+          Payments are due on the 5th of each month. Any payment received between the 1st and the 5th
+          is recorded as Regular. Payments arriving after the 5th are recorded as Late but are still
+          credited at the standard amount and applied to the balance immediately upon receipt.
         </p>
-      </section>
-
-      <section aria-labelledby="next-steps">
-        <h2 id="next-steps">Next Steps</h2>
-        <ul>
-          <li>Continue monthly payment verification.</li>
-          <li>Update the page after each confirmed payment.</li>
-          <li>Revise the current balance and next due date as needed.</li>
-        </ul>
       </section>
     </main>
 

@@ -159,14 +159,10 @@
       display: block;
     }
 
-    /* Wide icon variant for logos that include a wordmark (no tile, fully transparent). */
-    .link-card-icon--wide {
-      width: 96px;
-      height: 68px;
-      border-radius: 0;
+    /* Transparent icon variant for logos with their own background (e.g., dark-bg emblem). */
+    .link-card-icon--transparent {
       background: transparent;
-      border: none;
-      overflow: visible;
+      border-color: rgba(212, 209, 202, 0.18);
     }
 
     .link-card-icon--placeholder {
@@ -300,7 +296,7 @@
         </a>
 
         <a class="link-card" href="/marcela">
-          <span class="link-card-icon link-card-icon--wide" aria-hidden="true">
+          <span class="link-card-icon link-card-icon--transparent" aria-hidden="true">
             <img src="/marcela-logo-darkbg.png" alt="" />
           </span>
           <span class="link-card-text">

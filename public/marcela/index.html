@@ -3,90 +3,254 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Marcela Loan Information</title>
+  <title>Personal Loan Status — Marcela Arenas</title>
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&family=Inter:wght@400;500;600;700&display=swap"
+  />
   <style>
     :root {
-      --bg: #f7f4ee;
-      --surface: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-      --accent: #0f766e;
-      --accent-soft: #ecfdf5;
-      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-      --radius: 18px;
-      --max: 860px;
+      --bg-navy: #0a1628;
+      --bg-navy-2: #0d1a30;
+      --accent-gold: #c4973b;
+      --accent-gold-dark: #a67d2e;
+      --accent-steel: #3a6b8c;
+      --bg-cream: #f7f6f2;
+      --border-light: rgba(212, 209, 202, 0.18);
+      --border-strong: rgba(212, 209, 202, 0.28);
+      --surface: rgba(255, 255, 255, 0.025);
+      --surface-strong: rgba(255, 255, 255, 0.04);
+      --text-primary: #f7f6f2;
+      --text-muted: #b9b6ad;
+      --font-heading: "Source Serif 4", Georgia, "Times New Roman", serif;
+      --font-body: "Inter", system-ui, -apple-system, sans-serif;
     }
-    * { box-sizing: border-box; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; }
+
     body {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      background: linear-gradient(180deg, #f8f5ef 0%, #f5f1ea 100%);
-      color: var(--text);
+      font-family: var(--font-body);
+      background: var(--bg-navy);
+      color: var(--text-primary);
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      background-image:
+        radial-gradient(1200px 600px at 85% -10%, rgba(196, 151, 59, 0.10), transparent 70%),
+        radial-gradient(900px 500px at -10% 30%, rgba(58, 107, 140, 0.12), transparent 70%);
+      min-height: 100vh;
     }
-    .wrap { max-width: var(--max); margin: 0 auto; padding: 40px 20px 64px; }
-    header { margin-bottom: 28px; }
+
+    .wrap {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 56px 32px 80px;
+    }
+
+    header { margin-bottom: 40px; }
+
     .eyebrow {
-      display: inline-block; margin-bottom: 10px;
-      padding: 6px 10px; border-radius: 999px;
-      background: var(--accent-soft); color: var(--accent);
-      font: 600 13px/1.2 Arial, sans-serif; letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 22px;
     }
-    h1 { margin: 0 0 12px; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.1; }
-    .intro { max-width: 62ch; margin: 0; color: var(--muted); font-size: 1.05rem; }
-    main { display: grid; gap: 22px; }
+    .eyebrow::before {
+      content: "";
+      width: 36px;
+      height: 1px;
+      background: var(--accent-gold);
+    }
+
+    h1 {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: clamp(2.1rem, 4vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: -0.015em;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+    h1 em { font-style: italic; color: var(--accent-gold); font-weight: 500; }
+
+    .subtitle {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      max-width: 60ch;
+    }
+
+    main { display: grid; gap: 20px; }
+
     section {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); box-shadow: var(--shadow); padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 28px 30px;
     }
-    h2 { margin: 0 0 16px; font-size: 1.35rem; line-height: 1.2; }
-    dl { margin: 0; display: grid; grid-template-columns: minmax(180px, 240px) 1fr; gap: 12px 18px; }
-    dt { margin: 0; font-weight: 700; }
-    dd { margin: 0; color: #111827; }
-    .num { font-variant-numeric: tabular-nums; }
+
+    h2 {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 1.4rem;
+      letter-spacing: -0.005em;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+
+    .section-eyebrow {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 6px;
+    }
+
+    dl {
+      margin: 0;
+      display: grid;
+      grid-template-columns: minmax(180px, 220px) 1fr;
+      gap: 14px 24px;
+    }
+    dt {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      align-self: center;
+    }
+    dd {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-primary);
+      font-weight: 400;
+    }
+    dd.num { font-variant-numeric: tabular-nums; }
+    dd strong { font-weight: 600; color: var(--accent-gold); font-size: 1.08rem; }
+
     .pill {
-      display: inline-block; padding: 4px 10px; border-radius: 999px;
-      background: var(--accent-soft); color: var(--accent);
-      font: 600 13px/1.2 Arial, sans-serif;
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(196, 151, 59, 0.12);
+      border: 1px solid rgba(196, 151, 59, 0.35);
+      color: var(--accent-gold);
+      font-family: var(--font-body);
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
-    table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+
+    .hist-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
     th, td {
-      text-align: left; padding: 10px 12px;
-      border-bottom: 1px solid var(--border); font-size: 0.97rem;
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 0.95rem;
     }
     th {
-      font: 600 13px/1.2 Arial, sans-serif;
-      letter-spacing: 0.04em; text-transform: uppercase;
-      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border-bottom-color: var(--border-strong);
     }
+    td.num { font-variant-numeric: tabular-nums; }
     tr:last-child td { border-bottom: 0; }
-    .note, .small { color: var(--muted); }
-    .note { margin: 0; }
-    ul { margin: 0; padding-left: 20px; }
-    li + li { margin-top: 8px; }
-    .updated { margin-top: 20px; font-size: 0.95rem; color: var(--muted); }
-    footer { margin-top: 28px; color: var(--muted); font-size: 0.95rem; }
-    a { color: var(--accent); }
+    tbody tr:hover { background: rgba(196, 151, 59, 0.04); }
+
+    .download-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 18px;
+    }
+
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 22px;
+      background: rgba(196, 151, 59, 0.10);
+      border: 1px solid rgba(196, 151, 59, 0.45);
+      border-radius: 4px;
+      color: var(--accent-gold);
+      text-decoration: none;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: all 220ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-download:hover {
+      background: rgba(196, 151, 59, 0.18);
+      border-color: var(--accent-gold);
+      transform: translateY(-1px);
+    }
+    .btn-download svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .updated {
+      margin-top: 32px;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-align: center;
+      letter-spacing: 0.04em;
+    }
+
     @media (max-width: 640px) {
-      .wrap { padding: 28px 16px 48px; }
-      section { padding: 20px; }
-      dl { grid-template-columns: 1fr; gap: 6px 0; }
-      dd { margin-bottom: 10px; }
-      .hist-wrap { overflow-x: auto; }
+      .wrap { padding: 36px 20px 64px; }
+      section { padding: 22px 20px; }
+      dl { grid-template-columns: 1fr; gap: 4px 0; }
+      dt { margin-top: 12px; }
+      dt:first-child { margin-top: 0; }
       table { min-width: 520px; }
+      .download-row { justify-content: stretch; }
+      .btn-download { width: 100%; justify-content: center; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header>
-      <h1>Personal Loan Status for Marcela Arenas</h1>
+      <div class="eyebrow">Private &middot; Loan Status</div>
+      <h1>Personal Loan Status for <em>Marcela Arenas</em></h1>
+      <p class="subtitle">A live record of the private pool loan from Brendan O&#39;Connor, refreshed monthly after the Bank of America statement posts.</p>
     </header>
 
     <main>
       <section aria-labelledby="loan-summary">
-        <h2 id="loan-summary">Loan Summary</h2>
+        <span class="section-eyebrow">Loan Summary</span>
+        <h2 id="loan-summary">Terms &amp; current standing</h2>
         <dl>
           <dt>Borrower</dt>
           <dd>Marcela Arenas</dd>
@@ -124,7 +288,8 @@
       </section>
 
       <section aria-labelledby="latest-payment">
-        <h2 id="latest-payment">Latest Verified Payment</h2>
+        <span class="section-eyebrow">Latest Activity</span>
+        <h2 id="latest-payment">Latest verified payment</h2>
         <dl>
           <dt>Amount received</dt>
           <dd class="num">$706.70</dd>
@@ -138,7 +303,8 @@
       </section>
 
       <section aria-labelledby="history">
-        <h2 id="history">Payment History</h2>
+        <span class="section-eyebrow">Ledger</span>
+        <h2 id="history">Payment history</h2>
         <div class="hist-wrap">
           <table>
             <thead>
@@ -152,60 +318,68 @@
             <tbody>
           <tr>
             <td><time datetime="2026-06-01">Jun 1, 2026</time></td>
-            <td>$706.70</td>
+            <td class="num">$706.70</td>
             <td>Regular</td>
-            <td>$45,439.21</td>
+            <td class="num">$45,439.21</td>
           </tr>
           <tr>
             <td><time datetime="2026-05-01">May 1, 2026</time></td>
-            <td>$706.70</td>
+            <td class="num">$706.70</td>
             <td>Regular</td>
-            <td>$45,954.43</td>
+            <td class="num">$45,954.43</td>
           </tr>
           <tr>
             <td><time datetime="2026-04-01">Apr 1, 2026</time></td>
-            <td>$706.70</td>
+            <td class="num">$706.70</td>
             <td>Regular</td>
-            <td>$46,467.52</td>
+            <td class="num">$46,467.52</td>
           </tr>
           <tr>
             <td><time datetime="2026-03-02">Mar 2, 2026</time></td>
-            <td>$706.70</td>
+            <td class="num">$706.70</td>
             <td>Regular</td>
-            <td>$46,978.48</td>
+            <td class="num">$46,978.48</td>
           </tr>
           <tr>
             <td><time datetime="2026-02-02">Feb 2, 2026</time></td>
-            <td>$706.70</td>
+            <td class="num">$706.70</td>
             <td>Regular</td>
-            <td>$47,487.32</td>
+            <td class="num">$47,487.32</td>
           </tr>
           <tr>
             <td><time datetime="2026-01-02">Jan 2, 2026</time></td>
-            <td>$706.70</td>
+            <td class="num">$706.70</td>
             <td>Regular</td>
-            <td>$47,994.04</td>
+            <td class="num">$47,994.04</td>
           </tr>
           <tr>
             <td><time datetime="2025-12-01">Dec 1, 2025</time></td>
-            <td>$706.70</td>
+            <td class="num">$706.70</td>
             <td>Regular</td>
-            <td>$48,498.66</td>
+            <td class="num">$48,498.66</td>
           </tr>
           <tr>
             <td><time datetime="2025-11-03">Nov 3, 2025</time></td>
-            <td>$706.70</td>
+            <td class="num">$706.70</td>
             <td>Regular</td>
-            <td>$49,001.19</td>
+            <td class="num">$49,001.19</td>
           </tr>
           <tr>
             <td><time datetime="2025-10-01">Oct 1, 2025</time></td>
-            <td>$706.70</td>
+            <td class="num">$706.70</td>
             <td>Regular</td>
-            <td>$49,501.63</td>
+            <td class="num">$49,501.63</td>
           </tr>
             </tbody>
           </table>
+        </div>
+        <div class="download-row">
+          <a class="btn-download" href="/marcela/Marcela_Loan_Tracker.xlsx" download>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16" />
+            </svg>
+            Download canonical tracker (.xlsx)
+          </a>
         </div>
       </section>
 

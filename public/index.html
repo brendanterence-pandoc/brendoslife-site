@@ -140,29 +140,32 @@
     }
 
     .link-card-icon {
-      flex: 0 0 auto;
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      background: rgba(247, 246, 242, 0.92);
+      flex: 0 0 96px;
+      width: 96px;
+      height: 68px;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      border: 1px solid rgba(212, 209, 202, 0.25);
+      background: transparent;
+      border: none;
+      border-radius: 0;
     }
 
     .link-card-icon img {
-      width: 100%;
-      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
       object-fit: contain;
       display: block;
     }
 
-    /* Transparent icon variant for logos with their own background (e.g., dark-bg emblem). */
-    .link-card-icon--transparent {
-      background: transparent;
-      border-color: rgba(212, 209, 202, 0.18);
+    /* Tile variant for square brand icons that want a cream background plate. */
+    .link-card-icon--tile img {
+      width: 48px;
+      height: 48px;
+      background: rgba(247, 246, 242, 0.92);
+      border: 1px solid rgba(212, 209, 202, 0.25);
+      border-radius: 8px;
     }
 
     .link-card-icon--placeholder {
@@ -274,7 +277,7 @@
 
       <nav class="links" aria-label="Primary links">
         <a class="link-card" href="https://thebrushtongroup.com" target="_blank" rel="noopener">
-          <span class="link-card-icon" aria-hidden="true">
+          <span class="link-card-icon link-card-icon--tile" aria-hidden="true">
             <img src="/icon-brushton.jpg" alt="" />
           </span>
           <span class="link-card-text">
@@ -285,7 +288,7 @@
         </a>
 
         <a class="link-card" href="https://brendanoconnor.net" target="_blank" rel="noopener">
-          <span class="link-card-icon" aria-hidden="true">
+          <span class="link-card-icon link-card-icon--tile" aria-hidden="true">
             <img src="/icon-brendanoconnor.jpg" alt="" />
           </span>
           <span class="link-card-text">
@@ -296,7 +299,7 @@
         </a>
 
         <a class="link-card" href="/marcela">
-          <span class="link-card-icon link-card-icon--transparent" aria-hidden="true">
+          <span class="link-card-icon" aria-hidden="true">
             <img src="/marcela-logo-darkbg.png" alt="" />
           </span>
           <span class="link-card-text">

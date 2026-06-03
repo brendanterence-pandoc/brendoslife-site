@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="shortcut icon" type="image/png" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<title>Media Campaign Master Plan v14 - Active, resumed</title>
+<style>
+:root {
+  --navy: #1a2744;
+  --navy-dark: #0f1a30;
+  --navy-soft: #2a3858;
+  --gold: #c9a64a;
+  --gold-soft: #e3c878;
+  --cream: #f7f3ea;
+  --paper: #fbfaf6;
+  --ink: #1d1d1d;
+  --muted: #6b6b6b;
+  --rule: #d9d4c4;
+  --green: #2c6e49;
+  --red: #a23b1f;
+  --amber: #b88012;
+  --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+}
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+/* Sidebar */
+aside {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  background: var(--navy);
+  color: var(--cream);
+  padding: 24px 18px;
+  overflow-y: auto;
+}
+aside h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 16px;
+  font-weight: 400;
+}
+aside nav a {
+  display: block;
+  color: var(--cream);
+  text-decoration: none;
+  padding: 6px 0;
+  font-size: 13.5px;
+  border-left: 2px solid transparent;
+  padding-left: 10px;
+  margin-left: -10px;
+}
+aside nav a:hover { color: var(--gold-soft); border-left-color: var(--gold); }
+aside .progress-block {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--navy-soft);
+}
+.progress-bar {
+  height: 6px;
+  background: var(--navy-soft);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 8px 0 6px;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--gold);
+  transition: width .3s;
+}
+.progress-text {
+  font-size: 12px;
+  color: var(--gold-soft);
+}
+aside .controls {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+aside .controls button {
+  background: transparent;
+  color: var(--cream);
+  border: 1px solid var(--navy-soft);
+  padding: 8px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: left;
+}
+aside .controls button:hover { background: var(--navy-soft); border-color: var(--gold); }
+aside .scenario-toggle {
+  margin-top: 24px;
+  padding: 12px;
+  background: var(--navy-dark);
+  border-radius: 6px;
+  border: 1px solid var(--navy-soft);
+}
+aside .scenario-toggle label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 6px;
+}
+aside .scenario-toggle select {
+  width: 100%;
+  background: var(--navy);
+  color: var(--cream);
+  border: 1px solid var(--navy-soft);
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+/* Main */
+main {
+  padding: 36px 56px 80px;
+  max-width: 920px;
+  background: var(--paper);
+}
+header.doc-header {
+  border-bottom: 2px solid var(--navy);
+  padding-bottom: 22px;
+  margin-bottom: 28px;
+}
+header.doc-header .eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+header.doc-header h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 32px;
+  margin: 0 0 6px;
+  color: var(--navy);
+  font-weight: 700;
+  line-height: 1.15;
+}
+header.doc-header .subtitle {
+  font-family: Georgia, serif;
+  font-size: 17px;
+  color: var(--navy-soft);
+  font-style: italic;
+  margin-bottom: 14px;
+}
+header.doc-header .meta {
+  display: flex;
+  gap: 22px;
+  font-size: 12.5px;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+header.doc-header .meta span strong {
+  color: var(--navy);
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+section.major {
+  margin-top: 40px;
+  padding-top: 8px;
+  scroll-margin-top: 20px;
+}
+section.major > h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 4px;
+  font-weight: 600;
+}
+section.major > h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  color: var(--navy);
+  margin: 0 0 18px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 8px;
+}
+section.major h4 {
+  font-family: Georgia, serif;
+  font-size: 17px;
+  color: var(--navy);
+  margin: 22px 0 8px;
+  font-weight: 700;
+}
+section.major h5 {
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--navy-soft);
+  margin: 16px 0 6px;
+  font-weight: 600;
+}
+p { margin: 8px 0; }
+.callout {
+  background: #fff;
+  border-left: 3px solid var(--gold);
+  padding: 14px 18px;
+  margin: 14px 0;
+  font-size: 14px;
+  box-shadow: var(--shadow);
+}
+.callout.immediate {
+  border-left-color: var(--red);
+}
+.callout.scenario-a {
+  border-left-color: var(--green);
+}
+.callout.scenario-b {
+  border-left-color: var(--amber);
+}
+
+/* Tasks */
+.task {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 7px 10px;
+  border-radius: 4px;
+  margin: 2px 0;
+  transition: background .15s;
+}
+.task:hover { background: #fff; }
+.task input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--navy);
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  margin-top: 3px;
+  background: white;
+}
+.task input[type="checkbox"]:checked {
+  background: var(--navy);
+  border-color: var(--navy);
+}
+.task input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0px;
+  width: 5px;
+  height: 10px;
+  border: solid var(--gold);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.task label {
+  flex: 1;
+  cursor: pointer;
+  font-size: 14px;
+}
+.task input:checked + label {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+.task .time-badge {
+  display: inline-block;
+  background: var(--navy);
+  color: var(--cream);
+  padding: 1px 7px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-family: "SF Mono", Menlo, monospace;
+  margin-right: 8px;
+  letter-spacing: 0.04em;
+}
+.task .time-badge.am { background: var(--navy-soft); }
+.task .day-badge {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy-dark);
+  padding: 1px 7px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-right: 8px;
+  letter-spacing: 0.04em;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-left: 8px;
+}
+.tag.A { background: #d8e9d4; color: var(--green); }
+.tag.B { background: #fbe8c8; color: var(--amber); }
+.tag.both { background: #e7e3d4; color: var(--navy); }
+
+/* Notes */
+.notes-block {
+  margin: 14px 0 8px;
+}
+.notes-block label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+.notes-block textarea {
+  width: 100%;
+  min-height: 60px;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-family: inherit;
+  font-size: 13.5px;
+  resize: vertical;
+  background: #fff;
+}
+.notes-block textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+/* Copy blocks */
+.copy-item {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 18px 20px;
+  margin: 16px 0;
+  box-shadow: var(--shadow);
+}
+.copy-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+.copy-item-header .title {
+  font-family: Georgia, serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+}
+.copy-item-header .fires {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-top: 4px;
+  letter-spacing: 0.03em;
+}
+.copy-btn {
+  background: var(--navy);
+  color: var(--cream);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.copy-btn:hover { background: var(--navy-dark); }
+.copy-btn.copied { background: var(--green); }
+.copy-body {
+  background: var(--cream);
+  border-radius: 4px;
+  padding: 14px 16px;
+  margin-top: 10px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  font-family: Georgia, serif;
+  border-left: 3px solid var(--gold);
+}
+.copy-item .sent-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.copy-item .sent-row input[type="date"] {
+  border: 1px solid var(--rule);
+  padding: 3px 6px;
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+/* Hide-completed mode */
+body.hide-done .task input[type="checkbox"]:checked,
+body.hide-done .task input[type="checkbox"]:checked + label {
+  /* keep visible but dim */
+}
+body.hide-done .task:has(input:checked) {
+  display: none;
+}
+
+/* Scenario filtering */
+body.scenario-A [data-scenario="B"] { opacity: 0.35; }
+body.scenario-B [data-scenario="A"] { opacity: 0.35; }
+
+/* Risk register */
+.risk {
+  background: #fff;
+  border-left: 3px solid var(--navy);
+  padding: 12px 16px;
+  margin: 10px 0;
+  font-size: 13.5px;
+}
+.risk .rid {
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: 0.05em;
+}
+.risk.high { border-left-color: var(--red); }
+.risk.mod { border-left-color: var(--amber); }
+.risk.low { border-left-color: var(--green); }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  background: var(--navy);
+  color: var(--cream);
+  padding: 12px 18px;
+  border-radius: 4px;
+  font-size: 13px;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all .3s;
+  pointer-events: none;
+  z-index: 100;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+main label a, main p a, main li a, main .task label a, main .callout a {
+  color: var(--navy);
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+main label a:hover, main p a:hover, main li a:hover, main .task label a:hover, main .callout a:hover {
+  color: var(--gold-soft);
+  background: var(--navy-dark);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+@media print {
+  aside { display: none; }
+  .layout { grid-template-columns: 1fr; }
+  main { padding: 20px; max-width: none; }
+  .copy-btn, .controls { display: none; }
+}
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  aside { position: relative; height: auto; }
+  main { padding: 24px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside>
+  <h2>Contents</h2>
+  <nav>
+    <a href="#immediate">Immediate Actions</a>
+    <a href="#sec1">1. State of play</a>
+    <a href="#sec2">2. Pre-publication weekend</a>
+    <a href="#sec3">3. Scenario A</a>
+    <a href="#sec5">5. CRN treatment</a>
+    <a href="#sec6">6. Outreach copy library</a>
+    <a href="#sec6b">6B. Internal copy library</a>
+    <a href="#sec7">7. Risk register</a>
+    <a href="#sec8">8. Master checklist</a>
+  </nav>
+
+  <div class="progress-block">
+    <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);">Progress</div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-text" id="progressText">0 of 0 complete</div>
+  </div>
+
+  <div class="scenario-toggle" style="background:#1a3a1a;border-color:#2c6e49;">
+    <label style="color:#9fdb9f;">Published</label>
+    <div style="font-size:11px;color:var(--cream);line-height:1.4;margin-top:4px;">
+      <strong>1 Jun 2026 &middot; 10:00 UTC</strong><br>
+      <em style="color:var(--gold-soft);">"I designed Microsoft's $5B EA channel architecture in 2001..."</em><br>
+      <a href="https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235" target="_blank" rel="noopener" style="color:#e3c878;text-decoration:underline;word-break:break-all;display:inline-block;margin-top:4px;">View article &rarr;</a>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button onclick="toggleHideDone()" id="hideDoneBtn">Hide completed</button>
+    <button onclick="exportData()">Export backup (JSON)</button>
+    <button onclick="document.getElementById('importInput').click()">Import backup</button>
+    <input type="file" id="importInput" accept=".json" style="display:none" onchange="importData(event)">
+    <button onclick="window.print()">Print view</button>
+    <button onclick="resetAll()" style="border-color:#7a3a2a;color:#f6c8b9;">Reset all data</button>
+  </div>
+</aside>
+
+<main>
+
+<header class="doc-header">
+  <div class="eyebrow">Media Campaign Master Plan &middot; v14</div>
+  <h1>Active. Compressed Wednesday afternoon resume.</h1>
+  <div class="subtitle">Updated Wednesday June 3, 2026 afternoon &mdash; resumed from v12 with latest LinkedIn numbers, CMA deadline tomorrow</div>
+  <div class="meta">
+    <span><strong>PREPARED BY</strong> Brendan T. O'Connor</span>
+    <span><strong>LOCATION</strong> Sarasota, FL</span>
+    <span><strong>WINDOW</strong> Jun 1 &mdash; Jun 19, 2026</span>
+    <span><strong>STATUS</strong> <span style="color:var(--green);font-weight:700;">Active</span></span>
+  </div>
+</header>
+
+<!-- IMMEDIATE -->
+<section class="major" id="immediate">
+  <h2>Immediate Actions</h2>
+  <h3>What to do now</h3>
+
+  <div class="callout scenario-a">
+    <strong>Publication confirmed.</strong> The Register published "I designed Microsoft's $5B EA channel architecture in 2001. The 2026 transition is missing what made it work" at <strong>10:00 UTC Monday 1 June 2026</strong>, byline Brendan T. O'Connor, filed under OSes. <a href="https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235" target="_blank" rel="noopener">View article &rarr;</a><br>
+    Scenario A is now active. Sections below are the operational plan through Friday June 19.
+  </div>
+
+  <div class="callout immediate" style="border-left-color:var(--green);">
+    <strong>Status: Active.</strong> The article is doing its work. Distribution is compounding. Today's job is to convert organic reach into conversation.<br><br>
+    <strong>Latest LinkedIn (Wed ~1:10 PM ET, no action since Tue):</strong>
+    <ul style="margin-top:6px;margin-bottom:6px;">
+      <li>Original post: 2,284 post-specific impressions (up from 1,939 Tue EOD, +18%). ~1,741 members reached (up from 1,469).</li>
+      <li>Weekly cumulative: 2,441 impressions (+3,490% vs prior 7 days). Followers: 2,029 (+0.8%). Profile viewers: 194 (past 90 days).</li>
+      <li>4 reactions, 3 comments visible. The article carries 4 Register comments.</li>
+      <li><strong>Warm reconnect (new):</strong> David Babineau, PMP (former STE colleague) commented on the post. Brendan's reply is on the thread. Keep nurturing this one - it is exactly the value we built the campaign to surface.</li>
+    </ul>
+    <strong>DM batch from Monday:</strong> Anderson, Speed, Millward still silent. Normal during Build week. Soft second-touches (Items 13/14/15) remain held until Thursday noon.<br><br>
+    <strong>Diagnosis:</strong> Distribution layer working without intervention. Conversation layer is the lever today. Highest-leverage move is Item 16 (comment-bait engagement post) followed by a tight Action 2 batch from the Outreach Manager Excel.
+  </div>
+
+  <h4>Monday June 1 actions (completed) &middot; reference only</h4>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-imm-A-1"><label for="t-imm-A-1"><strong>Read the published piece.</strong> Compare against submitted draft. Note headline change, "Your reporting" -&gt; "The Register's reporting" pronoun swap, bio cut (Dynamics Deal Desk / Cisco / Sage / MBA / no-current-relationship disclosure removed). Archive screenshot.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-imm-A-2"><label for="t-imm-A-2">Ship "Featured in The Register" callout to brendanoconnor.net (see <a href="#item-A1">Item A1</a>) via Manus prompt. Verify mobile render and OG cache.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-imm-A-3"><label for="t-imm-A-3">Add Register article to LinkedIn Featured section with caption (<a href="#item-B1">Item B1</a>).</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-imm-A-4"><label for="t-imm-A-4">Update Resume Master Library v18 line 5B with actual headline and URL (<a href="#item-C2">Item C2</a>). Regenerate PDF. Upload to brendanoconnor.net.</label></div>
+
+  <h4>Monday June 1 &middot; Within 2-4 hours of publication (completed)</h4>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-imm-A-5"><label for="t-imm-A-5"><span class="time-badge">7&ndash;9 AM ET</span>Fire <a href="#li-5a">LinkedIn post 5A</a>. Ship <a href="#item-D0"><strong>D0 (recommended primary)</strong></a>. Tuned to the actual published subhead "the man behind Redmond's direct billing model" and the OSes filing. D1/D2/D3 retained as alternates if D0 doesn't feel right on a re-read. URL in first comment via <a href="#item-D4">Item D4</a>, not the post body.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-imm-A-6"><label for="t-imm-A-6"><span class="time-badge">8&ndash;10 AM ET</span>Fire <a href="#item-1">Item 1</a> (James Anderson DM), <a href="#item-2">Item 2</a> (Richard Speed email, Paul cc'd), <a href="#item-3">Item 3</a> (Wade Millward note + transcript ask).</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-imm-A-7"><label for="t-imm-A-7"><span class="time-badge">12&ndash;1 PM ET</span>Begin Action 2 DM rollout. Use <a href="#item-H3">H3</a> for former-Microsoft contacts, <a href="#item-H4">H4</a> for everyone else. Four to five out by EOD.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-imm-A-8"><label for="t-imm-A-8">All day: engage LinkedIn comments substantively (questions/factual challenges only, use <a href="#item-H1">H1</a> as template). Skip "thanks for sharing" replies. Save reactions list as Week 2 candidates.</label></div>
+
+  <h4>Monday June 1 tonight (completed)</h4>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-imm-A-9"><label for="t-imm-A-9">Day-one metrics snapshot (LinkedIn impressions/reactions/comments, Register comment count, referrer traffic to brendanoconnor.net case study page). Log in notes below.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-imm-A-10"><label for="t-imm-A-10">Stop work by 10 PM ET. No further outreach tonight.</label></div>
+
+  <h4 style="color:var(--navy);">From now through EOD today &middot; ordered by leverage</h4>
+  <div class="callout immediate" style="border-left-color:var(--navy);">
+    <strong>Compressed checklist.</strong> If you only do the top three, the day is a win. Everything below #3 is bonus.
+  </div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-now-1"><label for="t-now-1"><strong>1. Nurture the David Babineau thread (5 min).</strong> Glance at his reply chain on the original post. If he answered your reply, respond once more with a specific reference to a project or person from STE days. This is a real warm reconnect; do not let it die from neglect.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-now-2"><label for="t-now-2"><strong>2. Fire <a href="#item-16">Item 16 (comment-bait engagement post)</a> (10 min).</strong> This is the single highest-leverage move available right now. It costs nothing, uses the original post's 1,741+ reach pool, and converts views into conversation. Reply to every substantive comment within 30 minutes for the rest of the day. Re-read Item 16 once before posting to confirm the three questions sound like you.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-now-3"><label for="t-now-3"><strong>3. Send 3-5 Action 2 personalized DMs (30 min).</strong> Top of the prioritized list from the Outreach Manager Excel: <strong>Vince Menzione, Chris Sakalosky, Brent Combest, Fearghal O'Higgins, Peter Cray</strong>. Customize the first line per contact using their actual current role or recent post. Use H3 (former-Microsoft) or H4 (everyone else) as the base. Log each in the tracker as you send.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-now-4"><label for="t-now-4"><strong>4. Fire <a href="#item-4">Item 4 (Tom Warren, The Verge)</a> if energy allows (5 min).</strong> Build day 2 is his beat. Single LinkedIn or X DM. Skip if afternoon is fading.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-now-5"><label for="t-now-5"><strong>5. HOLD Stratechery and Pluralistic.</strong> Stratechery is a one-shot pitch; save for Thursday post-CMA news vacuum. Pluralistic can shift to tomorrow if Item 16 generates traction worth riding.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-now-6"><label for="t-now-6"><strong>6. 5:00 PM ET snapshot.</strong> Did Item 16 lift engagement? Did any Action 2 contact reply? Did profile views climb past 6? Log below.</label></div>
+
+  <h4 style="color:var(--red);">Tomorrow &middot; Thursday June 4 &middot; CMA deadline 23:55 BST</h4>
+  <div class="callout immediate">
+    <strong>Thursday is the news-cycle peak for this story.</strong> The CMA invitation closes at 23:55 BST. UK trade press still considering follow-up will move today or not at all. Pre-staged soft second-touches (Items 13, 14, 15) fire <em>only</em> if still silent by noon Thursday. One per outlet, not blanket.
+  </div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-thu-1n"><label for="t-thu-1n"><span class="time-badge">9:00 AM ET</span>Fire <a href="#item-7">Item 7 (LinkedIn CMA-deadline post)</a>. Highest-priority post of the week. Article URL in first comment via Item D4.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-thu-2n"><label for="t-thu-2n"><span class="time-badge">10:00 AM ET</span>Fire <a href="#item-8">Brody Ford, Bloomberg</a>.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-thu-3n"><label for="t-thu-3n"><span class="time-badge">11:00 AM ET</span>Fire <a href="#item-9">Cristina Criddle, FT</a>.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-thu-4n"><label for="t-thu-4n"><span class="time-badge">12:00 PM ET</span>Fire <a href="#item-10">Dina Bass, Bloomberg</a>. Also: if Anderson, Speed, or Millward still silent, fire matching soft second-touch (<a href="#item-13">Item 13</a>, <a href="#item-14">Item 14</a>, <a href="#item-15">Item 15</a>). One each, not all three blindly.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-thu-5n"><label for="t-thu-5n"><span class="time-badge">2:00 PM ET</span><strong>Decision-point:</strong> direct CMA submission with Brendan named as primary-source voice. Turns the article into evidence rather than commentary. 200-word draft submitted by 5 PM ET (10 PM BST) to clear the 23:55 BST cutoff with a buffer.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-thu-6n"><label for="t-thu-6n"><span class="time-badge">3:00-5:00 PM ET</span>Action 2 batch &middot; Thursday push. 5-8 more personalized DMs from the Excel tracker.</label></div>
+
+  <div class="notes-block">
+    <label>Day-2 / Day-3 metrics and conversation log</label>
+    <textarea id="notes-day23" placeholder="Wed Item 16 engagement delta. Babineau thread continuation. Action 2 replies. Thu CMA-post performance. Any Anderson/Speed/Millward signal."></textarea>
+  </div>
+
+  <div class="notes-block">
+    <label>Day-2 / Day-3 metrics log</label>
+    <textarea id="notes-day23" placeholder="Wed impressions/reactions/comments delta. Thu CMA-post performance. Which Action 2 DMs replied. Any Anderson/Speed/Millward signal."></textarea>
+  </div>
+
+  <div class="notes-block">
+    <label>Day-one observations / response log</label>
+    <textarea id="notes-monday" placeholder="Who replied, who reacted, comment thread highlights, any surprises..."></textarea>
+  </div>
+
+  <div class="notes-block">
+    <label>Published article URL (confirmed)</label>
+    <textarea id="published-url" style="min-height:36px;">https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235</textarea>
+  </div>
+</section>
+
+<!-- SECTION 1 -->
+<section class="major" id="sec1">
+  <h2>Section 1</h2>
+  <h3>State of play</h3>
+  <div class="callout scenario-a">
+    <strong>Publication confirmed.</strong> The Register ran Brendan's piece Monday 1 June 2026 at 10:00 UTC. Headline as published: "I designed Microsoft's $5B EA channel architecture in 2001. The 2026 transition is missing what made it work". Subhead (desk-written): "The man behind Redmond's direct billing model and its geo rollout explains why the new version forgets the channel to its cost." Filed under OSes. Tagged LICENSING / ENTERPRISE AGREEMENT / CHANNEL PARTNERS / CMA / MICROSOFT / OSES.<br>
+    <a href="https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235" target="_blank" rel="noopener">https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235</a>
+  </div>
+
+  <p>Body survived the desk essentially intact. Two pronoun edits ("Your reporting" -&gt; "The Register's reporting" in two places, removing direct second-person address to the publication), section heads sentence-cased, ® closer added, bio paragraph cut to first two sentences only (Dynamics Deal Desk, Cisco/Sage, MBA credentials, and the explicit no-current-relationship disclosure line all removed). One typo: "What the channel Looked Like in 1998" header has inconsistent capitalization in published version. Auto-generated "MORE CONTEXT" sidebar inserted mid-article (UCLA/Oracle, AI agents, SAP, Royal Household) &mdash; not curated, standard TR template furniture.</p>
+
+  <p>The bio cut is the only structural item worth proactive handling. The published version no longer carries the "Mr. O'Connor has not been employed by Microsoft since 2016 and has no current financial relationship with the company" line. Surface that in the LinkedIn post body, the Item D4 first-comment drop, and any Register-comments rebuttal if independence questions arise.</p>
+
+  <p><strong>WSJ Opinion is closed.</strong> Exclusivity expired May 12 with no response. The silence was effectively a pass. The May 8 WSJ news desk DMs to Tom Dotan and Robbie Whelan remain background watches; no active follow-up.</p>
+  <p>Hacker News moderator-promote is closed. Channel Dive form submission expired May 28.</p>
+
+  <p>This v11 plan covers <strong>Monday June 1 through Friday June 19, 2026</strong>. Scenario A is the only path. The non-publication contingency (Scenario B in v9 / v10) has been removed from this version.</p>
+  <div class="callout scenario-a"><strong>Active path.</strong> The Register published. Execute amplification per Section 3.</div>
+  <div class="callout immediate" style="border-left-color:var(--green);margin-top:14px;">
+    <strong>Snapshot through Wed Jun 3, 1:10 PM ET.</strong> LinkedIn post 5A (D0 variant) shipped Mon morning ET. Now ~52 hours in: <strong>2,284 post-specific impressions (up from 1,939 Tue EOD, +18% without any new intervention), ~1,741 members reached (up from 1,469).</strong> Weekly cumulative: 2,441 impressions (+3,490% vs prior 7 days). Followers: 2,029 (+0.8%). Profile viewers: 194 past 90 days. 4 reactions, 3 comments visible on the post. The Register article carries 4 comments. <strong>David Babineau (PMP, former STE colleague) commented on the original post; Brendan replied warmly. This is a live warm reconnect.</strong> Trade press DMs from Monday (Anderson, Speed, Millward) still silent; normal during Microsoft Build week, soft second-touches held for Thursday noon.
+  </div>
+
+
+  <div class="notes-block"><label>Section 1 notes</label><textarea id="notes-sec1"></textarea></div>
+</section>
+
+<!-- SECTION 2 -->
+<section class="major" id="sec2">
+  <h2>Section 2</h2>
+  <h3>Pre-publication weekend</h3>
+  <p>These tasks fire regardless of Monday outcome.</p>
+
+  <h4>Saturday May 30 (yesterday. Confirm complete)</h4>
+  <div class="task"><input type="checkbox" id="t-sat-1"><label for="t-sat-1"><span class="time-badge">9:00 AM ET</span>Build Action 2 contact list. Target eight to twelve senior contacts. Categories below.</label></div>
+  <div class="task"><input type="checkbox" id="t-sat-2"><label for="t-sat-2"><span class="time-badge">11:00 AM ET</span>Audit brendanoconnor.net case study page. Mobile rendering, OG image cache, load speed, content alignment across multiple possible Paul framings.</label></div>
+  <div class="task"><input type="checkbox" id="t-sat-3"><label for="t-sat-3"><span class="time-badge">2:00 PM ET</span>Build "Featured in The Register" callout block for case study page with placeholder URL. Ready to inject Monday morning.</label></div>
+  <div class="task"><input type="checkbox" id="t-sat-4"><label for="t-sat-4"><span class="time-badge">4:00 PM ET</span>Update LinkedIn featured section to surface the case study URL prominently.</label></div>
+
+  <h5>Action 2 contact list categories</h5>
+  <ol style="font-size:14px;">
+    <li>Former Microsoft colleagues at director-plus level (Chris Barry, Bill Henningsgaard if reachable, others from the WW Licensing era).</li>
+    <li>Sage and Cisco senior contacts (Bill Feder, others).</li>
+    <li>FreeMarkets / VC contacts (Sam Kinney, Dave Becker).</li>
+    <li>Active recruiter threads from current job search.</li>
+    <li>CRO, CCO, VP Partnerships contacts at named target companies.</li>
+    <li>Two or three high-signal industry analysts if available.</li>
+  </ol>
+  <div class="notes-block"><label>Action 2 contact list (paste names + notes)</label><textarea id="action2-list" style="min-height:140px;" placeholder="1. Chris Barry &mdash; ..."></textarea></div>
+
+  <h4>Sunday May 31</h4>
+  <div class="task"><input type="checkbox" id="t-sun-1"><label for="t-sun-1"><span class="time-badge">10:00 AM ET</span>Final case study page audit.</label></div>
+  <div class="task"><input type="checkbox" id="t-sun-2"><label for="t-sun-2"><span class="time-badge">12:00 PM ET</span>Update Resume Master Library v18 with line 5B placeholder.</label></div>
+  <div class="task"><input type="checkbox" id="t-sun-3"><label for="t-sun-3"><span class="time-badge">2:00 PM ET</span>Pre-stage three LinkedIn post variants: <a href="#item-D1">capex</a> / <a href="#item-D2">CMA</a> / <a href="#item-D3">neutral</a>.</label></div>
+  <div class="task"><input type="checkbox" id="t-sun-4"><label for="t-sun-4"><span class="time-badge">4:00 PM ET</span>Verify both Google Alerts active.</label></div>
+  <div class="task"><input type="checkbox" id="t-sun-5"><label for="t-sun-5"><span class="time-badge">6:00 PM ET</span>Hold. No further work tonight.</label></div>
+
+  <div class="notes-block"><label>LinkedIn post variant drafts</label><p style="font-size:12.5px;color:var(--muted);margin:0 0 6px;">Final drafts live in Section 6B as <a href="#item-D1">D1 capex</a>, <a href="#item-D2">D2 CMA</a>, and <a href="#item-D3">D3 neutral</a>. Use this field for last-minute edits or notes on the variant you ship.</p><textarea id="li-variants" style="min-height:120px;" placeholder="Edits, observations, or the version you actually posted..."></textarea></div>
+</section>
+
+<!-- SECTION 3 -->
+<section class="major" id="sec3">
+  <h2>Section 3</h2>
+  <h3>Scenario A &middot; The Register publishes Monday June 1</h3>
+
+  <div class="callout scenario-a">
+    <strong>Active execution path.</strong> Publication confirmed Mon 1 Jun 2026 at 10:00 UTC. The Monday-morning monitoring tasks below are retained as a historical checklist (mark complete and move on). The post-publication sequence starts at "Within 30 minutes" and runs through Friday June 19.
+  </div>
+
+  <h4>Monday June 1 timeline</h4>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-mon-1"><label for="t-mon-1"><span class="time-badge am">5:00 AM ET</span>First Register check.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-mon-2"><label for="t-mon-2"><span class="time-badge am">7:00 AM ET</span>Second Register check.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-mon-3"><label for="t-mon-3"><span class="time-badge">9:00 AM ET</span>Verify and commit to Scenario A or B.</label></div>
+
+  <h5>If Scenario A confirmed &middot; within 30 minutes</h5>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-mon-4"><label for="t-mon-4">Pull canonical URL. Screenshot for archives.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-mon-5"><label for="t-mon-5">Read published version carefully. Note Paul's actual headline and lede framing. Note what was kept, cut, or modified from the manuscript.</label></div>
+
+  <h5>Within one hour</h5>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-mon-6"><label for="t-mon-6">Add "Featured in The Register" callout to brendanoconnor.net case study page.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-mon-7"><label for="t-mon-7">Update LinkedIn featured section with article URL.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-mon-8"><label for="t-mon-8">Update Resume Master Library v18 line 5B with article title and date.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-mon-9"><label for="t-mon-9">Regenerate Resume PDF. Upload to brendanoconnor.net.</label></div>
+
+  <h5>Two to four hours after publication &middot; target 7:00&ndash;9:00 AM ET</h5>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-mon-10"><label for="t-mon-10">Fire <a href="#li-5a">LinkedIn post 5A</a>. Variant matched to Paul's framing (<a href="#item-D1">D1</a> / <a href="#item-D2">D2</a> / <a href="#item-D3">D3</a>). Article URL in first comment, not post body.</label></div>
+
+  <h5>8:00&ndash;10:00 AM ET &middot; Morning batch DMs</h5>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-mon-11"><label for="t-mon-11">Fire James Anderson DM &middot; Copy Library item 1.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-mon-12"><label for="t-mon-12">Fire Richard Speed email with Paul cc'd &middot; Copy Library item 2.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-mon-13"><label for="t-mon-13">Fire Wade Millward email &middot; Copy Library item 3.</label></div>
+
+  <h5>12:00&ndash;1:00 PM ET</h5>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-mon-14"><label for="t-mon-14">Begin Action 2 personalized DM rollout. Four to five messages out by EOD Monday.</label></div>
+
+  <h5>Throughout day</h5>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-mon-15"><label for="t-mon-15">Engage LinkedIn comments substantively. Questions and factual challenges only. Skip "thanks for sharing" replies.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-mon-16"><label for="t-mon-16">Save reactions list as soft-touch candidates for Week 2.</label></div>
+
+  <h4>Tuesday June 2 (Microsoft Build day 1)</h4>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-tue-1"><label for="t-tue-1"><span class="time-badge">9:00 AM ET</span>Check Paul's author page for any Register follow-up coverage.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-tue-2"><label for="t-tue-2"><span class="time-badge">10:00 AM ET</span>Continue Action 2 DM rollout. Remaining four to seven contacts.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-tue-3"><label for="t-tue-3">All day: If James Anderson, Richard Speed, or Wade Millward engages, propose specific meeting times within 10 days.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-tue-4"><label for="t-tue-4"><span class="time-badge">4:00 PM ET</span>Monitor Build coverage for intersection points with the EA story.</label></div>
+
+  <h4>Wednesday June 3 (Microsoft Build day 2)</h4>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-wed-1"><label for="t-wed-1"><span class="time-badge">9:00 AM ET</span>Fire Tom Warren DM &middot; The Verge &middot; Copy Library item 4.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-wed-2"><label for="t-wed-2"><span class="time-badge">10:00 AM ET</span>Fire Stratechery contact form submission &middot; Copy Library item 5.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-wed-3"><label for="t-wed-3"><span class="time-badge">11:00 AM ET</span>Fire Pluralistic email &middot; Copy Library item 6.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-wed-4"><label for="t-wed-4">All day: continue LinkedIn engagement. Monitor for Build-related coverage that intersects.</label></div>
+
+  <h4>Thursday June 4 (CMA comment deadline, 23:55 BST)</h4>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-thu-1"><label for="t-thu-1"><span class="time-badge">9:00 AM ET</span>LinkedIn quote-share with CMA-deadline framing &middot; Copy Library item 7.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-thu-2"><label for="t-thu-2"><span class="time-badge">10:00 AM ET</span>Fire Brody Ford pitch &middot; Bloomberg &middot; Copy Library item 8.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-thu-3"><label for="t-thu-3"><span class="time-badge">11:00 AM ET</span>Fire Cristina Criddle pitch &middot; FT &middot; Copy Library item 9.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-thu-4"><label for="t-thu-4"><span class="time-badge">12:00 PM ET</span>Fire Dina Bass pitch &middot; Bloomberg &middot; Copy Library item 10.</label></div>
+
+  <h4>Friday June 5</h4>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-fri-1"><label for="t-fri-1"><span class="time-badge">9:00 AM ET</span>Review Week 1 metrics. Responses, shares, comments, third-party pickup.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-fri-2"><label for="t-fri-2"><span class="time-badge">11:00 AM ET</span>Plan Week 2 contacts based on actual signal.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-fri-3"><label for="t-fri-3">EOD: light day. European desks wind down.</label></div>
+
+  <h4>Week of June 8 to 12 &middot; Former-colleague layer</h4>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-w2-1"><label for="t-w2-1"><span class="day-badge">MON 8</span>First five messages to former colleagues &middot; Copy Library item 11.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-w2-2"><label for="t-w2-2"><span class="day-badge">TUE&ndash;THU</span>Continue rollout. Four to five messages per day.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-w2-3"><label for="t-w2-3"><span class="day-badge">FRI 12</span>Total fifteen to twenty messages sent. Track responses in spreadsheet.</label></div>
+
+  <h4>Week of June 15 to 19 &middot; Hiring managers and podcast pitching</h4>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-w3-1"><label for="t-w3-1"><span class="day-badge">MON 15</span>Identify target companies with open VP or SVP partner and channel roles.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-w3-2"><label for="t-w3-2"><span class="day-badge">TUE 16</span>Send first five hiring manager outreach messages &middot; Copy Library item 12.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-w3-3"><label for="t-w3-3"><span class="day-badge">WED 17</span>Send next five hiring manager messages.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-w3-4"><label for="t-w3-4"><span class="day-badge">THU 18</span>Begin podcast pitching. Acquired, TITV, trade-press podcasts.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="t-w3-5"><label for="t-w3-5"><span class="day-badge">FRI 19</span>Week 3 review. Plan ongoing cadence.</label></div>
+
+  <div class="notes-block"><label>Scenario A running log</label><textarea id="notes-sec3" style="min-height:120px;"></textarea></div>
+</section>
+
+<!-- SECTION 5 -->
+<section class="major" id="sec5">
+  <h2>Section 5</h2>
+  <h3>CRN treatment (applies to both scenarios)</h3>
+  <p>The May 6 interview with Wade Millward gives CRN a different posture than other outlets. Wade has a baseline understanding of the architecture story and a personal investment in the conversation.</p>
+
+  <h4>CRN as parallel placement</h4>
+  <p>Wade gets the Register piece Monday morning as a personal note that references the May 6 interview &middot; <a href="#item-3">Copy Library item 3</a>. The CRN-specific 1,150-word op-ed (<a href="#item-F1">Item F1</a>) is held in reserve. If Wade engages, send the CRN piece as a follow-up offering. The Howard Diamond / Corporate Software 2002 archive frame is the warmth hook; the EA-architecture credential is the credibility hook. The CRN piece is differentiated from the Register piece by audience (channel-side solution providers vs. enterprise IT) and angle (partner-economics survival vs. structural-architecture), so the two can coexist without exclusivity conflict.</p>
+
+  <h4>Shared watch item</h4>
+  <p>The May 6 transcript Wade owes is a separate item. If not received by Monday morning, a soft ask is appropriate in either scenario.</p>
+  <div class="callout"><em>"Following up on the transcript from our May 6 conversation when you have a moment. Happy to wait, just flagging it's still on my radar."</em></div>
+
+  <div class="task"><input type="checkbox" id="t-sec5-1"><label for="t-sec5-1">Soft transcript ask sent to Wade (if needed)</label></div>
+  <div class="task"><input type="checkbox" id="t-sec5-2"><label for="t-sec5-2">Transcript received from Wade</label></div>
+
+  <div class="notes-block"><label>Wade Millward thread notes</label><textarea id="notes-sec5"></textarea></div>
+</section>
+
+<!-- SECTION 6 -->
+<section class="major" id="sec6">
+  <h2>Section 6</h2>
+  <h3>Outreach copy library</h3>
+  <p style="color:var(--muted);font-size:13.5px;">All copy paste-ready. No em-dashes. First-person from Brendan. Each item has a Copy button and a Sent date field.</p>
+
+  <!-- Item 1 -->
+  <div class="copy-item" id="item-1">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">Item 1 &middot; James Anderson, Channel Dive (LinkedIn DM) <span class="tag A">Scenario A</span></div>
+        <div class="fires">FIRES &middot; Monday June 1, 8:00&ndash;10:00 AM ET</div>
+      </div>
+      <button class="copy-btn" data-target="body-1">Copy</button>
+    </div>
+    <div class="copy-body" id="body-1">Hi James,
+
+Quick note. The Register piece I mentioned ran today. https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235
+
+Genuinely appreciated your read and your advocacy on this, and I want to keep the door open with Channel Dive. The MCI pool collapse and the LSP-to-CSP commission shift are still under-reported on the numbers side, and I have specific figures I'd share on background or for attribution if a different angle works for you. Coffee on the next trip up?
+
+Brendan</div>
+    <div class="sent-row"><label>Sent: <input type="date" id="sent-1"></label> <label>Reply received: <input type="checkbox" id="reply-1"></label></div>
+    <div class="notes-block"><label>Item 1 thread notes</label><textarea id="notes-1"></textarea></div>
+  </div>
+
+  <!-- Item 2 -->
+  <div class="copy-item" id="item-2">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">Item 2 &middot; Richard Speed, The Register (email, Paul cc'd) <span class="tag A">Scenario A</span></div>
+        <div class="fires">FIRES &middot; Monday June 1, 8:00&ndash;10:00 AM ET</div>
+      </div>
+      <button class="copy-btn" data-target="body-2">Copy</button>
+    </div>
+    <div class="copy-body" id="body-2">Subject: EA mechanics piece in today's Register / background source for CMA follow-ups
+
+Hi Richard,
+
+Brendan O'Connor here. I wrote the EA piece Paul Kunert ran in The Register today. https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235 Paul knows I'm reaching out.
+
+Saw your 14 May coverage of the CMA SMS investigation. As the comment window closes on 4 June, I'd be happy to be a background source for any follow-up on the licensing-practices angle, MCA-E mechanics, or partner-program impact. I have firsthand pattern data from the LSP commission collapse and the discount-tier reset that would be at your disposal.
+
+Easiest reach is here or +1 (425) 269-5044 (text or WhatsApp).
+
+Brendan</div>
+    <div class="sent-row"><label>Sent: <input type="date" id="sent-2"></label> <label>Reply received: <input type="checkbox" id="reply-2"></label></div>
+    <div class="notes-block"><label>Item 2 thread notes</label><textarea id="notes-2"></textarea></div>
+  </div>
+
+  <!-- Item 3 -->
+  <div class="copy-item" id="item-3">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">Item 3 &middot; Wade Millward, CRN (email or LinkedIn DM) <span class="tag A">Scenario A</span></div>
+        <div class="fires">FIRES &middot; Monday June 1, 8:00&ndash;10:00 AM ET</div>
+      </div>
+      <button class="copy-btn" data-target="body-3">Copy</button>
+    </div>
+    <div class="copy-body" id="body-3">Subject: Register piece on EA architecture / following up on our May 6 conversation
+
+Hi Wade,
+
+The Register ran my analysis of the Microsoft EA channel architecture this morning. https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235 It builds directly on the architecture work I described in our May 6 conversation.
+
+Two reasons I'm sending this directly. First, you were the trade-press journalist who took the time to actually understand the architectural mechanics back in May, and I wanted you to see the piece before it shows up in your feed elsewhere. Second, if a CRN-specific follow-up angle would be useful, I have a 1,150-word piece that focuses specifically on the partner-advice dimension and draws on CRN's own 2002 archive with Howard Diamond at Corporate Software. Happy to send if it fits your editorial direction.
+
+Either way, would value any read of the published piece. And I'm still glad to be a source on any of your ongoing EA / E7 / partner-program coverage.
+
+Brendan</div>
+    <div class="sent-row"><label>Sent: <input type="date" id="sent-3"></label> <label>Reply received: <input type="checkbox" id="reply-3"></label></div>
+    <div class="notes-block"><label>Item 3 thread notes</label><textarea id="notes-3"></textarea></div>
+  </div>
+
+  <!-- Item 4 -->
+  <div class="copy-item" id="item-4">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">Item 4 &middot; Tom Warren, The Verge (LinkedIn DM or X DM) <span class="tag A">Scenario A</span></div>
+        <div class="fires">FIRES &middot; Wednesday June 3, 9:00 AM ET</div>
+      </div>
+      <button class="copy-btn" data-target="body-4">Copy</button>
+    </div>
+    <div class="copy-body" id="body-4">Tom, your Verge coverage of Microsoft's commercial moves through 2025 caught my attention. The Register ran a piece I wrote on Monday on the EA channel architecture being dismantled and what makes the 2026 transition structurally different from the 2001 version I designed. Link: https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235. Available as a background source if useful for any related coverage.
+
+Brendan O'Connor / Former Senior Director, Microsoft 1998 to 2016</div>
+    <div class="sent-row"><label>Sent: <input type="date" id="sent-4"></label> <label>Reply received: <input type="checkbox" id="reply-4"></label></div>
+    <div class="notes-block"><label>Item 4 thread notes</label><textarea id="notes-4"></textarea></div>
+  </div>
+
+  <!-- Item 5 -->
+  <div class="copy-item" id="item-5">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">Item 5 &middot; Stratechery (contact form) <span class="tag A">Scenario A</span></div>
+        <div class="fires">FIRES &middot; Wednesday June 3, 10:00 AM ET &middot; stratechery.com/contact</div>
+      </div>
+      <button class="copy-btn" data-target="body-5">Copy</button>
+    </div>
+    <div class="copy-body" id="body-5">Subject: Background source on Microsoft EA channel restructuring. Primary-source op-ed in The Register today.
+
+Ben,
+
+The Register published my analysis on Monday of the Microsoft Enterprise Software Advisor channel architecture and what makes the 2026 transition structurally different from the 2001 transition I designed. https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235
+
+Aware this isn't the typical sourcing pattern. Reaching out because the platform-vs-ecosystem dynamics you've written about repeatedly are the underlying structural questions the piece examines. If a background conversation on the architectural history or the CMA SMS implications would be useful for any upcoming analysis, available at this email or +1 (425) 269-5044.
+
+Brendan O'Connor / Founder and Principal, The Brushton Group / Former Senior Director, Microsoft 1998 to 2016</div>
+    <div class="sent-row"><label>Sent: <input type="date" id="sent-5"></label> <label>Reply received: <input type="checkbox" id="reply-5"></label></div>
+    <div class="notes-block"><label>Item 5 thread notes</label><textarea id="notes-5"></textarea></div>
+  </div>
+
+  <!-- Item 6 -->
+  <div class="copy-item" id="item-6">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">Item 6 &middot; Cory Doctorow, Pluralistic (email) <span class="tag A">Scenario A</span></div>
+        <div class="fires">FIRES &middot; Wednesday June 3, 11:00 AM ET &middot; doctorow@craphound.com</div>
+      </div>
+      <button class="copy-btn" data-target="body-6">Copy</button>
+    </div>
+    <div class="copy-body" id="body-6">Subject: Microsoft EA channel restructuring. Register op-ed today, primary-source perspective.
+
+Cory,
+
+Quick note. The Register ran my piece on Monday on the Microsoft EA channel architecture being dismantled in 2026. I designed the original ESA architecture in 2001. https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235
+
+The piece argues the 2026 transition has no partner bridge. Eliminating a $2.5B partner compensation pool without a replacement mechanism. The structural-power dimension you've written about as enshittification is what's actually happening in this transition, with regulatory consequences already visible (CMA SMS investigation comment window closes today).
+
+Available as a source for anything you're working on in this space. brendanoconnor.net/case-studies/microsoft-enterprise-channel.
+
+Brendan</div>
+    <div class="sent-row"><label>Sent: <input type="date" id="sent-6"></label> <label>Reply received: <input type="checkbox" id="reply-6"></label></div>
+    <div class="notes-block"><label>Item 6 thread notes</label><textarea id="notes-6"></textarea></div>
+  </div>
+
+  <!-- Item 7 -->
+  <div class="copy-item" id="item-7">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">Item 7 &middot; LinkedIn quote-share with CMA-deadline framing <span class="tag A">Scenario A</span></div>
+        <div class="fires">FIRES &middot; Thursday June 4, 9:00 AM ET</div>
+      </div>
+      <button class="copy-btn" data-target="body-7">Copy</button>
+    </div>
+    <div class="copy-body" id="body-7">Today is the deadline for public comment on the CMA's Strategic Market Status investigation into Microsoft's business software ecosystem. The structural context for that investigation is in the piece The Register published Monday. https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235</div>
+    <div class="sent-row"><label>Posted: <input type="date" id="sent-7"></label> <label>Engagement logged: <input type="checkbox" id="reply-7"></label></div>
+    <div class="notes-block"><label>Item 7 engagement notes</label><textarea id="notes-7"></textarea></div>
+  </div>
+
+  <!-- Item 8 -->
+  <div class="copy-item" id="item-8">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">Item 8 &middot; Brody Ford, Bloomberg (email or LinkedIn) <span class="tag A">Scenario A</span></div>
+        <div class="fires">FIRES &middot; Thursday June 4, 10:00 AM ET</div>
+      </div>
+      <button class="copy-btn" data-target="body-8">Copy</button>
+    </div>
+    <div class="copy-body" id="body-8">Brody, The Register published my Microsoft EA channel analysis on Monday. https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235 The CMA SMS investigation comment window closes today and the piece provides primary-source structural context on the licensing architecture under examination. Available as a background source on the EA / E7 / partner-program mechanics for any related coverage.
+
+Brendan O'Connor / Former Senior Director, Microsoft 1998 to 2016</div>
+    <div class="sent-row"><label>Sent: <input type="date" id="sent-8"></label> <label>Reply received: <input type="checkbox" id="reply-8"></label></div>
+    <div class="notes-block"><label>Item 8 thread notes</label><textarea id="notes-8"></textarea></div>
+  </div>
+
+  <!-- Item 9 -->
+  <div class="copy-item" id="item-9">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">Item 9 &middot; Cristina Criddle, FT (LinkedIn DM) <span class="tag A">Scenario A</span></div>
+        <div class="fires">FIRES &middot; Thursday June 4, 11:00 AM ET</div>
+      </div>
+      <button class="copy-btn" data-target="body-9">Copy</button>
+    </div>
+    <div class="copy-body" id="body-9">Cristina, your FT coverage of Microsoft's enterprise business and the CMA investigations is the closest mainstream business-press treatment of the architectural question. The Register ran my piece on this Monday. https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235 Available as a background source on the licensing mechanics for any FT follow-up coverage.
+
+Brendan O'Connor</div>
+    <div class="sent-row"><label>Sent: <input type="date" id="sent-9"></label> <label>Reply received: <input type="checkbox" id="reply-9"></label></div>
+    <div class="notes-block"><label>Item 9 thread notes</label><textarea id="notes-9"></textarea></div>
+  </div>
+
+  <!-- Item 10 -->
+  <div class="copy-item" id="item-10">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">Item 10 &middot; Dina Bass, Bloomberg (LinkedIn DM) <span class="tag A">Scenario A</span></div>
+        <div class="fires">FIRES &middot; Thursday June 4, 12:00 PM ET</div>
+      </div>
+      <button class="copy-btn" data-target="body-10">Copy</button>
+    </div>
+    <div class="copy-body" id="body-10">Dina, The Register ran my analysis of the Microsoft EA channel architecture on Monday. https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235 The CMA SMS investigation comment window closes today and the piece provides primary-source structural context. Available as a background source on the EA mechanics for any related Bloomberg coverage.
+
+Brendan O'Connor / Former Senior Director, Microsoft 1998 to 2016</div>
+    <div class="sent-row"><label>Sent: <input type="date" id="sent-10"></label> <label>Reply received: <input type="checkbox" id="reply-10"></label></div>
+    <div class="notes-block"><label>Item 10 thread notes</label><textarea id="notes-10"></textarea></div>
+  </div>
+
+  <!-- Item 11 -->
+  <div class="copy-item" id="item-11">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">Item 11 &middot; Former-colleague personalized template <span class="tag A">Scenario A</span></div>
+        <div class="fires">FIRES &middot; Week of June 8&ndash;12 &middot; Customize per contact</div>
+      </div>
+      <button class="copy-btn" data-target="body-11">Copy</button>
+    </div>
+    <div class="copy-body" id="body-11">Hi [First Name],
+
+The Register published a piece I wrote on the Microsoft EA channel architecture last week. https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235 Given your [specific context: Time at Microsoft during the ESA rollout / Current work on partner ecosystems at Company / Perspective on the 2001 transition], your read on this would mean more than most.
+
+One specific question I've been mulling that I'd value your take on. [Tailored question per contact. E.g., whether you think Microsoft can re-introduce an advisory fee structure post-FY26 without conceding the 2026 model is broken. Or whether you've seen partner economics decisions in your current org that mirror this pattern.]
+
+No urgency on a response.
+
+Brendan</div>
+    <div class="notes-block"><label>Item 11 contact log (who sent, who replied)</label><textarea id="notes-11" style="min-height:140px;" placeholder="Chris Barry &mdash; sent 6/8 &mdash; ..."></textarea></div>
+  </div>
+
+  <!-- Item 12 -->
+  <div class="copy-item" id="item-12">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">Item 12 &middot; Hiring manager template <span class="tag A">Scenario A</span></div>
+        <div class="fires">FIRES &middot; Week of June 15&ndash;19 &middot; Customize per role</div>
+      </div>
+      <button class="copy-btn" data-target="body-12">Copy</button>
+    </div>
+    <div class="copy-body" id="body-12">Subject: Recent Register piece on enterprise channel architecture / fit for [specific role]
+
+Hi [Hiring Manager],
+
+The Register published a piece I wrote last week on Microsoft's enterprise channel architecture and the 2026 unwind. https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235 Sending because the architectural questions in the piece are essentially the questions a VP of Channel at [Company] is facing today. How do you build commercial infrastructure that scales without breaking partner economics or eroding advisory expertise.
+
+I designed the original Microsoft EA channel model in 2001, led partner ecosystem strategy at Sage from 2022 to 2025 (900% AWS partnership revenue growth), and am currently exploring VP and SVP-level partner and channel leadership roles. [Company]'s [specific reference: Recent partner program move, recent earnings line, recent ecosystem expansion] is the kind of work that maps to my track record.
+
+Would value 30 minutes if there's mutual interest. Calendly link: [URL]
+
+Brendan O'Connor / linkedin.com/in/brendanoconnor / brendanoconnor.net</div>
+    <div class="notes-block"><label>Item 12 hiring manager log</label><textarea id="notes-12" style="min-height:140px;"></textarea></div>
+  </div>
+
+
+  <!-- Item 13 -->
+  <div class="copy-item" id="item-13">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">Item 13 &middot; James Anderson, Channel Dive &middot; soft second touch <span class="tag A">Scenario A</span></div>
+        <div class="fires">HOLD &middot; Fire Thursday June 4, 12:00 PM ET only if still silent. Skip if any reply on Item 1.</div>
+      </div>
+      <button class="copy-btn" data-target="body-13">Copy</button>
+    </div>
+    <div class="copy-body" id="body-13">Hi James,
+
+No urgency, just flagging in case it's useful: the CMA invitation to comment closes today at 23:55 BST, and the piece carries primary-source context on the licensing-practices angle the CMA is examining. If a Channel Dive follow-up makes sense after the deadline, I'd be glad to walk through the MCI pool numbers on background or for attribution. Otherwise no worries at all.
+
+Brendan</div>
+    <div class="sent-row"><label>Sent: <input type="date" id="sent-13"></label> <label>Reply received: <input type="checkbox" id="reply-13"></label></div>
+    <div class="notes-block"><label>Item 13 thread notes</label><textarea id="notes-13"></textarea></div>
+  </div>
+
+  <!-- Item 14 -->
+  <div class="copy-item" id="item-14">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">Item 14 &middot; Richard Speed, The Register &middot; soft second touch <span class="tag A">Scenario A</span></div>
+        <div class="fires">HOLD &middot; Fire Thursday June 4, 12:00 PM ET only if still silent. Skip if any reply on Item 2.</div>
+      </div>
+      <button class="copy-btn" data-target="body-14">Copy</button>
+    </div>
+    <div class="copy-body" id="body-14">Subject: re: EA mechanics piece / CMA comment deadline today
+
+Hi Richard,
+
+Just flagging the CMA comment window closes at 23:55 BST tonight. If any of the licensing or partner-program mechanics in Monday's piece would help a Register follow-up, I'm reachable here or +1 (425) 269-5044 (text or WhatsApp). Happy to provide background or sit for a longer conversation. No pressure either way.
+
+Brendan</div>
+    <div class="sent-row"><label>Sent: <input type="date" id="sent-14"></label> <label>Reply received: <input type="checkbox" id="reply-14"></label></div>
+    <div class="notes-block"><label>Item 14 thread notes</label><textarea id="notes-14"></textarea></div>
+  </div>
+
+  <!-- Item 15 -->
+  <div class="copy-item" id="item-15">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">Item 15 &middot; Wade Millward, CRN &middot; soft second touch <span class="tag A">Scenario A</span></div>
+        <div class="fires">HOLD &middot; Fire Thursday June 4, 12:00 PM ET only if still silent. Skip if any reply on Item 3.</div>
+      </div>
+      <button class="copy-btn" data-target="body-15">Copy</button>
+    </div>
+    <div class="copy-body" id="body-15">Hi Wade,
+
+Just a soft follow-up. Two things have moved this week that may make the CRN partner-advice angle more timely. The CMA comment window closes today at 23:55 BST, and the Register piece is getting moderate trade-press circulation but no channel-press treatment yet. If the 1,150-word CRN-specific piece (Howard Diamond / Corporate Software anchor, partner-economics survival angle) fits your editorial direction, I can have it in your inbox in 30 minutes. If not, no worries; just wanted to keep it on your radar.
+
+Brendan</div>
+    <div class="sent-row"><label>Sent: <input type="date" id="sent-15"></label> <label>Reply received: <input type="checkbox" id="reply-15"></label></div>
+    <div class="notes-block"><label>Item 15 thread notes</label><textarea id="notes-15"></textarea></div>
+  </div>
+
+  <!-- Item 16 -->
+  <div class="copy-item" id="item-16">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">Item 16 &middot; Comment-bait engagement post (Wed afternoon) <span class="tag A">Scenario A</span></div>
+        <div class="fires">FIRES &middot; Wednesday June 3, 12:00 PM ET. Reply to every substantive comment within 30 min.</div>
+      </div>
+      <button class="copy-btn" data-target="body-16">Copy</button>
+    </div>
+    <div class="copy-body" id="body-16">One specific question I'm getting from people in DMs about the Register piece:
+
+If Microsoft is eliminating the EA partner commission pool (~$2.5B in 2023, zero this year), where do they expect the customer-education work to come from? Field sales is shrinking. CSP is a transactional motion, not an advisory one. The 1998 to 2001 channel was 4% to 15% ESA fees because customer education was a paid function. In 2026 it is being treated as overhead.
+
+Genuinely curious what people are seeing on the ground.
+
+For partners: how are you funding the advisory work now?
+For customers: where are you going for licensing strategy if not your reseller?
+For ex-Microsoft folks: is there a quiet plan I am missing?
+
+Link to the piece in comments.</div>
+    <div class="sent-row"><label>Posted: <input type="date" id="sent-16"></label> <label>Engagement lift logged: <input type="checkbox" id="reply-16"></label></div>
+    <div class="notes-block"><label>Item 16 engagement notes</label><textarea id="notes-16" placeholder="Comments received, who engaged, follow-on DMs..."></textarea></div>
+  </div>
+
+</section>
+
+<!-- SECTION 6B -->
+<section class="major" id="sec6b">
+  <h2>Section 6B</h2>
+  <h3>Internal copy library</h3>
+  <p style="color:var(--muted);font-size:13.5px;">Site callouts, profile updates, resume line, pre-staged LinkedIn posts, the Wade transcript ask, the CRN reserve op-ed, and the LinkedIn self-publish opening. Items grouped by surface. Copy button on each.</p>
+
+  <h4>Brendanoconnor.net &middot; case study page</h4>
+
+  <!-- A1 -->
+  <div class="copy-item" id="item-A1">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">A1 &middot; "Featured in The Register" callout block (HTML) <span class="tag A">Live &mdash; ship now</span></div>
+        <div class="fires">FIRES &middot; Sat May 30, 2:00 PM ET to build with placeholders. Sun May 31, 10:00 AM ET final audit. Mon Jun 1 +1 hr to inject live URL/headline.</div>
+      </div>
+      <button class="copy-btn" data-target="body-A1">Copy</button>
+    </div>
+    <div class="copy-body" id="body-A1">&lt;aside class="register-feature"&gt;
+  &lt;div class="register-feature-eyebrow"&gt;Featured in&lt;/div&gt;
+  &lt;div class="register-feature-publication"&gt;The Register &middot; June 2026&lt;/div&gt;
+  &lt;div class="register-feature-headline"&gt;I designed Microsoft's $5B EA channel architecture in 2001. The 2026 transition is missing what made it work&lt;/div&gt;
+  &lt;p class="register-feature-blurb"&gt;
+    Primary-source analysis of Microsoft's Enterprise Agreement channel architecture and the 2026 partner-program unwind. Reported by Paul Kunert.
+  &lt;/p&gt;
+  &lt;a class="register-feature-link" href="https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235" target="_blank" rel="noopener"&gt;
+    Read in The Register &rarr;
+  &lt;/a&gt;
+&lt;/aside&gt;
+
+&lt;style&gt;
+.register-feature {
+  background: #f6f1e3;
+  border-left: 4px solid #c9a64a;
+  padding: 22px 26px;
+  margin: 28px 0;
+  font-family: Georgia, serif;
+}
+.register-feature-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #6b6b6b;
+  margin-bottom: 4px;
+}
+.register-feature-publication {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a2744;
+  margin-bottom: 10px;
+}
+.register-feature-headline {
+  font-size: 16px;
+  font-style: italic;
+  color: #1a2744;
+  margin-bottom: 10px;
+}
+.register-feature-blurb {
+  font-size: 14px;
+  color: #1d1d1d;
+  margin: 0 0 14px;
+}
+.register-feature-link {
+  display: inline-block;
+  color: #1a2744;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 2px solid #c9a64a;
+}
+&lt;/style&gt;</div>
+    <div class="notes-block"><label>A1 deployment notes (where injected, cache cleared, etc.)</label><textarea id="notes-A1"></textarea></div>
+  </div>
+
+  <!-- A2 -->
+  <div class="copy-item" id="item-A2">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">A2 &middot; Saturday placeholder version (pre-publication state) <span class="tag B">Historical &mdash; not for use</span></div>
+        <div class="fires">FIRES &middot; Sat May 30 build, replaced Mon Jun 1 with A1 once live</div>
+      </div>
+      <button class="copy-btn" data-target="body-A2">Copy</button>
+    </div>
+    <div class="copy-body" id="body-A2">&lt;aside class="register-feature register-feature--coming"&gt;
+  &lt;div class="register-feature-eyebrow"&gt;Forthcoming in&lt;/div&gt;
+  &lt;div class="register-feature-publication"&gt;The Register&lt;/div&gt;
+  &lt;p class="register-feature-blurb"&gt;
+    Primary-source analysis of Microsoft's Enterprise Agreement channel architecture and the 2026 partner-program unwind. Publication imminent.
+  &lt;/p&gt;
+&lt;/aside&gt;</div>
+    <div class="notes-block"><label>A2 notes</label><textarea id="notes-A2"></textarea></div>
+  </div>
+
+  <!-- A3 -->
+  <div class="copy-item" id="item-A3">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">A3 &middot; OG / social meta tags for the case study page <span class="tag both">Both</span></div>
+        <div class="fires">FIRES &middot; Update Mon Jun 1 +1 hr along with callout injection</div>
+      </div>
+      <button class="copy-btn" data-target="body-A3">Copy</button>
+    </div>
+    <div class="copy-body" id="body-A3">&lt;meta property="og:title" content="The Microsoft EA Channel Architecture and the 2026 Unwind &mdash; Case Study"&gt;
+&lt;meta property="og:description" content="Primary-source analysis from the architect of the original 2001 Enterprise Software Advisor program. Featured in The Register, June 2026."&gt;
+&lt;meta property="og:type" content="article"&gt;
+&lt;meta property="og:url" content="https://brendanoconnor.net/case-studies/microsoft-enterprise-channel"&gt;
+&lt;meta property="og:image" content="https://brendanoconnor.net/img/case-studies/ms-ea-channel-og.jpg"&gt;
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+&lt;meta name="twitter:title" content="The Microsoft EA Channel Architecture and the 2026 Unwind"&gt;
+&lt;meta name="twitter:description" content="Featured in The Register, June 2026. Primary-source analysis from the architect of the original 2001 program."&gt;</div>
+    <div class="notes-block"><label>A3 notes</label><textarea id="notes-A3"></textarea></div>
+  </div>
+
+  <h4>LinkedIn profile &middot; Featured section</h4>
+
+  <!-- B1 -->
+  <div class="copy-item" id="item-B1">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">B1 &middot; LinkedIn Featured caption (when adding the Register article) <span class="tag A">Scenario A</span></div>
+        <div class="fires">FIRES &middot; Mon Jun 1 +1 hr</div>
+      </div>
+      <button class="copy-btn" data-target="body-B1">Copy</button>
+    </div>
+    <div class="copy-body" id="body-B1">Primary-source analysis of Microsoft's Enterprise Agreement channel architecture and what makes the 2026 unwind structurally different from the 2001 transition I designed. Published in The Register, June 2026.</div>
+    <div class="notes-block"><label>B1 notes</label><textarea id="notes-B1"></textarea></div>
+  </div>
+
+  <!-- B2 -->
+  <div class="copy-item" id="item-B2">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">B2 &middot; LinkedIn About section addendum (optional) <span class="tag A">Scenario A</span></div>
+        <div class="fires">FIRES &middot; Mon Jun 1 sometime during the day, after post 5A engagement starts</div>
+      </div>
+      <button class="copy-btn" data-target="body-B2">Copy</button>
+    </div>
+    <div class="copy-body" id="body-B2">Recent writing in The Register (June 2026) on the Microsoft Enterprise Agreement channel architecture and the 2026 partner-program unwind. Available as a background source on enterprise commercial infrastructure, channel architecture, and partner-economics questions. brendanoconnor.net</div>
+    <div class="notes-block"><label>B2 notes</label><textarea id="notes-B2"></textarea></div>
+  </div>
+
+  <h4>Resume Master Library v18 &middot; line 5B</h4>
+
+  <!-- C1 -->
+  <div class="copy-item" id="item-C1">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">C1 &middot; Line 5B placeholder (Sunday May 31 build) <span class="tag B">Historical &mdash; superseded by C2</span></div>
+        <div class="fires">FIRES &middot; Sun May 31, 12:00 PM ET</div>
+      </div>
+      <button class="copy-btn" data-target="body-C1">Copy</button>
+    </div>
+    <div class="copy-body" id="body-C1">Published, The Register (Jun 2026): "I designed Microsoft's $5B EA channel architecture in 2001. The 2026 transition is missing what made it work." Primary-source analysis of Microsoft Enterprise Agreement channel architecture and the 2026 partner-program unwind. https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235</div>
+    <div class="notes-block"><label>C1 notes</label><textarea id="notes-C1"></textarea></div>
+  </div>
+
+  <!-- C2 -->
+  <div class="copy-item" id="item-C2">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">C2 &middot; Line 5B post-publication (fill in headline + URL) <span class="tag A">Scenario A</span></div>
+        <div class="fires">FIRES &middot; Mon Jun 1 +1 hr</div>
+      </div>
+      <button class="copy-btn" data-target="body-C2">Copy</button>
+    </div>
+    <div class="copy-body" id="body-C2">Published, The Register (Jun 2026): "I designed Microsoft's $5B EA channel architecture in 2001. The 2026 transition is missing what made it work." Primary-source analysis of Microsoft Enterprise Agreement channel architecture and the 2026 partner-program unwind. https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235</div>
+    <div class="notes-block"><label>C2 notes</label><textarea id="notes-C2"></textarea></div>
+  </div>
+
+  <!-- C3 -->
+  <div class="copy-item" id="item-C3">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">C3 &middot; Compact one-line variant for short-format resume <span class="tag A">Scenario A</span></div>
+        <div class="fires">Optional alternate for tighter resume formats</div>
+      </div>
+      <button class="copy-btn" data-target="body-C3">Copy</button>
+    </div>
+    <div class="copy-body" id="body-C3">The Register (Jun 2026), "I designed Microsoft's $5B EA channel architecture in 2001. The 2026 transition is missing what made it work." Author, on Microsoft EA channel architecture and 2026 unwind.</div>
+    <div class="notes-block"><label>C3 notes</label><textarea id="notes-C3"></textarea></div>
+  </div>
+
+  <h4 id="li-5a">LinkedIn post 5A &middot; pre-staged variants (capex / CMA / neutral)</h4>
+  <p style="font-size:13px;color:var(--muted);">D0 below is the recommended primary post for today, tuned to the actual published framing (subhead positions Brendan as "the man behind Redmond's direct billing model"). D1&ndash;D3 retained as alternates. Article URL goes in the first comment (<a href="#item-D4">D4</a>), not the post body.</p>
+
+  <!-- D0 RECOMMENDED -->
+  <div class="copy-item" id="item-D0" style="border-left:4px solid var(--green);">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">D0 &middot; <strong style="color:var(--green);">RECOMMENDED PRIMARY POST</strong> <span class="tag A">Ship today</span></div>
+        <div class="fires">FIRES &middot; Today, 7&ndash;9 AM ET &middot; ~1,450 chars &middot; First-comment URL drop via <a href="#item-D4">D4</a></div>
+      </div>
+      <button class="copy-btn" data-target="body-D0">Copy</button>
+    </div>
+    <div class="copy-body" id="body-D0">Microsoft's 2026 capex is on track to land near $190 billion. The partner commission pool that helped scale the Enterprise Agreement channel collapses to zero this year, down from $2.5 billion in 2023.
+
+Those two numbers are connected.
+
+In 2001, I designed Microsoft's $5 billion Enterprise Agreement channel architecture inside Worldwide Licensing and Pricing. The model converted the EA channel from indirect resale to direct billing, replaced reseller margin with an advisory-fee structure, and was named verbatim in Microsoft's FY2025 10-K twenty-four years later.
+
+The 2026 transition follows the same internal logic: internalize margin, move to direct billing, redefine partner economics. What's different is the bridge.
+
+In 2001, we built one.
+
+In 2026, the bridge is being removed while partners and customers are still relying on it. The CMA opened its Strategic Market Status investigation into Microsoft business software on May 14. Public comment closes Thursday. The bundling-and-tying questions before the regulator are the same questions the DOJ asked in 1998. I was a few months into the ESA work when that trial opened.
+
+The Register published the full architectural argument this morning.
+
+Disclosure: I have not been employed by Microsoft since 2016 and have no current financial relationship with the company. That line was in my bio at submission; the desk removed it in editing. Restoring it here.
+
+Link in comments.</div>
+    <div class="sent-row"><label>Posted: <input type="date" id="sent-D0"></label></div>
+    <div class="notes-block"><label>D0 engagement notes (impressions, top comments, who reacted)</label><textarea id="notes-D0" style="min-height:100px;"></textarea></div>
+  </div>
+
+  <!-- D1 -->
+  <div class="copy-item" id="item-D1">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">D1 &middot; Capex framing <span class="tag both">Alternate</span></div>
+        <div class="fires">USE IF &middot; Paul's headline leads on Microsoft spending, AI infrastructure, or capex / partner-budget tradeoff</div>
+      </div>
+      <button class="copy-btn" data-target="body-D1">Copy</button>
+    </div>
+    <div class="copy-body" id="body-D1">Microsoft's 2026 capex is on track to land around $190 billion. The partner commission pool that helped scale the Enterprise Agreement channel goes to zero this year, down from $2.5 billion in 2023.
+
+Those two numbers are connected. One is a buildout. The other is a cost recovery.
+
+I designed the original Enterprise Agreement direct-billing architecture in 2001. The 2026 transition follows the same internal logic: internalize margin, move to direct billing, redefine partner economics. The difference is the bridge. In 2001, we built one. In 2026, the bridge is being removed while partners and customers are still relying on it.
+
+The Register ran a piece I wrote on the structural comparison and what the next 36 months may look like for enterprise licensing.
+
+Link in comments.</div>
+    <div class="sent-row"><label>Posted: <input type="date" id="sent-D1"></label></div>
+    <div class="notes-block"><label>D1 notes</label><textarea id="notes-D1"></textarea></div>
+  </div>
+
+  <!-- D2 -->
+  <div class="copy-item" id="item-D2">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">D2 &middot; CMA framing <span class="tag both">Alternate</span></div>
+        <div class="fires">USE IF &middot; Paul's headline leads on the CMA SMS investigation, regulatory pressure, or competition law</div>
+      </div>
+      <button class="copy-btn" data-target="body-D2">Copy</button>
+    </div>
+    <div class="copy-body" id="body-D2">The UK Competition and Markets Authority opened its formal Strategic Market Status investigation into Microsoft business software on May 14. Licensing practices are explicitly in scope. Public comment closes June 4.
+
+The bundling and tying questions in front of the CMA are the same questions the US Department of Justice asked Microsoft in 1998. I was a few months into designing the Enterprise Agreement channel architecture when that trial opened.
+
+What I wrote for The Register is the structural argument missing from most of the coverage: the 2001 transition preserved channel productivity because it included a bridge between the old model and the new one. The 2026 transition has no equivalent mechanism, and the regulatory consequences are now visible.
+
+Link in comments.</div>
+    <div class="sent-row"><label>Posted: <input type="date" id="sent-D2"></label></div>
+    <div class="notes-block"><label>D2 notes</label><textarea id="notes-D2"></textarea></div>
+  </div>
+
+  <!-- D3 -->
+  <div class="copy-item" id="item-D3">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">D3 &middot; Neutral / architectural framing <span class="tag both">Alternate</span></div>
+        <div class="fires">USE IF &middot; Paul's headline is descriptive (e.g., "Microsoft EA channel changes" / "ESA program ends" / "Partner program restructure")</div>
+      </div>
+      <button class="copy-btn" data-target="body-D3">Copy</button>
+    </div>
+    <div class="copy-body" id="body-D3">In 2001, I designed the channel architecture that converted Microsoft's Enterprise Agreement business from indirect resale to direct billing. The model is still named verbatim in Microsoft's FY2025 10-K, twenty-four years later.
+
+The 2026 transition follows the same internal logic: internalize margin, move to direct billing, redefine how partners are compensated. What's different is the bridge. In 2001, we built one. In 2026, the bridge is being removed while partners and customers are still relying on it.
+
+I wrote the structural comparison for The Register: what made the 2001 model work, what's missing in 2026, and where enterprise licensing economics go from here.
+
+Link in comments.</div>
+    <div class="sent-row"><label>Posted: <input type="date" id="sent-D3"></label></div>
+    <div class="notes-block"><label>D3 notes</label><textarea id="notes-D3"></textarea></div>
+  </div>
+
+  <!-- D4 -->
+  <div class="copy-item" id="item-D4">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">D4 &middot; First-comment URL drop (use with any of D1&ndash;D3) <span class="tag A">Scenario A</span></div>
+        <div class="fires">FIRES &middot; Within 60 seconds of posting</div>
+      </div>
+      <button class="copy-btn" data-target="body-D4">Copy</button>
+    </div>
+    <div class="copy-body" id="body-D4">Piece is here: https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235
+
+Reporter: Paul Kunert. Full disclosure on background and prior Microsoft tenure is in the piece itself.</div>
+    <div class="notes-block"><label>D4 notes</label><textarea id="notes-D4"></textarea></div>
+  </div>
+
+  <h4>Section 5 &middot; Wade transcript soft ask</h4>
+
+  <!-- E1 -->
+  <div class="copy-item" id="item-E1">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">E1 &middot; Wade Millward transcript soft ask <span class="tag both">Both scenarios</span></div>
+        <div class="fires">FIRES &middot; Mon Jun 1, 9:00 AM ET if transcript has not arrived</div>
+      </div>
+      <button class="copy-btn" data-target="body-E1">Copy</button>
+    </div>
+    <div class="copy-body" id="body-E1">Hi Wade,
+
+Following up on the transcript from our May 6 conversation when you have a moment. Happy to wait, just flagging it's still on my radar.
+
+Brendan</div>
+    <div class="sent-row"><label>Sent: <input type="date" id="sent-E1"></label> <label>Received: <input type="checkbox" id="reply-E1"></label></div>
+    <div class="notes-block"><label>E1 notes</label><textarea id="notes-E1"></textarea></div>
+  </div>
+
+  <h4>CRN-specific 1,150-word op-ed &middot; held in reserve</h4>
+  <p style="font-size:13px;color:var(--muted);">Reserve piece for Wade Millward. Partner-advice angle, Howard Diamond / Corporate Software anchor. Send only if Wade engages on <a href="#item-3">Item 3</a>. Draft below; revise as needed before sending.</p>
+
+  <!-- F1 -->
+  <div class="copy-item" id="item-F1">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">F1 &middot; CRN reserve op-ed (draft) <span class="tag both">Reserve</span></div>
+        <div class="fires">HOLD &middot; Send only on Wade engagement</div>
+      </div>
+      <button class="copy-btn" data-target="body-F1">Copy</button>
+    </div>
+    <div class="copy-body" id="body-F1">HEADLINE: I Designed Microsoft's Channel Architecture in 2001. Here's What Solution Providers Need to See in the 2026 Unwind.
+
+BYLINE: Brendan T. O'Connor, Former Senior Director, Microsoft Worldwide Licensing and Pricing (1998 to 2016); Founder, The Brushton Group
+
+In 2002, CRN ran a profile of Howard Diamond at Corporate Software that described what the Enterprise Software Advisor program was actually supposed to do. The piece was clear-eyed in a way that most coverage of Microsoft's partner economics was not, and is not. Diamond's argument, in shorthand: an advisory fee paid to a solution provider was not a kickback or a markup. It was the price of architecture work. Of someone in the room who could explain to a $400M-revenue customer why an Enterprise Agreement was the right shape for them, or why it was not.
+
+I read that piece in early 2002. I had spent the previous year, with a small team inside Microsoft Worldwide Licensing, designing the ESA architecture Diamond was describing. We were trying to solve a specific problem. Enterprise customers were buying volume licenses they did not understand from resellers who were not paid to explain them.
+
+Twenty-four years later, Microsoft is unwinding that architecture. The 2026 commercial transition eliminates roughly $2.5 billion in partner compensation that flowed through the LSP and ESA structures and replaces it with the Modern Commerce model and the CSP path. The CMA opened a Strategic Market Status investigation into Microsoft's business software ecosystem on May 14. The comment window closes June 4. The Register published a piece I wrote this week on the architectural mechanics.
+
+The structural argument lives there. This piece is for the solution provider community CRN serves. It is about what the 2026 unwind means if you are a partner trying to figure out where your business model goes next.
+
+Three points.
+
+One. The advisory fee was a price signal, not a margin grab.
+
+The original ESA design paid solution providers for time spent advising customers on the right contracting vehicle, the right SKU mix, the right renewal posture. That money came out of the customer's net price, but it came out for a reason. Someone had to do the work. When Microsoft removes the advisory fee and replaces it with a transaction margin model, the work does not stop being necessary. It stops being compensated. Solution providers who have been making the work happen anyway, on the assumption that the relationship is the asset, are about to find out what the relationship is worth without a fee structure attached.
+
+Two. The 2026 transition has no partner bridge.
+
+In 2001, when ESA went live, we built a transition path. Partners who had been operating under the prior model had a defined window to migrate their advisory practice into the new structure. That window was generous because the architecture depended on partner capability surviving the change. In 2026 there is no equivalent bridge. The LSP-to-CSP shift is being treated as a margin recalibration when it is, in practice, a different commercial model with different unit economics. A partner whose 2025 P&amp;L was built on LSP commissions does not automatically have a 2027 P&amp;L built on CSP margins. The math does not carry across.
+
+Three. The 1998 DOJ antitrust framing has a 2026 echo.
+
+In the late 1990s, the question regulators kept asking Microsoft was whether the company's platform power was being used to dictate the economics of the ecosystems around it. The eventual settlement turned partly on whether independent commercial actors had enough latitude to operate without being structurally captured. The CMA SMS investigation is, in form, a different inquiry. A UK regulatory body asking whether Microsoft's position in business software justifies a strategic market designation. The substance rhymes. If a $2.5B partner compensation pool is dismantled and the partners holding the contracts do not have a meaningful alternative path, the structural-capture question is back on the table.
+
+For solution providers reading this, three practical postures are worth considering.
+
+First, audit your 2025 revenue by program. The partners I have spoken with who are clear-eyed about the unwind are the ones who already know what percentage of their 2025 revenue came from LSP commissions versus MCA-E margin versus CSP transactional. The partners who will be hit hardest are the ones who never broke their P&amp;L down that way.
+
+Second, price your advisory work explicitly. If Microsoft is not going to pay you for the customer-education work, the customer has to. Build a separate line item. Make it visible. The customers who balk at it are the customers who were already getting more value than they paid for, and the partners who carried that imbalance into 2026 are the partners who will not survive the transition.
+
+Third, talk to peers. The Bytes and Softcat divergence on recent earnings calls is not a one-off. Different LSPs are reading the 2026 unwind differently and reporting different forward guidance. Compare notes. The trade press is not going to do the cross-checking work for you, and the OEM-level conversations Microsoft is having are not the conversations you need.
+
+I have a longer piece in The Register this week on the architectural questions. The audience there is different. CRN's readership built the partner ecosystem the 2026 transition is unwinding. The conversation that matters here, in the channel, is about what comes next for the people who have spent the last 25 years making the EA model work.
+
+I designed the first version. I do not know what the second version looks like. I do know that pretending the 2026 unwind is a margin event rather than an architectural one is the most expensive mistake a partner could make this year.
+
+[END]
+
+Word count: approximately 1,150.
+
+Disclosure for CRN: Brendan T. O'Connor served as Senior Director at Microsoft Worldwide Licensing and Pricing from 1998 to 2016, where he designed the Enterprise Software Advisor architecture. He is the founder of The Brushton Group and writes on enterprise commercial infrastructure at brendanoconnor.net. He holds no current financial interest in Microsoft, any LSP, or any CSP partner referenced in this piece.</div>
+    <div class="notes-block"><label>F1 revision log (what changed before sending to Wade)</label><textarea id="notes-F1" style="min-height:120px;"></textarea></div>
+  </div>
+
+  <h4>Outbound supporting copy</h4>
+
+  <!-- H1 -->
+  <div class="copy-item" id="item-H1">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">H1 &middot; Generic LinkedIn comment-reply template (substantive engagement) <span class="tag A">Scenario A</span></div>
+        <div class="fires">USE &middot; Throughout Mon Jun 1 day-of engagement</div>
+      </div>
+      <button class="copy-btn" data-target="body-H1">Copy</button>
+    </div>
+    <div class="copy-body" id="body-H1">[Name], the [specific point they raised] is the right question. Short answer: [one-sentence direct answer with a specific number, year, or mechanism].
+
+Longer answer is in the piece, but the part most relevant to your point is [paraphrase a single sentence from the published article without quoting the whole paragraph]. Happy to go deeper on this offline if useful.</div>
+    <div class="notes-block"><label>H1 notes</label><textarea id="notes-H1"></textarea></div>
+  </div>
+
+  <!-- H2 -->
+  <div class="copy-item" id="item-H2">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">H2 &middot; "Meeting time" reply template (for engaged journalists / contacts) <span class="tag A">Scenario A</span></div>
+        <div class="fires">USE &middot; If James Anderson, Richard Speed, Wade Millward, or any Action 2 contact engages and asks for a call</div>
+      </div>
+      <button class="copy-btn" data-target="body-H2">Copy</button>
+    </div>
+    <div class="copy-body" id="body-H2">Glad this resonated. I can do [day, day, day] this week or [day, day] next. 30 minutes works for a first pass. ET preferred but I will adjust for your time zone.
+
+Calendly if easier: [URL]
+Direct dial: +1 (425) 269-5044
+
+Brendan</div>
+    <div class="notes-block"><label>H2 notes</label><textarea id="notes-H2"></textarea></div>
+  </div>
+
+  <!-- H3 -->
+  <div class="copy-item" id="item-H3">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">H3 &middot; LinkedIn Action-2 generic DM opener (for category 1: former Microsoft colleagues) <span class="tag A">Scenario A</span></div>
+        <div class="fires">USE &middot; Mon Jun 1 PM and Tue Jun 2 AM for the Action 2 list</div>
+      </div>
+      <button class="copy-btn" data-target="body-H3">Copy</button>
+    </div>
+    <div class="copy-body" id="body-H3">Hi [First name],
+
+The Register ran a piece I wrote this morning on the EA channel architecture and what makes the 2026 unwind structurally different from the work we did in 2001. https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235
+
+Sending because you were there for the original build, and your read on what is or is not landing in this piece would mean more than most.
+
+No urgency on a response.
+
+Brendan</div>
+    <div class="notes-block"><label>H3 notes</label><textarea id="notes-H3"></textarea></div>
+  </div>
+
+  <!-- H4 -->
+  <div class="copy-item" id="item-H4">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">H4 &middot; LinkedIn Action-2 generic DM opener (for categories 2&ndash;6: Sage, Cisco, VC, recruiters, hiring contacts, analysts) <span class="tag A">Scenario A</span></div>
+        <div class="fires">USE &middot; Mon Jun 1 PM and Tue Jun 2 AM</div>
+      </div>
+      <button class="copy-btn" data-target="body-H4">Copy</button>
+    </div>
+    <div class="copy-body" id="body-H4">Hi [First name],
+
+Quick share. The Register published an analysis I wrote this morning on Microsoft's EA channel architecture and the 2026 partner-program unwind. https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235
+
+Sending because [one-line tailored connection: your work at Company on partner ecosystems / our last conversation on go-to-market structure / your earnings-call point on Microsoft commercial dynamics] is in the same problem space the piece examines.
+
+If a follow-up conversation would be useful, happy to set time. Either way, would value your read.
+
+Brendan</div>
+    <div class="notes-block"><label>H4 notes</label><textarea id="notes-H4"></textarea></div>
+  </div>
+
+  <!-- H5 -->
+  <div class="copy-item" id="item-H5">
+    <div class="copy-item-header">
+      <div>
+        <div class="title">H5 &middot; Podcast pitch template (Acquired / TITV / trade-press podcasts) <span class="tag A">Scenario A</span></div>
+        <div class="fires">FIRES &middot; Thu Jun 18 onward</div>
+      </div>
+      <button class="copy-btn" data-target="body-H5">Copy</button>
+    </div>
+    <div class="copy-body" id="body-H5">Subject: Microsoft EA channel architecture and the 2026 unwind / guest pitch
+
+Hi [Host first name],
+
+The Register published a piece I wrote on June 1 on the Microsoft Enterprise Agreement channel architecture and what makes the 2026 unwind structurally different from the 2001 transition I designed inside Microsoft Worldwide Licensing. https://www.theregister.com/oses/2026/06/01/i-designed-microsofts-5b-ea-channel-architecture-in-2001-the-2026-transition-is-missing-what-made-it-work/5248235
+
+Reaching out because the architecture-versus-margin distinction the piece makes is exactly the kind of structural question [Show name] takes seriously. I would be a fit for a single-episode conversation on the history of the EA channel model from inside the company, the 2026 transition mechanics, and the regulatory frame the CMA Strategic Market Status investigation opened in May.
+
+Background: Senior Director at Microsoft 1998 to 2016, designed the ESA architecture in 2001, led the E7 program rollout, ran partner ecosystem strategy at Sage from 2022 to 2025. Founder of The Brushton Group.
+
+Available for a 60 to 90 minute recorded conversation. Time zone ET. No agency intermediation needed.
+
+Brendan O'Connor / linkedin.com/in/brendanoconnor / brendanoconnor.net / +1 (425) 269-5044</div>
+    <div class="notes-block"><label>H5 notes (which shows pitched, response status)</label><textarea id="notes-H5" style="min-height:100px;"></textarea></div>
+  </div>
+</section>
+
+<!-- SECTION 7 -->
+<section class="major" id="sec7">
+  <h2>Section 7</h2>
+  <h3>Risk register</h3>
+
+  
+  
+  <h4>v14 (resumed) &middot; new in v14</h4>
+  <div class="risk low">
+    <span class="rid">R-V14-1</span> &middot; <strong>Plan resumed Wednesday afternoon after a brief pause.</strong> Numbers compounded during the pause (+18% impressions, +18% reach) confirming the article is self-distributing.<br>
+    <em>Mitigation:</em> Use the warm reconnect (David Babineau) as proof the paused posture preserved value rather than losing it. Posture going forward: do the highest-leverage moves only, in compressed form, with explicit permission to skip anything that does not fit the moment.
+  </div>
+  <h4>Day 1 observations &middot; new in v12</h4>
+  <div class="risk mod">
+    <span class="rid">R-V12-1</span> &middot; <strong>Low engagement on LinkedIn post.</strong> 0.36% engagement rate vs 1-2% benchmark. Distribution is fine; the post is not provoking response.<br>
+    <em>Mitigation:</em> Item 16 comment-bait post on Wednesday afternoon. Personal-DM lift via 8-10 named contacts from the Excel tracker. CMA-deadline post Thursday morning as a second swing.
+  </div>
+  <div class="risk mod">
+    <span class="rid">R-V12-2</span> &middot; <strong>Zero DM replies from trade press at 24 hours.</strong> Normal during Microsoft Build week but cannot be assumed past 72 hours.<br>
+    <em>Mitigation:</em> Pre-staged soft second-touches (Items 13, 14, 15) for Thursday noon. After that, the Tier-1 trade press path is declared dead and the campaign pivots to analyst, podcast, and Tier-3 outlet outreach.
+  </div>
+  <div class="risk low">
+    <span class="rid">R-V12-3</span> &middot; <strong>Low profile-conversion from post.</strong> 3 of 1,469 reached = 0.2% profile-click rate. Means readers are seeing the post but not curious enough to look at Brendan's profile.<br>
+    <em>Mitigation:</em> First-person hook in the comment-bait post and the CMA post. Featured-section card is already serving the curious; the cohort that should click but doesn't is who Item 16 targets.
+  </div>
+  <h4>Scenario A risks</h4>
+  <div class="risk low"><span class="rid">R1.</span> Paul's framing diverges substantively from yours. <em>Likelihood low.</em> Mitigation: Read published version before posting amplification copy. Adapt 5A opening accordingly.</div>
+  <div class="risk low"><span class="rid">R2.</span> LinkedIn algorithm flags rapid DM volume. <em>Likelihood low.</em> Mitigation: Stagger Action 2 DMs across 24 hours, not all at once. Five to seven first day, balance day two.</div>
+  <div class="risk high"><span class="rid">R3.</span> Senior contacts read but do not reply. <em>Likelihood high.</em> This is normal. Track as soft signal. Do not chase.</div>
+  <div class="risk high"><span class="rid">R4.</span> Adjacent outlet pitches (Stratechery, Pluralistic) go unanswered. <em>Likelihood high.</em> These are long-shot bets. Single send each, no follow-up.</div>
+
+  <div class="notes-block"><label>Live risk observations</label><textarea id="notes-sec7" style="min-height:100px;"></textarea></div>
+</section>
+
+<!-- SECTION 8 -->
+<section class="major" id="sec8">
+  <h2>Section 8</h2>
+  <h3>Master checklist (strictly chronological)</h3>
+  <p style="color:var(--muted);font-size:13px;">Single chronological list pulled together from Sections 2 through 4. Times in ET. Checks here mirror the per-section state.</p>
+
+  <h4>Saturday May 30</h4>
+  <div class="task"><input type="checkbox" id="m-sat-1"><label for="m-sat-1"><span class="time-badge">9:00 AM</span>Build Action 2 contact list. Eight to twelve senior contacts.</label></div>
+  <div class="task"><input type="checkbox" id="m-sat-2"><label for="m-sat-2"><span class="time-badge">11:00 AM</span>Audit brendanoconnor.net case study page.</label></div>
+  <div class="task"><input type="checkbox" id="m-sat-3"><label for="m-sat-3"><span class="time-badge">2:00 PM</span>Build "Featured in The Register" callout block with placeholder URL.</label></div>
+  <div class="task"><input type="checkbox" id="m-sat-4"><label for="m-sat-4"><span class="time-badge">4:00 PM</span>Update LinkedIn featured section with case study URL.</label></div>
+
+  <h4>Sunday May 31</h4>
+  <div class="task"><input type="checkbox" id="m-sun-1"><label for="m-sun-1"><span class="time-badge">10:00 AM</span>Final case study page audit.</label></div>
+  <div class="task"><input type="checkbox" id="m-sun-2"><label for="m-sun-2"><span class="time-badge">12:00 PM</span>Update Resume Master Library v18 with line 5B placeholder.</label></div>
+  <div class="task"><input type="checkbox" id="m-sun-3"><label for="m-sun-3"><span class="time-badge">2:00 PM</span>Pre-stage three LinkedIn post variants.</label></div>
+  <div class="task"><input type="checkbox" id="m-sun-4"><label for="m-sun-4"><span class="time-badge">4:00 PM</span>Verify both Google Alerts active.</label></div>
+  <div class="task"><input type="checkbox" id="m-sun-5"><label for="m-sun-5"><span class="time-badge">6:00 PM</span>Hold. No further work tonight.</label></div>
+
+  <h4>Monday June 1 &middot; Publication day</h4>
+  <div class="task"><input type="checkbox" id="m-mon-1"><label for="m-mon-1"><span class="time-badge am">5:00 AM</span>First Register check.</label></div>
+  <div class="task"><input type="checkbox" id="m-mon-2"><label for="m-mon-2"><span class="time-badge am">7:00 AM</span>Second Register check.</label></div>
+  <div class="task"><input type="checkbox" id="m-mon-3"><label for="m-mon-3"><span class="time-badge">9:00 AM</span>Branch commit. Scenario A or hold for B.</label></div>
+
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-mon-A1"><label for="m-mon-A1">+30 min: Pull canonical URL. Screenshot. Read published version.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-mon-A2"><label for="m-mon-A2">+1 hr: Update brendanoconnor.net, LinkedIn featured, Resume v18.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-mon-A3"><label for="m-mon-A3"><span class="time-badge">7&ndash;9 AM</span>Fire LinkedIn post 5A.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-mon-A4"><label for="m-mon-A4"><span class="time-badge">8&ndash;10 AM</span>Fire James Anderson DM, Richard Speed email, Wade Millward email.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-mon-A5"><label for="m-mon-A5"><span class="time-badge">12&ndash;1 PM</span>Begin Action 2 DM rollout. Four to five by EOD.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-mon-A6"><label for="m-mon-A6">All day: engage LinkedIn comments. Save reactions list.</label></div>
+
+  <h4>Tuesday June 2 (Microsoft Build day 1)</h4>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-tue-A1"><label for="m-tue-A1"><span class="time-badge">9:00 AM</span>Check Paul author page for follow-up.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-tue-A2"><label for="m-tue-A2"><span class="time-badge">10:00 AM</span>Continue Action 2 DM rollout.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-tue-A3"><label for="m-tue-A3"><span class="time-badge">4:00 PM</span>Monitor Build coverage.</label></div>
+  <h4>Wednesday June 3 (Microsoft Build day 2)</h4>
+  <h5>Scenario A path</h5>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-wed-A1"><label for="m-wed-A1"><span class="time-badge">9:00 AM</span>Fire Tom Warren DM. Item 4.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-wed-A2"><label for="m-wed-A2"><span class="time-badge">10:00 AM</span>Fire Stratechery contact form. Item 5.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-wed-A3"><label for="m-wed-A3"><span class="time-badge">11:00 AM</span>Fire Pluralistic email. Item 6.</label></div>
+  <h4>Thursday June 4 (CMA deadline 23.55 BST)</h4>
+  <h5>Scenario A path</h5>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-thu-A1"><label for="m-thu-A1"><span class="time-badge">9:00 AM</span>LinkedIn quote-share with CMA framing. Item 7.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-thu-A2"><label for="m-thu-A2"><span class="time-badge">10:00 AM</span>Brody Ford pitch. Item 8.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-thu-A3"><label for="m-thu-A3"><span class="time-badge">11:00 AM</span>Cristina Criddle pitch. Item 9.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-thu-A4"><label for="m-thu-A4"><span class="time-badge">12:00 PM</span>Dina Bass pitch. Item 10.</label></div>
+  <h4>Friday June 5</h4>
+  <h5>Scenario A path</h5>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-fri-A1"><label for="m-fri-A1"><span class="time-badge">9:00 AM</span>Week 1 metrics review.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-fri-A2"><label for="m-fri-A2"><span class="time-badge">11:00 AM</span>Plan Week 2 contacts.</label></div>
+  <h4>Week of June 8 to 12</h4>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-w2-A1"><label for="m-w2-A1">Mon AM: first five former-colleague messages. Item 11.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-w2-A2"><label for="m-w2-A2">Tue&ndash;Thu: four to five messages per day.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-w2-A3"><label for="m-w2-A3">Fri EOD: fifteen to twenty messages total. Track in spreadsheet.</label></div>
+
+  <h4>Week of June 15 to 19</h4>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-w3-A1"><label for="m-w3-A1">Mon: identify target companies with open VP / SVP partner roles.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-w3-A2"><label for="m-w3-A2">Tue: first five hiring manager messages. Item 12.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-w3-A3"><label for="m-w3-A3">Wed: next five hiring manager messages.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-w3-A4"><label for="m-w3-A4">Thu: begin podcast pitching.</label></div>
+  <div class="task" data-scenario="A"><input type="checkbox" id="m-w3-A5"><label for="m-w3-A5">Fri: Week 3 review.</label></div>
+
+  <p style="margin-top:30px;text-align:center;color:var(--muted);font-family:Georgia,serif;font-style:italic;">End of v14. Plan resumed Wed 3 Jun 2026 afternoon with latest numbers and compressed checklist. David Babineau warm reconnect live. Items 1-16, A1-F1, D0-D4 all paste-ready.</p>
+</section>
+
+</main>
+</div>
+
+<div class="toast" id="toast">Copied</div>
+
+<script>
+const STORAGE_KEY = 'mediaCampaignV9';
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+  catch { return {}; }
+}
+function saveState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+let state = loadState();
+
+// Hydrate all inputs from state
+function hydrate() {
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    if (state[cb.id] === true) cb.checked = true;
+  });
+  document.querySelectorAll('input[type="date"]').forEach(d => {
+    if (state[d.id]) d.value = state[d.id];
+  });
+  document.querySelectorAll('textarea').forEach(t => {
+    if (state[t.id]) t.value = state[t.id];
+  });
+  if (state.__hideDone) document.body.classList.add('hide-done');
+  if (state.__scenario) {
+    document.getElementById('scenarioSelect').value = state.__scenario;
+    applyScenario(state.__scenario);
+  }
+  updateProgress();
+}
+
+// Persist on any change
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (!t.id) return;
+  if (t.type === 'checkbox') state[t.id] = t.checked;
+  else if (t.type === 'date') state[t.id] = t.value;
+  else if (t.tagName === 'TEXTAREA') state[t.id] = t.value;
+  saveState(state);
+  updateProgress();
+});
+document.addEventListener('input', e => {
+  const t = e.target;
+  if (t.tagName !== 'TEXTAREA' || !t.id) return;
+  state[t.id] = t.value;
+  saveState(state);
+});
+
+// Progress bar
+function updateProgress() {
+  const all = document.querySelectorAll('.task input[type="checkbox"]');
+  const done = Array.from(all).filter(c => c.checked).length;
+  const pct = all.length ? Math.round((done / all.length) * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${done} of ${all.length} complete (${pct}%)`;
+}
+
+// Hide-done toggle
+function toggleHideDone() {
+  document.body.classList.toggle('hide-done');
+  state.__hideDone = document.body.classList.contains('hide-done');
+  document.getElementById('hideDoneBtn').textContent =
+    state.__hideDone ? 'Show completed' : 'Hide completed';
+  saveState(state);
+}
+
+// Scenario filter
+function applyScenario(s) {
+  document.body.classList.remove('scenario-A', 'scenario-B');
+  if (s === 'A') document.body.classList.add('scenario-A');
+  if (s === 'B') document.body.classList.add('scenario-B');
+}
+document.getElementById('scenarioSelect').addEventListener('change', e => {
+  state.__scenario = e.target.value;
+  applyScenario(e.target.value);
+  saveState(state);
+});
+
+// Copy buttons
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = document.getElementById(btn.dataset.target);
+    const text = target.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = 'Copied';
+      btn.classList.add('copied');
+      showToast('Copied to clipboard');
+      setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1500);
+    });
+  });
+});
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+// Export
+function exportData() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const stamp = new Date().toISOString().slice(0, 10);
+  a.href = url;
+  a.download = `media-campaign-v9-backup-${stamp}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Backup downloaded');
+}
+
+// Import
+function importData(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const incoming = JSON.parse(ev.target.result);
+      if (confirm('Import will overwrite current data. Continue?')) {
+        state = incoming;
+        saveState(state);
+        location.reload();
+      }
+    } catch { alert('Invalid backup file.'); }
+  };
+  reader.readAsText(file);
+}
+
+// Reset
+function resetAll() {
+  if (confirm('Erase all checkmarks, notes, dates? This cannot be undone unless you exported first.')) {
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
+  }
+}
+
+hydrate();
+</script>
+</body>
+</html>

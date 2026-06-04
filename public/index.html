@@ -35,16 +35,13 @@
   />
   <style>
     /*
-      Page-specific styles only. The site-wide header (.brendoslife-site-header)
+      Page-specific styles only. Shared site header (.brendoslife-site-header)
       is injected by the Worker — do NOT redefine it here.
     */
     :root {
       --bg-navy: #0a1628;
-      --bg-navy-2: #0d1a30;
       --accent-gold: #c4973b;
-      --accent-gold-dark: #a67d2e;
       --accent-steel: #3a6b8c;
-      --bg-cream: #f7f6f2;
       --border-light: rgba(212, 209, 202, 0.18);
       --text-primary: #f7f6f2;
       --text-muted: #b9b6ad;
@@ -60,7 +57,7 @@
       font-family: var(--font-body);
       background: var(--bg-navy);
       color: var(--text-primary);
-      line-height: 1.6;
+      line-height: 1.55;
       -webkit-font-smoothing: antialiased;
       background-image:
         radial-gradient(900px 500px at 75% 5%, rgba(196, 151, 59, 0.07), transparent 70%),
@@ -68,34 +65,42 @@
       min-height: 100vh;
     }
 
+    /*
+      Layout strategy:
+      - .welcome row spans full width at the top (h1 doesn't wrap on desktop)
+      - .content-grid below holds link cards (left) and photo (right)
+      - Everything tightened so all four cards fit above the fold on ~768px viewport heights
+    */
     .wrap {
-      max-width: 1280px;
+      max-width: 1240px;
       margin: 0 auto;
-      padding: 48px 40px 80px;
-      display: grid;
-      grid-template-columns: 1.05fr 1fr;
-      gap: 64px;
-      align-items: center;
+      padding: 32px 40px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
       min-height: calc(100vh - 64px);
+      justify-content: center;
     }
 
-    .content { max-width: 600px; }
+    .welcome {
+      max-width: 940px;
+    }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 14px;
       font-family: var(--font-body);
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 600;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--accent-gold);
-      margin-bottom: 28px;
+      margin-bottom: 14px;
     }
     .eyebrow::before {
       content: "";
-      width: 36px;
+      width: 32px;
       height: 1px;
       background: var(--accent-gold);
     }
@@ -103,11 +108,11 @@
     h1 {
       font-family: var(--font-heading);
       font-weight: 500;
-      font-size: clamp(2.6rem, 4.6vw, 4.2rem);
-      line-height: 1.05;
+      font-size: clamp(2.2rem, 4vw, 3.6rem);
+      line-height: 1.08;
       letter-spacing: -0.015em;
       color: var(--text-primary);
-      margin-bottom: 22px;
+      margin-bottom: 12px;
     }
     h1 em {
       font-style: italic;
@@ -116,23 +121,29 @@
     }
 
     .intro {
-      font-size: 1.08rem;
+      font-size: 1rem;
       color: var(--text-muted);
-      max-width: 52ch;
-      margin-bottom: 44px;
+      max-width: 60ch;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 48px;
+      align-items: center;
     }
 
     .links {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 10px;
     }
 
     .link-card {
       display: flex;
       align-items: center;
-      gap: 18px;
-      padding: 22px 26px;
+      gap: 16px;
+      padding: 14px 20px;
       background: rgba(255, 255, 255, 0.025);
       border: 1px solid var(--border-light);
       border-radius: 4px;
@@ -141,9 +152,9 @@
       transition: all 220ms cubic-bezier(0.4, 0, 0.2, 1);
     }
     .link-card-icon {
-      flex: 0 0 96px;
-      width: 96px;
-      height: 68px;
+      flex: 0 0 64px;
+      width: 64px;
+      height: 46px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -156,11 +167,11 @@
       display: block;
     }
     .link-card-icon--tile img {
-      width: 48px;
-      height: 48px;
+      width: 38px;
+      height: 38px;
       background: rgba(247, 246, 242, 0.92);
       border: 1px solid rgba(212, 209, 202, 0.25);
-      border-radius: 8px;
+      border-radius: 6px;
     }
     .link-card:hover {
       background: rgba(196, 151, 59, 0.06);
@@ -171,39 +182,38 @@
     .link-card-title {
       font-family: var(--font-heading);
       font-weight: 500;
-      font-size: 1.3rem;
+      font-size: 1.08rem;
       letter-spacing: -0.005em;
     }
     .link-card-host {
       font-family: var(--font-body);
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-muted);
     }
     .link-card-arrow {
       font-family: var(--font-body);
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       color: var(--accent-gold);
       transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
       line-height: 1;
     }
     .link-card:hover .link-card-arrow { transform: translateX(6px); }
 
-    /* Portrait: centered in the right column, larger, soft feathered vignette */
+    /* Portrait: centered in right column, soft feathered vignette */
     .portrait {
-      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      align-self: center;
-      justify-self: center;
     }
     .portrait img {
       display: block;
       width: 100%;
-      max-width: 420px;
+      max-width: 360px;
+      max-height: 64vh;
       height: auto;
+      object-fit: contain;
       filter: saturate(1.02);
       border-radius: 12px;
       box-shadow: 0 22px 56px rgba(0, 0, 0, 0.40);
@@ -215,32 +225,37 @@
 
     @media (max-width: 960px) {
       .wrap {
-        grid-template-columns: 1fr;
-        gap: 40px;
-        padding: 32px 24px 64px;
+        padding: 24px 24px 48px;
+        gap: 24px;
         min-height: 0;
+        justify-content: flex-start;
       }
-      .content { max-width: 100%; order: 2; }
-      .portrait { order: 1; max-width: 360px; margin: 0 auto; }
-      .portrait img { max-width: 360px; }
-      h1 { font-size: clamp(2.2rem, 8vw, 3.2rem); }
-      .intro { margin-bottom: 32px; }
+      .content-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .portrait { order: -1; }
+      .portrait img { max-width: 320px; max-height: 45vh; }
+      h1 { font-size: clamp(2rem, 7vw, 2.8rem); }
     }
     @media (max-width: 480px) {
-      .link-card { padding: 18px 20px; }
-      .link-card-title { font-size: 1.12rem; }
+      .link-card { padding: 12px 16px; }
+      .link-card-title { font-size: 1rem; }
+      .link-card-icon { flex: 0 0 52px; width: 52px; height: 38px; }
     }
   </style>
 </head>
 <body>
   <main class="wrap">
-    <section class="content">
+    <header class="welcome">
       <div class="eyebrow">Personal Hub</div>
       <h1>Welcome to <em>Brendo's Life</em></h1>
       <p class="intro">
         A small corner of the internet for the things and people that matter most.
       </p>
+    </header>
 
+    <div class="content-grid">
       <nav class="links" aria-label="Primary links">
         <a class="link-card" href="https://thebrushtongroup.com" target="_blank" rel="noopener">
           <span class="link-card-icon link-card-icon--tile" aria-hidden="true">
@@ -286,11 +301,11 @@
           <span class="link-card-arrow" aria-hidden="true">&rarr;</span>
         </a>
       </nav>
-    </section>
 
-    <aside class="portrait" aria-label="Photograph">
-      <img src="/Betsy-with-Rose.jpg" alt="Betsy the dog holding a red rose" loading="eager" />
-    </aside>
+      <aside class="portrait" aria-label="Photograph">
+        <img src="/Betsy-with-Rose.jpg" alt="Betsy the dog holding a red rose" loading="eager" />
+      </aside>
+    </div>
   </main>
 </body>
 </html>

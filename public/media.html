@@ -464,61 +464,12 @@ body.scenario-B [data-scenario="A"] { opacity: 0.35; }
   transform: translateY(0);
 }
 
-/* Site-wide header (brendoslife nav) */
-.site-header {
-  background: var(--navy);
-  color: var(--cream);
-  padding: 12px 28px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 2px solid var(--gold);
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-.site-header .brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-}
-.site-header .brand-mark {
-  display: block;
-  height: 28px;
-  width: auto;
-  filter: brightness(1.05);
-}
-.site-header .brand-text {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 14px;
-  letter-spacing: 0.22em;
-  color: var(--gold);
-  text-transform: uppercase;
-  font-weight: 600;
-}
-.site-header .brand:hover .brand-text { color: var(--gold-soft); }
-.site-header nav { display: flex; gap: 22px; }
-.site-header nav a {
-  color: var(--cream);
-  text-decoration: none;
-  font-size: 13.5px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 4px 0;
-  border-bottom: 1.5px solid transparent;
-  transition: color .15s, border-color .15s;
-}
-.site-header nav a:hover { color: var(--gold-soft); }
-.site-header nav a.active {
-  color: var(--gold);
-  border-bottom-color: var(--gold);
-}
-/* Adjust sticky sidebar so it sits below the site header */
-aside { top: 48px; height: calc(100vh - 48px); }
+/*
+  Site-wide header (.brendoslife-site-header) is injected by the Worker (src/index.ts).
+  Page-local styles below only adjust how this page's sticky sidebar sits beneath it.
+*/
+aside { top: 56px; height: calc(100vh - 56px); }
 @media (max-width: 900px) {
-  .site-header { padding: 10px 16px; }
-  .site-header nav { gap: 14px; }
   aside { top: 0; height: auto; }
 }
 
@@ -551,16 +502,8 @@ main label a:hover, main p a:hover, main li a:hover, main .task label a:hover, m
 </style>
 </head>
 <body>
-<header class="site-header">
-  <a href="/" class="brand">
-    <img src="/brendoslife-mark.png" alt="" class="brand-mark" />
-    <span class="brand-text">Brendo's Life</span>
-  </a>
-  <nav>
-    <a href="/marcela">Marcela</a>
-    <a href="/media.html" class="active">Media</a>
-  </nav>
-</header>
+<!-- Site header is injected by the Worker (src/index.ts) for consistency across pages -->
+
 <div class="layout">
 
 <aside>

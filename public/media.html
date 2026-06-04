@@ -478,15 +478,26 @@ body.scenario-B [data-scenario="A"] { opacity: 0.35; }
   z-index: 50;
 }
 .site-header .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.site-header .brand-mark {
+  display: block;
+  height: 28px;
+  width: auto;
+  filter: brightness(1.05);
+}
+.site-header .brand-text {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 15px;
-  letter-spacing: 0.18em;
+  font-size: 14px;
+  letter-spacing: 0.22em;
   color: var(--gold);
   text-transform: uppercase;
   font-weight: 600;
-  text-decoration: none;
 }
-.site-header .brand:hover { color: var(--gold-soft); }
+.site-header .brand:hover .brand-text { color: var(--gold-soft); }
 .site-header nav { display: flex; gap: 22px; }
 .site-header nav a {
   color: var(--cream);
@@ -541,7 +552,10 @@ main label a:hover, main p a:hover, main li a:hover, main .task label a:hover, m
 </head>
 <body>
 <header class="site-header">
-  <a href="/" class="brand">brendoslife</a>
+  <a href="/" class="brand">
+    <img src="/brendoslife-mark.png" alt="" class="brand-mark" />
+    <span class="brand-text">Brendo's Life</span>
+  </a>
   <nav>
     <a href="/marcela">Marcela</a>
     <a href="/media.html" class="active">Media</a>

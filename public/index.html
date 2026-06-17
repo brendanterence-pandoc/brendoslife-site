@@ -223,6 +223,33 @@
         radial-gradient(ellipse 95% 95% at 50% 50%, #000 70%, rgba(0,0,0,0.85) 90%, rgba(0,0,0,0.6) 100%);
     }
 
+    /* Icon Medical card variant — cream background, navy text */
+    .link-card--icon-medical {
+      background: #F7F2E7;
+      border-color: #E8DEC8;
+    }
+    .link-card--icon-medical .link-card-title {
+      color: #16314F;
+    }
+    .link-card--icon-medical .link-card-host {
+      color: #7A6F59;
+    }
+    .link-card--icon-medical .link-card-arrow {
+      color: #16314F;
+    }
+    .link-card--icon-medical:hover {
+      background: #EFE8D4;
+      border-color: #C8B98A;
+    }
+    .link-card--icon-medical .link-card-icon img {
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+    }
+
     @media (max-width: 960px) {
       .wrap {
         padding: 24px 24px 48px;
@@ -301,9 +328,9 @@
           <span class="link-card-arrow" aria-hidden="true">&rarr;</span>
         </a>
 
-        <a class="link-card" href="/icon">
+        <a class="link-card link-card--icon-medical" href="/icon">
           <span class="link-card-icon" aria-hidden="true">
-            <img src="/brendoslife-mark.png" alt="" />
+            <img src="/icon-palm.png" alt="" />
           </span>
           <span class="link-card-text">
             <span class="link-card-title">Icon Medical</span>

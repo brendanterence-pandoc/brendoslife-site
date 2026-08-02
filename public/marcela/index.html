@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Marcela Pool Loan · Statement</title>
-<meta name="description" content="Private loan statement for Marcela Arenas — 5146 Adega Way, Bradenton FL." />
+<title>Marcela Pool Loan · Paid in Full</title>
+<meta name="description" content="Private loan statement for Marcela Arenas — 5146 Adega Way, Bradenton FL. Loan paid in full July 19, 2026." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
@@ -12,15 +12,15 @@
 <meta name="theme-color" content="#0A1628" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Marcela Arenas · Private Loan" />
-<meta property="og:title" content="Marcela Pool Loan · Statement" />
-<meta property="og:description" content="Private loan statement for Marcela Arenas — 5146 Adega Way, Bradenton FL." />
+<meta property="og:title" content="Marcela Pool Loan · Paid in Full" />
+<meta property="og:description" content="Private loan for Marcela Arenas paid in full July 19, 2026." />
 <meta property="og:url" content="https://brendoslife.com/marcela" />
 <meta property="og:image" content="https://brendoslife.com/marcela/og-image.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Marcela Pool Loan · Statement" />
-<meta name="twitter:description" content="Private loan statement for Marcela Arenas — 5146 Adega Way, Bradenton FL." />
+<meta name="twitter:title" content="Marcela Pool Loan · Paid in Full" />
+<meta name="twitter:description" content="Private loan for Marcela Arenas paid in full July 19, 2026." />
 <meta name="twitter:image" content="https://brendoslife.com/marcela/og-image.png" />
 <style>
   :root {
@@ -31,6 +31,7 @@
     --ink: #1A2433;
     --muted: #5C6577;
     --line: #D8D1BD;
+    --green: #2C6F3B;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); }
@@ -53,13 +54,16 @@
   }
   header.site .sub { color: rgba(245,241,232,0.7); font-size: 0.85rem; margin-top: 2px; letter-spacing: 0.03em; }
   .badge { display: inline-block; padding: 3px 10px; background: var(--gold); color: var(--navy); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
-  .hero { background: var(--cream); border: 1px solid var(--line); padding: 36px; margin-bottom: 32px; }
+  .badge-paid { background: var(--green); color: white; }
+  .hero { background: var(--cream); border: 1px solid var(--line); padding: 36px; margin-bottom: 32px; position: relative; }
+  .hero.paid { background: #EAF3EC; border-color: var(--green); border-left: 6px solid var(--green); }
+  .hero .stamp { position: absolute; top: 24px; right: 28px; border: 3px solid var(--green); color: var(--green); font-weight: 700; padding: 8px 16px; letter-spacing: 0.15em; font-size: 0.85rem; transform: rotate(-6deg); font-family: "Inter", sans-serif; text-transform: uppercase; background: rgba(255,255,255,0.6); }
   .hero .label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); font-weight: 600; }
   .hero .number { font-family: "Cormorant Garamond", serif; font-size: 3.5rem; font-weight: 600; color: var(--navy); line-height: 1; margin: 10px 0 6px; font-variant-numeric: tabular-nums; }
   .hero .sub { color: var(--muted); font-size: 0.95rem; }
   .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: end; }
   .progress { background: rgba(10,22,40,0.08); height: 10px; border-radius: 0; overflow: hidden; margin-top: 18px; }
-  .progress .bar { background: var(--gold); height: 100%; transition: width 0.6s ease; }
+  .progress .bar { background: var(--green); height: 100%; transition: width 0.6s ease; }
   .progress-meta { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted); margin-top: 6px; }
   .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 32px; }
   .card { background: white; border: 1px solid var(--line); padding: 20px 22px; }
@@ -70,6 +74,10 @@
   .card.accent .label { color: rgba(245,241,232,0.7); }
   .card.accent .value { color: var(--gold); }
   .card.accent .meta { color: rgba(245,241,232,0.7); }
+  .card.paid { background: var(--green); color: white; border-color: var(--green); }
+  .card.paid .label { color: rgba(255,255,255,0.75); }
+  .card.paid .value { color: white; }
+  .card.paid .meta { color: rgba(255,255,255,0.85); }
   section.block { margin-bottom: 36px; }
   section.block > h2 { display: flex; align-items: center; gap: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line); margin-bottom: 18px; }
   section.block > h2::after { content: ""; flex: 1; height: 1px; background: linear-gradient(to right, var(--gold), transparent); margin-left: 12px; }
@@ -78,12 +86,15 @@
   td { padding: 11px 14px; border-top: 1px solid var(--line); font-variant-numeric: tabular-nums; }
   td.num, th.num { text-align: right; }
   tr:hover td { background: rgba(196,151,59,0.06); }
+  tr.payoff-row td { background: #EAF3EC; font-weight: 600; }
+  tr.payoff-row:hover td { background: #DDECDF; }
   .terms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; border: 1px solid var(--line); background: white; }
   .terms-grid .item { padding: 16px 20px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .terms-grid .item:last-child { border-right: none; }
   .terms-grid .item .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
   .terms-grid .item .value { font-size: 1.05rem; color: var(--navy); font-weight: 500; font-variant-numeric: tabular-nums; }
   .note { background: var(--cream); border-left: 3px solid var(--gold); padding: 16px 20px; font-size: 0.9rem; color: var(--ink); margin: 20px 0; display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+  .note.paid { background: #EAF3EC; border-left-color: var(--green); }
   .note strong { color: var(--navy); }
   .note .note-text { flex: 1 1 320px; }
   .btn-download {
@@ -98,13 +109,11 @@
   .btn-download:hover { background: var(--gold); color: var(--navy) !important; border-color: var(--gold); }
   .btn-download svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   footer.site { margin-top: 60px; padding: 28px 0; background: var(--navy); color: rgba(245,241,232,0.7); font-size: 0.82rem; border-top: 3px solid var(--gold); }
-  footer.site .wrap { padding-top: 0; padding-bottom: 0; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-  footer.site a { color: var(--gold); }
-  .pill { display: inline-block; padding: 2px 8px; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; background: rgba(196,151,59,0.18); color: var(--navy); }
-  @media (max-width: 720px) {
+  @media (max-width: 700px) {
     .hero-grid { grid-template-columns: 1fr; }
     .hero { padding: 24px; }
     .hero .number { font-size: 2.6rem; }
+    .hero .stamp { position: static; display: inline-block; margin-bottom: 14px; }
     .wrap { padding: 24px 18px; }
     header.site .wrap { flex-wrap: wrap; }
     table { font-size: 0.85rem; }
@@ -121,65 +130,56 @@
     <h1>Marcela Pool Loan</h1>
     <div class="sub">Private Loan Ledger · 5146 Adega Way</div>
   </div>
-  <div style="margin-left:auto;"><span class="badge">Borrower</span></div>
+  <div style="margin-left:auto;"><span class="badge badge-paid">Paid in Full</span></div>
 </div></header>
 
 <main class="wrap">
-  <div class="hero">
+  <div class="hero paid">
+    <div class="stamp">Paid in Full</div>
     <div class="hero-grid">
       <div>
         <div class="label">Current Principal Balance</div>
-        <div class="number">$42,830.71</div>
-        <div class="sub">Down $7,169.29 from the original $50,000 principal</div>
+        <div class="number" style="color: var(--green);">$0.00</div>
+        <div class="sub">Loan satisfied July 19, 2026 — 5 years and 9 months ahead of maturity</div>
       </div>
       <div>
-        <div class="label">Next Payment Due</div>
-        <div class="number" style="font-size:2.2rem">$706.70</div>
-        <div class="sub">Wednesday, August 5, 2026</div>
+        <div class="label">Final Payment</div>
+        <div class="number" style="font-size:2.2rem">$42,830.71</div>
+        <div class="sub">Chase check #502, deposited BofA July 21, 2026</div>
       </div>
     </div>
-    <div class="progress"><div class="bar" style="width:14.3%"></div></div>
+    <div class="progress"><div class="bar" style="width:100%"></div></div>
     <div class="progress-meta">
-      <span>14 of 84 payments made</span>
-      <span>14.3% paid off</span>
+      <span>15 of 15 total payments received</span>
+      <span>100% paid off</span>
     </div>
   </div>
 
   <section class="block">
-    <h2>Loan Terms</h2>
+    <h2>Loan Terms (Closed)</h2>
     <div class="terms-grid">
       <div class="item"><div class="label">Original Principal</div><div class="value">$50,000.00</div></div>
       <div class="item"><div class="label">Interest Rate</div><div class="value">5.0% APR fixed</div></div>
-      <div class="item"><div class="label">Term</div><div class="value">84 months</div></div>
+      <div class="item"><div class="label">Original Term</div><div class="value">84 months</div></div>
       <div class="item"><div class="label">Monthly Payment</div><div class="value">$706.70</div></div>
       <div class="item"><div class="label">Funded</div><div class="value">Apr 16, 2025</div></div>
-      <div class="item"><div class="label">Maturity</div><div class="value">May 2, 2032</div></div>
+      <div class="item"><div class="label">Paid in Full</div><div class="value" style="color: var(--green);">Jul 19, 2026</div></div>
     </div>
   </section>
 
   <section class="block">
-    <h2>Progress to Date</h2>
+    <h2>Final Accounting</h2>
     <div class="card-grid">
-      <div class="card"><div class="label">Total Paid</div><div class="value">$9,893.80</div><div class="meta">14 payments</div></div>
-      <div class="card"><div class="label">Principal Paid</div><div class="value">$7,169.29</div><div class="meta">Reduces balance</div></div>
+      <div class="card"><div class="label">Total Paid</div><div class="value">$52,724.51</div><div class="meta">15 payments over 14 months</div></div>
+      <div class="card"><div class="label">Principal Paid</div><div class="value">$50,000.00</div><div class="meta">Original principal repaid</div></div>
       <div class="card"><div class="label">Interest Paid</div><div class="value">$2,724.51</div><div class="meta">At 5.0% APR</div></div>
-      <div class="card accent"><div class="label">Payments Remaining</div><div class="value">70</div><div class="meta">Through May 2, 2032</div></div>
+      <div class="card paid"><div class="label">Balance</div><div class="value">$0.00</div><div class="meta">Loan closed</div></div>
     </div>
-  </section>
-
-  <section class="block">
-    <h2>Payoff Quote</h2>
-    <div class="card-grid">
-      <div class="card"><div class="label">Payoff Date</div><div class="value" style="font-size:1.4rem">Jul 17, 2026</div><div class="meta">Quote reissued Jul 16, 2026</div></div>
-      <div class="card"><div class="label">Principal Balance</div><div class="value">$42,830.71</div><div class="meta">After payment #14</div></div>
-      <div class="card"><div class="label">Accrued Interest</div><div class="value">$0.00</div><div class="meta">Payment #14 satisfied Jul 5 installment early</div></div>
-      <div class="card accent"><div class="label">Total Payoff Amount</div><div class="value">$42,830.71</div><div class="meta">Equals outstanding principal &mdash; no interest through Aug 5</div></div>
-    </div>
-    <div class="note">
-      <div class="note-text"><strong>Payoff letter available.</strong> Full breakdown, ACH routing, and what happens after funds clear are in the signed letter dated July 16, 2026. Payment #14 (received June 29, 2026, memo &ldquo;Pool loan payment July 1 2026&rdquo;) satisfied the July 5 installment early, so no interest accrues for any payoff on or before the next scheduled due date of August 5, 2026. Per-diem interest of $5.87 per day resumes after August 5.</div>
-      <a class="btn-download" href="/marcela/Marcela-Pool-Loan-Payoff-Letter-07162026.pdf" download>
+    <div class="note paid">
+      <div class="note-text"><strong>Payoff acknowledgment letter.</strong> Chase check #502 dated July 19, 2026 in the amount of $42,830.71 was deposited at the Bank of America Financial Center at 5457 Fruitville Road, Sarasota FL on July 21, 2026 (Transaction #5628). The June 29, 2026 payment satisfied the July installment, so no additional interest accrued between then and the payoff. A signed and notarized acknowledgment of payment in full is available below.</div>
+      <a class="btn-download" href="/marcela/Arenas_PayoffAcknowledgment_2026-08-02.pdf" download>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
-        Download payoff letter (.pdf)
+        Download acknowledgment (.pdf)
       </a>
     </div>
   </section>
@@ -194,6 +194,12 @@
         <th>Notes</th>
       </tr></thead>
       <tbody>
+    <tr class="payoff-row">
+      <td>15</td>
+      <td>Jul 19, 2026</td>
+      <td class="num">$42,830.71</td>
+      <td><strong>PAYOFF.</strong> Chase check #502. Deposited BofA Fruitville Rd 7/21/2026. Trans #5628. Balance $0.00.</td>
+    </tr>
     <tr>
       <td>14</td>
       <td>Jun 29, 2026</td>
@@ -281,10 +287,10 @@
       </tbody>
     </table>
     <div class="note">
-      <div class="note-text"><strong>How to pay:</strong> Zelle $706.70 to Brendan's Bank of America account by the 5th of each month. Conf# is logged automatically when received.</div>
+      <div class="note-text"><strong>Complete ledger.</strong> The full loan register with amortization detail is available for download.</div>
       <a class="btn-download" href="/marcela/Marcela_Loan_Tracker.xlsx" download>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
-        Download tracker (.xlsx)
+        Download full tracker (.xlsx)
       </a>
     </div>
   </section>
@@ -292,7 +298,7 @@
 
 <footer class="site"><div class="wrap">
   <div>Lender: Brendan T. O'Connor · Borrower: Marcela Arenas</div>
-  <div>Effective May 2, 2025 · Maturity May 2, 2032 · Last updated July 16, 2026 · Payoff quote through July 17, 2026</div>
+  <div>Effective May 2, 2025 · Paid in Full July 19, 2026 · Statement updated August 2, 2026</div>
 </div></footer>
 </body>
 </html>

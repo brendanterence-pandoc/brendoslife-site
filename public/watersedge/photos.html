@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photo Library | Waters Edge</title>
+  <meta name="description" content="Project photo library for 6506 Waters Edge Way. Inspiration, progress, and designer reference photos." />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <link rel="canonical" href="https://brendoslife.com/watersedge/photos" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Brendo's Life" />
+  <meta property="og:title" content="Photo Library | Waters Edge" />
+  <meta property="og:description" content="Project photo library for 6506 Waters Edge Way. Inspiration, progress, and designer reference photos." />
+  <meta property="og:url" content="https://brendoslife.com/watersedge/photos" />
+  <meta property="og:image" content="https://brendoslife.com/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Photo Library | Waters Edge" />
+  <meta name="twitter:description" content="Project photo library for 6506 Waters Edge Way. Inspiration, progress, and designer reference photos." />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    "name": "Waters Edge Photo Library",
+    "description": "Project photo library for 6506 Waters Edge Way. Inspiration, progress, and designer reference photos.",
+    "url": "https://brendoslife.com/watersedge/photos"
+  }
+  </script>
+
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="theme-color" content="#0A1628" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600&family=Inter:wght@400;500;600;700&display=swap" />
+
+  <style>
+    :root {
+      --navy: #0A1628;
+      --gold: #C4973B;
+      --cream: #FBF9F4;
+      --steel-blue: #3A6B8C;
+      --body-blue: #1F4E8C;
+      --line: #E5DFD2;
+      --muted: #5A6478;
+      --font-heading: Georgia, "Times New Roman", serif;
+      --font-body: "Inter", system-ui, -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--body-blue);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* Page header */
+    .page-header {
+      background: var(--navy);
+      color: #FBF9F4;
+      padding: 36px 24px;
+      border-bottom: 4px solid var(--gold);
+    }
+    .page-header .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .page-header h1 {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .page-header .sub {
+      color: #aab4c4;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+    }
+    .page-header nav {
+      margin-top: 14px;
+      display: flex;
+      gap: 18px;
+      font-size: 0.82rem;
+    }
+    .page-header nav a {
+      color: var(--gold);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .page-header nav a:hover { color: #e3c878; }
+
+    /* Main content */
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 24px 60px;
+    }
+
+    /* Upload section */
+    .upload-section {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+    .upload-section h2 {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+    .upload-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: var(--navy);
+      color: #FBF9F4;
+      border: none;
+      border-radius: 4px;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+      min-height: 44px;
+      min-width: 44px;
+    }
+    .upload-toggle:hover { background: #162a4a; }
+
+    .upload-form {
+      display: none;
+      margin-top: 20px;
+    }
+    .upload-form.visible { display: block; }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="password"] {
+      width: 100%;
+      max-width: 360px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      font-size: 0.95rem;
+      font-family: var(--font-body);
+      color: var(--navy);
+      min-height: 44px;
+    }
+    .form-group input[type="file"] {
+      font-size: 0.9rem;
+      min-height: 44px;
+      padding: 8px 0;
+    }
+    .form-group input:focus {
+      outline: 2px solid var(--steel-blue);
+      outline-offset: 1px;
+    }
+
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: 4px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+      min-height: 44px;
+      min-width: 44px;
+    }
+    .submit-btn:hover { background: #d4a94b; }
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .upload-msg {
+      margin-top: 12px;
+      font-size: 0.88rem;
+      padding: 10px 14px;
+      border-radius: 4px;
+      display: none;
+    }
+    .upload-msg.error {
+      display: block;
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+    .upload-msg.success {
+      display: block;
+      background: #f0fdf4;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* Gallery */
+    .gallery-section h2 {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      color: var(--navy);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--gold);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .gallery-item {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .gallery-item:hover {
+      box-shadow: 0 4px 16px rgba(10, 22, 40, 0.12);
+      transform: translateY(-2px);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    .gallery-item-info {
+      padding: 12px 14px;
+    }
+    .gallery-item-caption {
+      font-size: 0.9rem;
+      color: var(--navy);
+      font-weight: 500;
+    }
+    .gallery-item-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .gallery-empty {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(10, 22, 40, 0.95);
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox-caption {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      font-size: 0.9rem;
+      text-align: center;
+      max-width: 80%;
+    }
+
+    .loading-spinner {
+      text-align: center;
+      padding: 32px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 640px) {
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 10px;
+      }
+      .gallery-item img { height: 140px; }
+      .page-header { padding: 24px 18px; }
+      .main { padding: 20px 18px 48px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <div class="inner">
+      <h1>Photo Library</h1>
+      <div class="sub">6506 WATERS EDGE WAY &nbsp;&bull;&nbsp; LAKEWOOD RANCH</div>
+      <nav>
+        <a href="/watersedge">Back to Waters Edge</a>
+        <a href="/watersedge/style">Style Guide</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- Upload Section -->
+    <section class="upload-section" aria-label="Upload photos">
+      <button class="upload-toggle" id="uploadToggle" type="button" aria-expanded="false" aria-controls="uploadForm">
+        + Add Photos
+      </button>
+
+      <div class="upload-form" id="uploadForm" role="region" aria-label="Photo upload form">
+        <form id="photoUploadForm" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="uploadPassword">Password</label>
+            <input type="password" id="uploadPassword" name="password" placeholder="Enter shared password" required autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="uploadFile">Photo (JPG, PNG, HEIC — max 15MB)</label>
+            <input type="file" id="uploadFile" name="file" accept="image/jpeg,image/png,image/heic,image/heif,.heic,.heif" required />
+          </div>
+          <div class="form-group">
+            <label for="uploadCaption">Caption (optional)</label>
+            <input type="text" id="uploadCaption" name="caption" placeholder="e.g., Living room inspiration" />
+          </div>
+          <div class="form-group">
+            <label for="uploadBy">Uploaded by (optional)</label>
+            <input type="text" id="uploadBy" name="uploadedBy" placeholder="e.g., Brendan, Marcela, Designer" />
+          </div>
+          <button type="submit" class="submit-btn" id="submitBtn">Upload Photo</button>
+        </form>
+        <div class="upload-msg" id="uploadMsg"></div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section" aria-label="Photo gallery">
+      <h2>Gallery</h2>
+      <div id="galleryGrid" class="gallery-grid">
+        <div class="loading-spinner">Loading photos...</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-label="Full-size photo viewer">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">&times;</button>
+    <img id="lightboxImg" src="" alt="" />
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+
+  <script>
+    (function () {
+      const API_BASE = "/api/photos";
+      const uploadToggle = document.getElementById("uploadToggle");
+      const uploadForm = document.getElementById("uploadForm");
+      const photoForm = document.getElementById("photoUploadForm");
+      const uploadMsg = document.getElementById("uploadMsg");
+      const submitBtn = document.getElementById("submitBtn");
+      const galleryGrid = document.getElementById("galleryGrid");
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = document.getElementById("lightboxImg");
+      const lightboxCaption = document.getElementById("lightboxCaption");
+      const lightboxClose = document.getElementById("lightboxClose");
+
+      // Toggle upload form
+      uploadToggle.addEventListener("click", function () {
+        const isVisible = uploadForm.classList.toggle("visible");
+        uploadToggle.setAttribute("aria-expanded", isVisible ? "true" : "false");
+      });
+
+      // Load gallery
+      async function loadGallery() {
+        try {
+          const res = await fetch(API_BASE);
+          if (!res.ok) throw new Error("Failed to load photos");
+          const photos = await res.json();
+
+          if (photos.length === 0) {
+            galleryGrid.innerHTML = '<div class="gallery-empty">No photos yet. Be the first to upload!</div>';
+            return;
+          }
+
+          galleryGrid.innerHTML = photos.map(function (photo) {
+            const date = new Date(photo.uploadedAt).toLocaleDateString("en-US", {
+              month: "short", day: "numeric", year: "numeric"
+            });
+            const caption = photo.caption || photo.filename;
+            const byLine = photo.uploadedBy ? " &bull; " + photo.uploadedBy : "";
+            return '<div class="gallery-item" data-id="' + photo.id + '" data-caption="' + caption.replace(/"/g, '&quot;') + '">' +
+              '<img src="' + API_BASE + '/thumb/' + photo.id + '" alt="' + caption.replace(/"/g, '&quot;') + '" loading="lazy" width="240" height="200" />' +
+              '<div class="gallery-item-info">' +
+              '<div class="gallery-item-caption">' + caption + '</div>' +
+              '<div class="gallery-item-meta">' + date + byLine + '</div>' +
+              '</div></div>';
+          }).join("");
+
+          // Attach click handlers for lightbox
+          document.querySelectorAll(".gallery-item").forEach(function (item) {
+            item.addEventListener("click", function () {
+              const id = this.getAttribute("data-id");
+              const caption = this.getAttribute("data-caption");
+              lightboxImg.src = API_BASE + "/full/" + id;
+              lightboxImg.alt = caption;
+              lightboxCaption.textContent = caption;
+              lightbox.classList.add("active");
+              document.body.style.overflow = "hidden";
+            });
+          });
+        } catch (err) {
+          galleryGrid.innerHTML = '<div class="gallery-empty">Unable to load photos. Please try again later.</div>';
+        }
+      }
+
+      // Close lightbox
+      function closeLightbox() {
+        lightbox.classList.remove("active");
+        lightboxImg.src = "";
+        document.body.style.overflow = "";
+      }
+      lightboxClose.addEventListener("click", closeLightbox);
+      lightbox.addEventListener("click", function (e) {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && lightbox.classList.contains("active")) {
+          closeLightbox();
+        }
+      });
+
+      // Upload form submission
+      photoForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        uploadMsg.className = "upload-msg";
+        uploadMsg.style.display = "none";
+        uploadMsg.textContent = "";
+
+        const password = document.getElementById("uploadPassword").value;
+        const fileInput = document.getElementById("uploadFile");
+        const caption = document.getElementById("uploadCaption").value;
+        const uploadedBy = document.getElementById("uploadBy").value;
+
+        if (!fileInput.files || fileInput.files.length === 0) {
+          showMsg("Please select a file.", "error");
+          return;
+        }
+
+        const file = fileInput.files[0];
+        if (file.size > 15 * 1024 * 1024) {
+          showMsg("File is too large. Maximum size is 15MB.", "error");
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Uploading...";
+
+        try {
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("caption", caption);
+          formData.append("uploadedBy", uploadedBy);
+
+          const res = await fetch(API_BASE + "/upload", {
+            method: "POST",
+            headers: { "X-Upload-Password": password },
+            body: formData,
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+            showMsg(data.error || "Upload failed. Please try again.", "error");
+          } else {
+            showMsg("Photo uploaded successfully!", "success");
+            photoForm.reset();
+            // Keep password filled for convenience
+            document.getElementById("uploadPassword").value = password;
+            loadGallery();
+          }
+        } catch (err) {
+          showMsg("Network error. Please check your connection and try again.", "error");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Upload Photo";
+        }
+      });
+
+      function showMsg(text, type) {
+        uploadMsg.textContent = text;
+        uploadMsg.className = "upload-msg " + type;
+      }
+
+      // Initial load
+      loadGallery();
+    })();
+  </script>
+</body>
+</html>

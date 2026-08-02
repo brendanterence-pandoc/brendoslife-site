@@ -2,4 +2,10 @@
 // Re-run `npm run cf-typegen` after adding new bindings to wrangler.jsonc.
 interface Env {
   ASSETS: Fetcher;
+  MARCELA_USERNAME: string;
+  MARCELA_PASSWORD: string;
+  MEDIA_USERNAME: string;
+  MEDIA_PASSWORD: string;
+  PHOTOS_BUCKET: R2Bucket;
+  PHOTOS_PASSWORD: string;
 }

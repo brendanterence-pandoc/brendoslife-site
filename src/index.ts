@@ -2,17 +2,10 @@
 //
 // Responsibilities:
 //   1. HTTP Basic Auth for protected areas (Marcela, Media, plus any future trackers).
-//   2. HTMLRewriter injects a shared site header (brand + nav) into every HTML page.
-//   3. HTMLRewriter injects a noindex meta tag into every HTML page.
-//   4. Response sets X-Robots-Tag: noindex, nofollow, noarchive on every response.
-//
-// All HTML pages get the same header from one source. To add a new tracker:
-//   - Add the new page (e.g., public/family.html).
-//   - Add a Cloudflare secret pair (FAMILY_USERNAME, FAMILY_PASSWORD).
-//   - Add a PROTECTED_AREAS entry below.
-//   - Add a NAV_LINKS entry below.
-//
-// No edits to individual HTML files needed for navigation.
+//   2. Photo Library API for Waters Edge (/api/photos/*) with R2 storage.
+//   3. HTMLRewriter injects a shared site header (brand + nav) into every HTML page.
+//   4. HTMLRewriter injects a noindex meta tag into every HTML page.
+//   5. Response sets X-Robots-Tag: noindex, nofollow, noarchive on every response.
 
 export interface Env {
   ASSETS: Fetcher;
@@ -20,6 +13,8 @@ export interface Env {
   MARCELA_PASSWORD: string;
   MEDIA_USERNAME: string;
   MEDIA_PASSWORD: string;
+  PHOTOS_BUCKET: R2Bucket;
+  PHOTOS_PASSWORD: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -108,6 +103,223 @@ async function isAuthorized(
 }
 
 // ---------------------------------------------------------------------------
+// Photo Library API (R2-backed)
+// ---------------------------------------------------------------------------
+
+interface PhotoMeta {
+  id: string;
+  filename: string;
+  caption: string;
+  uploadedBy: string;
+  uploadedAt: string;
+  contentType: string;
+  size: number;
+  thumbKey: string;
+  fullKey: string;
+}
+
+const PHOTOS_INDEX_KEY = "_photos_index.json";
+const MAX_FILE_SIZE = 15 * 1024 * 1024; // 15MB
+
+function jsonResponse(data: unknown, status = 200): Response {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: {
+      "Content-Type": "application/json",
+      "X-Robots-Tag": "noindex, nofollow, noarchive",
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
+}
+
+function corsHeaders(): Record<string, string> {
+  return {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, X-Upload-Password",
+    "X-Robots-Tag": "noindex, nofollow, noarchive",
+  };
+}
+
+async function getPhotosIndex(bucket: R2Bucket): Promise<PhotoMeta[]> {
+  const obj = await bucket.get(PHOTOS_INDEX_KEY);
+  if (!obj) return [];
+  const text = await obj.text();
+  try {
+    return JSON.parse(text) as PhotoMeta[];
+  } catch {
+    return [];
+  }
+}
+
+async function savePhotosIndex(bucket: R2Bucket, index: PhotoMeta[]): Promise<void> {
+  await bucket.put(PHOTOS_INDEX_KEY, JSON.stringify(index), {
+    httpMetadata: { contentType: "application/json" },
+  });
+}
+
+function generateId(): string {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
+async function handlePhotosApi(
+  request: Request,
+  env: Env,
+  pathname: string
+): Promise<Response> {
+  // CORS preflight
+  if (request.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: corsHeaders() });
+  }
+
+  const bucket = env.PHOTOS_BUCKET;
+
+  // GET /api/photos — list all photos
+  if (pathname === "/api/photos" && request.method === "GET") {
+    const index = await getPhotosIndex(bucket);
+    // Return newest first
+    const sorted = [...index].sort(
+      (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
+    );
+    return jsonResponse(sorted);
+  }
+
+  // GET /api/photos/thumb/:id — serve thumbnail
+  if (pathname.startsWith("/api/photos/thumb/") && request.method === "GET") {
+    const id = pathname.slice("/api/photos/thumb/".length);
+    const index = await getPhotosIndex(bucket);
+    const photo = index.find((p) => p.id === id);
+    if (!photo) return jsonResponse({ error: "Not found" }, 404);
+
+    const obj = await bucket.get(photo.thumbKey);
+    if (!obj) return jsonResponse({ error: "Thumbnail not found" }, 404);
+
+    return new Response(obj.body, {
+      headers: {
+        "Content-Type": "image/jpeg",
+        "Cache-Control": "public, max-age=31536000, immutable",
+        "X-Robots-Tag": "noindex, nofollow, noarchive",
+      },
+    });
+  }
+
+  // GET /api/photos/full/:id — serve full-resolution image
+  if (pathname.startsWith("/api/photos/full/") && request.method === "GET") {
+    const id = pathname.slice("/api/photos/full/".length);
+    const index = await getPhotosIndex(bucket);
+    const photo = index.find((p) => p.id === id);
+    if (!photo) return jsonResponse({ error: "Not found" }, 404);
+
+    const obj = await bucket.get(photo.fullKey);
+    if (!obj) return jsonResponse({ error: "Image not found" }, 404);
+
+    return new Response(obj.body, {
+      headers: {
+        "Content-Type": photo.contentType,
+        "Cache-Control": "public, max-age=86400",
+        "X-Robots-Tag": "noindex, nofollow, noarchive",
+      },
+    });
+  }
+
+  // POST /api/photos/upload — upload a photo (password-protected)
+  if (pathname === "/api/photos/upload" && request.method === "POST") {
+    const password = request.headers.get("X-Upload-Password") || "";
+    const expectedPassword = env.PHOTOS_PASSWORD || "WatersEdge";
+
+    if (!timingSafeEqual(password, expectedPassword)) {
+      return jsonResponse({ error: "Incorrect password. Please try again." }, 403);
+    }
+
+    const formData = await request.formData();
+    const file = formData.get("file") as File | null;
+    if (!file) {
+      return jsonResponse({ error: "No file provided" }, 400);
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      return jsonResponse({ error: "File too large. Maximum 15MB." }, 400);
+    }
+
+    const caption = (formData.get("caption") as string) || "";
+    const uploadedBy = (formData.get("uploadedBy") as string) || "";
+
+    // Determine content type
+    let contentType = file.type || "image/jpeg";
+    const lowerName = file.name.toLowerCase();
+
+    // Convert HEIC to JPEG on the server side (basic handling)
+    // Note: Full HEIC conversion requires additional libraries.
+    // For now, we accept the file as-is and store it; the frontend will handle display.
+    if (lowerName.endsWith(".heic") || lowerName.endsWith(".heif")) {
+      contentType = "image/heic";
+    }
+
+    const id = generateId();
+    const ext = contentType.includes("png") ? "png" : "jpg";
+    const fullKey = `photos/full/${id}.${ext}`;
+    const thumbKey = `photos/thumb/${id}.jpg`;
+
+    // Store full-resolution image
+    const arrayBuffer = await file.arrayBuffer();
+    await bucket.put(fullKey, arrayBuffer, {
+      httpMetadata: { contentType },
+    });
+
+    // Generate thumbnail (simple resize using canvas is not available in Workers,
+    // so we store a reference and serve the full image scaled by the browser for now.
+    // For a production system, you'd use Cloudflare Image Resizing or a separate transform.)
+    // Store the full image also as thumb for now — the frontend will display at thumbnail size.
+    await bucket.put(thumbKey, arrayBuffer, {
+      httpMetadata: { contentType: "image/jpeg" },
+    });
+
+    const meta: PhotoMeta = {
+      id,
+      filename: file.name,
+      caption,
+      uploadedBy,
+      uploadedAt: new Date().toISOString(),
+      contentType,
+      size: file.size,
+      thumbKey,
+      fullKey,
+    };
+
+    const index = await getPhotosIndex(bucket);
+    index.push(meta);
+    await savePhotosIndex(bucket, index);
+
+    return jsonResponse({ success: true, photo: meta }, 201);
+  }
+
+  // DELETE /api/photos/:id — delete a photo (password-protected)
+  if (pathname.startsWith("/api/photos/") && request.method === "DELETE") {
+    const password = request.headers.get("X-Upload-Password") || "";
+    const expectedPassword = env.PHOTOS_PASSWORD || "WatersEdge";
+
+    if (!timingSafeEqual(password, expectedPassword)) {
+      return jsonResponse({ error: "Incorrect password." }, 403);
+    }
+
+    const id = pathname.slice("/api/photos/".length);
+    const index = await getPhotosIndex(bucket);
+    const photoIdx = index.findIndex((p) => p.id === id);
+    if (photoIdx === -1) return jsonResponse({ error: "Not found" }, 404);
+
+    const photo = index[photoIdx];
+    await bucket.delete(photo.fullKey);
+    await bucket.delete(photo.thumbKey);
+    index.splice(photoIdx, 1);
+    await savePhotosIndex(bucket, index);
+
+    return jsonResponse({ success: true });
+  }
+
+  return jsonResponse({ error: "Not found" }, 404);
+}
+
+// ---------------------------------------------------------------------------
 // Shared site header (single source of truth)
 // ---------------------------------------------------------------------------
 
@@ -118,6 +330,11 @@ interface NavLink {
 }
 
 const NAV_LINKS: NavLink[] = [
+  {
+    href: "/watersedge",
+    label: "Waters Edge",
+    isActive: (p) => p === "/watersedge" || p.startsWith("/watersedge/"),
+  },
   {
     href: "/marcela",
     label: "Marcela",
@@ -252,19 +469,45 @@ export default {
     ctx: ExecutionContext
   ): Promise<Response> {
     const url = new URL(request.url);
-    const pathname = url.pathname;
+    let pathname = url.pathname;
 
-    // 1. Basic Auth for protected paths
+    // Normalize: strip trailing slash (except root)
+    if (pathname.length > 1 && pathname.endsWith("/")) {
+      pathname = pathname.slice(0, -1);
+    }
+
+    // 1. Photo Library API routes
+    if (pathname.startsWith("/api/photos")) {
+      return handlePhotosApi(request, env, pathname);
+    }
+
+    // 2. Basic Auth for protected paths
     const area = findProtectedArea(pathname);
     if (area) {
       const authorized = await isAuthorized(request, area, env);
       if (!authorized) return unauthorized(area.realm);
     }
 
-    // 2. Fetch the static asset
-    const assetResponse = await env.ASSETS.fetch(request);
+    // 3. Serve /watersedge as /watersedge/index.html (directory index)
+    let assetRequest = request;
+    if (pathname === "/watersedge") {
+      const newUrl = new URL(request.url);
+      newUrl.pathname = "/watersedge/index.html";
+      assetRequest = new Request(newUrl.toString(), request);
+    } else if (pathname === "/watersedge/style") {
+      const newUrl = new URL(request.url);
+      newUrl.pathname = "/watersedge/style.html";
+      assetRequest = new Request(newUrl.toString(), request);
+    } else if (pathname === "/watersedge/photos") {
+      const newUrl = new URL(request.url);
+      newUrl.pathname = "/watersedge/photos.html";
+      assetRequest = new Request(newUrl.toString(), request);
+    }
 
-    // 3. Only transform HTML responses. Pass everything else through unchanged.
+    // 4. Fetch the static asset
+    const assetResponse = await env.ASSETS.fetch(assetRequest);
+
+    // 5. Only transform HTML responses. Pass everything else through unchanged.
     const contentType = assetResponse.headers.get("Content-Type") || "";
     const isHtml = contentType.includes("text/html");
 
@@ -280,7 +523,7 @@ export default {
         .transform(assetResponse);
     }
 
-    // 4. Add X-Robots-Tag to every response (defense in depth on the noindex meta).
+    // 6. Add X-Robots-Tag to every response (defense in depth on the noindex meta).
     const headers = new Headers(response.headers);
     headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
 

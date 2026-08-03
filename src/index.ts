@@ -512,16 +512,40 @@ export default {
 
     const assetUrl = new URL(request.url);
     assetUrl.pathname = assetPathname;
-    let assetRequest = new Request(assetUrl.toString(), request);
 
-    // 4. Fetch the static asset (with fallback for extensionless paths)
-    let assetResponse = await env.ASSETS.fetch(assetRequest);
+    // Helper: fetch from Assets with redirect:manual to intercept 3xx
+    async function fetchAsset(targetUrl: string): Promise<Response> {
+      return env.ASSETS.fetch(
+        new Request(targetUrl, {
+          method: request.method,
+          headers: request.headers,
+          redirect: "manual",
+        })
+      );
+    }
+
+    // Helper: follow internal redirects from Assets (max 5 hops)
+    async function fetchAssetResolved(targetUrl: string): Promise<Response> {
+      let resp = await fetchAsset(targetUrl);
+      let hops = 0;
+      while (resp.status >= 300 && resp.status < 400 && hops < 5) {
+        const loc = resp.headers.get("Location");
+        if (!loc) break;
+        const resolved = new URL(loc, targetUrl).toString();
+        resp = await fetchAsset(resolved);
+        hops++;
+      }
+      return resp;
+    }
+
+    // 4. Fetch the static asset.
+    let assetResponse = await fetchAssetResolved(assetUrl.toString());
 
     // If the .html guess 404'd and original had no extension, try original path
     if (assetResponse.status === 404 && !pathname.includes(".") && !rewrites[pathname]) {
       const fallbackUrl = new URL(request.url);
       fallbackUrl.pathname = pathname;
-      assetResponse = await env.ASSETS.fetch(new Request(fallbackUrl.toString(), request));
+      assetResponse = await fetchAssetResolved(fallbackUrl.toString());
     }
 
     // 5. Only transform HTML responses. Pass everything else through unchanged.

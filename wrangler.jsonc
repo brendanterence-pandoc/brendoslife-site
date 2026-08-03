@@ -21,7 +21,8 @@
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
-    "run_worker_first": ["/marcela", "/marcela/*", "/watersedge", "/watersedge/*", "/api/*"]
+    "html_handling": "none",
+    "run_worker_first": true
   },
 
   // ── R2 Object Storage (Photo Library) ────────────────────────────────────

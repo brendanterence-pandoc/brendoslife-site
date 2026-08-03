@@ -488,24 +488,41 @@ export default {
       if (!authorized) return unauthorized(area.realm);
     }
 
-    // 3. Serve /watersedge as /watersedge/index.html (directory index)
-    let assetRequest = request;
-    if (pathname === "/watersedge") {
-      const newUrl = new URL(request.url);
-      newUrl.pathname = "/watersedge/index.html";
-      assetRequest = new Request(newUrl.toString(), request);
-    } else if (pathname === "/watersedge/style") {
-      const newUrl = new URL(request.url);
-      newUrl.pathname = "/watersedge/style.html";
-      assetRequest = new Request(newUrl.toString(), request);
-    } else if (pathname === "/watersedge/photos") {
-      const newUrl = new URL(request.url);
-      newUrl.pathname = "/watersedge/photos.html";
-      assetRequest = new Request(newUrl.toString(), request);
+    // 3. Rewrite clean URLs to actual .html files
+    //    (html_handling is "none" so Assets won't do this for us)
+    const rewrites: Record<string, string> = {
+      "/": "/index.html",
+      "/watersedge": "/watersedge/index.html",
+      "/watersedge/style": "/watersedge/style.html",
+      "/watersedge/photos": "/watersedge/photos.html",
+      "/marcela": "/marcela/index.html",
+    };
+
+    let assetPathname: string;
+    if (rewrites[pathname]) {
+      // Explicit directory-index or clean-URL mapping
+      assetPathname = rewrites[pathname];
+    } else if (pathname.includes(".")) {
+      // Path already has a file extension — serve as-is
+      assetPathname = pathname;
+    } else {
+      // Extensionless path (e.g. /media, /plan) — try appending .html
+      assetPathname = pathname + ".html";
     }
 
-    // 4. Fetch the static asset
-    const assetResponse = await env.ASSETS.fetch(assetRequest);
+    const assetUrl = new URL(request.url);
+    assetUrl.pathname = assetPathname;
+    let assetRequest = new Request(assetUrl.toString(), request);
+
+    // 4. Fetch the static asset (with fallback for extensionless paths)
+    let assetResponse = await env.ASSETS.fetch(assetRequest);
+
+    // If the .html guess 404'd and original had no extension, try original path
+    if (assetResponse.status === 404 && !pathname.includes(".") && !rewrites[pathname]) {
+      const fallbackUrl = new URL(request.url);
+      fallbackUrl.pathname = pathname;
+      assetResponse = await env.ASSETS.fetch(new Request(fallbackUrl.toString(), request));
+    }
 
     // 5. Only transform HTML responses. Pass everything else through unchanged.
     const contentType = assetResponse.headers.get("Content-Type") || "";

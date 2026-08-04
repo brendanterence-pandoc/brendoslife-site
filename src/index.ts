@@ -318,15 +318,8 @@ async function handlePhotosApi(
       });
   }
 
-  // POST /api/photos/upload — upload a photo (password-protected)
+  // POST /api/photos/upload — upload a photo (open)
   if (pathname === "/api/photos/upload" && request.method === "POST") {
-        const password = request.headers.get("X-Upload-Password") || "";
-        const expectedPassword = env.PHOTOS_PASSWORD || "WatersEdge";
-
-      if (!timingSafeEqual(password, expectedPassword)) {
-              return jsonResponse({ error: "Incorrect password. Please try again." }, 403);
-      }
-
       const formData = await request.formData();
         const file = formData.get("file") as File | null;
         if (!file) {
@@ -508,15 +501,8 @@ async function handlePhotosApi(
       }
   }
 
-  // DELETE /api/photos/:id — delete a photo (password-protected)
+  // DELETE /api/photos/:id — delete a photo (open)
   if (pathname.startsWith("/api/photos/") && request.method === "DELETE") {
-      const password = request.headers.get("X-Upload-Password") || "";
-      const expectedPassword = env.PHOTOS_PASSWORD || "WatersEdge";
-
-      if (!timingSafeEqual(password, expectedPassword)) {
-          return jsonResponse({ error: "Incorrect password." }, 403);
-      }
-
       const id = pathname.slice("/api/photos/".length);
       const index = await getPhotosIndex(bucket);
       const photoIdx = index.findIndex((p) => p.id === id);

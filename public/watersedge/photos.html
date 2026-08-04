@@ -549,10 +549,6 @@
       <div class="upload-form" id="uploadForm" role="region" aria-label="Photo upload form">
         <form id="photoUploadForm" enctype="multipart/form-data">
           <div class="form-group">
-            <label for="uploadPassword">Password</label>
-            <input type="password" id="uploadPassword" name="password" placeholder="Enter shared password" required autocomplete="off" />
-          </div>
-          <div class="form-group">
             <label for="uploadFile">Photo (JPG, PNG, HEIC — max 15MB)</label>
             <input type="file" id="uploadFile" name="file" accept="image/jpeg,image/png,image/heic,image/heif,.heic,.heif" required />
           </div>
@@ -998,7 +994,6 @@
         uploadMsg.style.display = "none";
         uploadMsg.textContent = "";
 
-        const password = document.getElementById("uploadPassword").value;
         const fileInput = document.getElementById("uploadFile");
         const caption = document.getElementById("uploadCaption").value;
         const uploadedBy = document.getElementById("uploadBy").value;
@@ -1025,7 +1020,6 @@
 
           const res = await fetch(API_BASE + "/upload", {
             method: "POST",
-            headers: { "X-Upload-Password": password },
             body: formData,
           });
 
@@ -1036,8 +1030,6 @@
           } else {
             showMsg("Photo uploaded successfully!", "success");
             photoForm.reset();
-            // Keep password filled for convenience
-            document.getElementById("uploadPassword").value = password;
             loadGallery();
           }
         } catch (err) {

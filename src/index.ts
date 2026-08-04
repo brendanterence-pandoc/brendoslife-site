@@ -118,8 +118,83 @@ interface PhotoMeta {
     fullKey: string;
 }
 
+interface Comment {
+    id: string;
+    photoId: string;
+    parentId: string | null; // null = top-level, otherwise the id of the parent comment (one level of nesting)
+    author: string;         // "Brendan" | "Jessica" | "Marcela"
+    body: string;
+    createdAt: string;
+}
+
 const PHOTOS_INDEX_KEY = "_photos_index.json";
 const MAX_FILE_SIZE = 15 * 1024 * 1024; // 15MB
+const MAX_COMMENT_LENGTH = 2000;
+const ALLOWED_AUTHORS = ["Brendan", "Jessica", "Marcela"];
+const ALERT_RECIPIENTS = ["brendo@outlook.com", "brendanterence@gmail.com"];
+const ALERT_FROM = "alerts@brendoslife.com";
+const ALERT_FROM_NAME = "Waters Edge Photos";
+
+function commentsKey(photoId: string): string {
+    return `comments/${photoId}.json`;
+}
+
+async function getComments(bucket: R2Bucket, photoId: string): Promise<Comment[]> {
+    const obj = await bucket.get(commentsKey(photoId));
+    if (!obj) return [];
+    const text = await obj.text();
+    try {
+        return JSON.parse(text) as Comment[];
+    } catch {
+        return [];
+    }
+}
+
+async function saveComments(bucket: R2Bucket, photoId: string, comments: Comment[]): Promise<void> {
+    await bucket.put(commentsKey(photoId), JSON.stringify(comments), {
+        httpMetadata: { contentType: "application/json" },
+    });
+}
+
+function escapeHtml(s: string): string {
+    return s
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+// Fire-and-forget email via Cloudflare MailChannels. Never blocks the response — the caller
+// wraps this in ctx.waitUntil so a slow or failing send doesn't hurt the user's request.
+async function sendAlert(subject: string, textBody: string, htmlBody: string): Promise<void> {
+    try {
+        const payload = {
+            personalizations: [
+                {
+                    to: ALERT_RECIPIENTS.map((email) => ({ email })),
+                },
+            ],
+            from: { email: ALERT_FROM, name: ALERT_FROM_NAME },
+            subject,
+            content: [
+                { type: "text/plain", value: textBody },
+                { type: "text/html", value: htmlBody },
+            ],
+        };
+        const res = await fetch("https://api.mailchannels.net/tx/v1/send", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        });
+        if (!res.ok) {
+            // Best-effort logging; observability enabled in wrangler.jsonc
+            console.warn("MailChannels send failed", res.status, await res.text());
+        }
+    } catch (err) {
+        console.warn("MailChannels send threw", err);
+    }
+}
 
 function jsonResponse(data: unknown, status = 200): Response {
     return new Response(JSON.stringify(data), {
@@ -165,6 +240,7 @@ function generateId(): string {
 async function handlePhotosApi(
     request: Request,
     env: Env,
+    ctx: ExecutionContext,
     pathname: string
   ): Promise<Response> {
     // CORS preflight
@@ -290,7 +366,126 @@ async function handlePhotosApi(
         index.push(meta);
         await savePhotosIndex(bucket, index);
 
+      // Fire-and-forget email alert to Brendan.
+      const uploadedByLabel = uploadedBy || "(anonymous)";
+      const captionLine = caption ? `Caption: ${caption}\n` : "";
+      const photoUrl = `https://brendoslife.com/watersedge/photos`;
+      const alertText =
+          `A new photo was uploaded to the Waters Edge photo library.\n\n` +
+          `Uploaded by: ${uploadedByLabel}\n` +
+          captionLine +
+          `File: ${file.name}\n` +
+          `View: ${photoUrl}\n`;
+      const alertHtml =
+          `<p>A new photo was uploaded to the <strong>Waters Edge</strong> photo library.</p>` +
+          `<p><strong>Uploaded by:</strong> ${escapeHtml(uploadedByLabel)}<br>` +
+          (caption ? `<strong>Caption:</strong> ${escapeHtml(caption)}<br>` : "") +
+          `<strong>File:</strong> ${escapeHtml(file.name)}</p>` +
+          `<p><a href="${photoUrl}">Open the photo library</a></p>`;
+      ctx.waitUntil(sendAlert(`New Waters Edge photo from ${uploadedByLabel}`, alertText, alertHtml));
+
       return jsonResponse({ success: true, photo: meta }, 201);
+  }
+
+  // GET /api/photos/:id/comments — list comments for a photo
+  {
+      const commentsMatch = pathname.match(/^\/api\/photos\/([^/]+)\/comments$/);
+      if (commentsMatch && request.method === "GET") {
+          const photoId = commentsMatch[1];
+          const index = await getPhotosIndex(bucket);
+          if (!index.find((p) => p.id === photoId)) {
+              return jsonResponse({ error: "Photo not found" }, 404);
+          }
+          const comments = await getComments(bucket, photoId);
+          // Sort oldest first for natural reading order
+          const sorted = [...comments].sort(
+              (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          );
+          return jsonResponse(sorted);
+      }
+
+      // POST /api/photos/:id/comments — add a comment (optionally a reply)
+      if (commentsMatch && request.method === "POST") {
+          const photoId = commentsMatch[1];
+          const index = await getPhotosIndex(bucket);
+          const photo = index.find((p) => p.id === photoId);
+          if (!photo) return jsonResponse({ error: "Photo not found" }, 404);
+
+          let payload: { author?: string; body?: string; parentId?: string | null };
+          try {
+              payload = await request.json();
+          } catch {
+              return jsonResponse({ error: "Invalid JSON" }, 400);
+          }
+
+          const author = (payload.author || "").trim();
+          const body = (payload.body || "").trim();
+          const parentId = payload.parentId || null;
+
+          if (!ALLOWED_AUTHORS.includes(author)) {
+              return jsonResponse({ error: "Please choose Brendan, Jessica, or Marcela." }, 400);
+          }
+          if (!body) {
+              return jsonResponse({ error: "Comment cannot be empty." }, 400);
+          }
+          if (body.length > MAX_COMMENT_LENGTH) {
+              return jsonResponse({ error: `Comment too long. Max ${MAX_COMMENT_LENGTH} characters.` }, 400);
+          }
+
+          const existing = await getComments(bucket, photoId);
+
+          // If parentId provided, it must reference an existing top-level comment on THIS photo.
+          // We enforce one level of nesting: parents can't themselves have a parentId.
+          let normalizedParentId: string | null = null;
+          if (parentId) {
+              const parent = existing.find((c) => c.id === parentId);
+              if (!parent) return jsonResponse({ error: "Parent comment not found." }, 400);
+              if (parent.parentId) {
+                  // Flatten: reply-to-a-reply attaches to the top-level parent instead.
+                  normalizedParentId = parent.parentId;
+              } else {
+                  normalizedParentId = parent.id;
+              }
+          }
+
+          const comment: Comment = {
+              id: generateId(),
+              photoId,
+              parentId: normalizedParentId,
+              author,
+              body,
+              createdAt: new Date().toISOString(),
+          };
+
+          existing.push(comment);
+          await saveComments(bucket, photoId, existing);
+
+          // Fire-and-forget email alert.
+          const photoLabel = photo.caption || photo.filename || photo.id;
+          const kind = normalizedParentId ? "reply" : "comment";
+          const photoUrl = `https://brendoslife.com/watersedge/photos`;
+          const alertText =
+              `${author} posted a new ${kind} on a Waters Edge photo.\n\n` +
+              `Photo: ${photoLabel}\n` +
+              `${author}: ${body}\n\n` +
+              `View: ${photoUrl}\n`;
+          const alertHtml =
+              `<p><strong>${escapeHtml(author)}</strong> posted a new ${kind} on a Waters Edge photo.</p>` +
+              `<p><strong>Photo:</strong> ${escapeHtml(photoLabel)}</p>` +
+              `<blockquote style="border-left:3px solid #C4973B;margin:0;padding:6px 12px;color:#0A1628;background:#FBF9F4;">` +
+              escapeHtml(body).replace(/\n/g, "<br>") +
+              `</blockquote>` +
+              `<p><a href="${photoUrl}">Open the photo library</a></p>`;
+          ctx.waitUntil(
+              sendAlert(
+                  `New Waters Edge ${kind} from ${author}`,
+                  alertText,
+                  alertHtml
+              )
+          );
+
+          return jsonResponse({ success: true, comment }, 201);
+      }
   }
 
   // DELETE /api/photos/:id — delete a photo (password-protected)
@@ -478,7 +673,7 @@ export default {
 
       // 1. Photo Library API routes
       if (pathname.startsWith("/api/photos")) {
-              return handlePhotosApi(request, env, pathname);
+              return handlePhotosApi(request, env, ctx, pathname);
       }
 
       // 2. Basic Auth for protected paths

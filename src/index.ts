@@ -120,6 +120,8 @@ interface PhotoMeta {
 
 interface Comment {
     id: string;
+    // Owner id. For photo threads this is the photo id (kept as `photoId` for backward
+    // compatibility with the initial deploy). For style-guide threads it's the thread id.
     photoId: string;
     parentId: string | null; // null = top-level, otherwise the id of the parent comment (one level of nesting)
     author: string;         // "Brendan" | "Jessica" | "Marcela"
@@ -133,7 +135,25 @@ const MAX_COMMENT_LENGTH = 2000;
 const ALLOWED_AUTHORS = ["Brendan", "Jessica", "Marcela"];
 const ALERT_RECIPIENTS = ["brendo@outlook.com", "brendanterence@gmail.com"];
 const ALERT_FROM = "alerts@brendoslife.com";
-const ALERT_FROM_NAME = "Waters Edge Photos";
+const ALERT_FROM_NAME = "Waters Edge";
+
+// Thread ids for the style guide must be lowercased and dash-separated. We restrict the
+// character set to a small allowlist so R2 keys stay clean and predictable.
+const THREAD_ID_RE = /^[a-z0-9][a-z0-9-]{0,80}$/;
+function threadKey(threadId: string): string {
+    return `threads/${threadId}.json`;
+}
+async function getThreadComments(bucket: R2Bucket, threadId: string): Promise<Comment[]> {
+    const obj = await bucket.get(threadKey(threadId));
+    if (!obj) return [];
+    const text = await obj.text();
+    try { return JSON.parse(text) as Comment[]; } catch { return []; }
+}
+async function saveThreadComments(bucket: R2Bucket, threadId: string, comments: Comment[]): Promise<void> {
+    await bucket.put(threadKey(threadId), JSON.stringify(comments), {
+        httpMetadata: { contentType: "application/json" },
+    });
+}
 
 function commentsKey(photoId: string): string {
     return `comments/${photoId}.json`;
@@ -490,28 +510,139 @@ async function handlePhotosApi(
 
   // DELETE /api/photos/:id — delete a photo (password-protected)
   if (pathname.startsWith("/api/photos/") && request.method === "DELETE") {
-        const password = request.headers.get("X-Upload-Password") || "";
-        const expectedPassword = env.PHOTOS_PASSWORD || "WatersEdge";
+      const password = request.headers.get("X-Upload-Password") || "";
+      const expectedPassword = env.PHOTOS_PASSWORD || "WatersEdge";
 
       if (!timingSafeEqual(password, expectedPassword)) {
-              return jsonResponse({ error: "Incorrect password." }, 403);
+          return jsonResponse({ error: "Incorrect password." }, 403);
       }
 
       const id = pathname.slice("/api/photos/".length);
-        const index = await getPhotosIndex(bucket);
-        const photoIdx = index.findIndex((p) => p.id === id);
-        if (photoIdx === -1) return jsonResponse({ error: "Not found" }, 404);
+      const index = await getPhotosIndex(bucket);
+      const photoIdx = index.findIndex((p) => p.id === id);
+      if (photoIdx === -1) return jsonResponse({ error: "Not found" }, 404);
 
       const photo = index[photoIdx];
-        await bucket.delete(photo.fullKey);
-        await bucket.delete(photo.thumbKey);
-        index.splice(photoIdx, 1);
-        await savePhotosIndex(bucket, index);
+      await bucket.delete(photo.fullKey);
+      await bucket.delete(photo.thumbKey);
+      index.splice(photoIdx, 1);
+      await savePhotosIndex(bucket, index);
 
       return jsonResponse({ success: true });
   }
 
   return jsonResponse({ error: "Not found" }, 404);
+}
+
+// ---------------------------------------------------------------------------
+// Generic comment threads (for the style guide, keyed by thread id)
+// ---------------------------------------------------------------------------
+
+async function handleThreadsApi(
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext,
+    pathname: string
+  ): Promise<Response> {
+    if (request.method === "OPTIONS") {
+        return new Response(null, { status: 204, headers: corsHeaders() });
+    }
+
+    const bucket = env.PHOTOS_BUCKET;
+
+    // POST /api/threads/counts — batch count lookup: body { ids: string[] } -> { id: count }
+    if (pathname === "/api/threads/counts" && request.method === "POST") {
+        let body: { ids?: string[] };
+        try { body = await request.json(); } catch { return jsonResponse({ error: "Invalid JSON" }, 400); }
+        const ids = Array.isArray(body.ids) ? body.ids : [];
+        const valid = ids.filter((id) => typeof id === "string" && THREAD_ID_RE.test(id)).slice(0, 200);
+        const results = await Promise.all(
+            valid.map(async (id) => [id, (await getThreadComments(bucket, id)).length] as const)
+        );
+        const out: Record<string, number> = {};
+        results.forEach(([id, n]) => { out[id] = n; });
+        return jsonResponse(out);
+    }
+
+    // /api/threads/:id/comments
+    const match = pathname.match(/^\/api\/threads\/([^/]+)\/comments$/);
+    if (!match) return jsonResponse({ error: "Not found" }, 404);
+    const threadId = match[1];
+    if (!THREAD_ID_RE.test(threadId)) {
+        return jsonResponse({ error: "Invalid thread id" }, 400);
+    }
+
+    if (request.method === "GET") {
+        const comments = await getThreadComments(bucket, threadId);
+        const sorted = [...comments].sort(
+            (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        );
+        return jsonResponse(sorted);
+    }
+
+    if (request.method === "POST") {
+        let payload: { author?: string; body?: string; parentId?: string | null; context?: string };
+        try { payload = await request.json(); } catch { return jsonResponse({ error: "Invalid JSON" }, 400); }
+
+        const author = (payload.author || "").trim();
+        const body = (payload.body || "").trim();
+        const parentId = payload.parentId || null;
+        // Optional human-readable label for the thread, provided by the frontend for the alert email.
+        const contextLabel = (payload.context || "").trim().slice(0, 200);
+
+        if (!ALLOWED_AUTHORS.includes(author)) {
+            return jsonResponse({ error: "Please choose Brendan, Jessica, or Marcela." }, 400);
+        }
+        if (!body) {
+            return jsonResponse({ error: "Comment cannot be empty." }, 400);
+        }
+        if (body.length > MAX_COMMENT_LENGTH) {
+            return jsonResponse({ error: `Comment too long. Max ${MAX_COMMENT_LENGTH} characters.` }, 400);
+        }
+
+        const existing = await getThreadComments(bucket, threadId);
+
+        let normalizedParentId: string | null = null;
+        if (parentId) {
+            const parent = existing.find((c) => c.id === parentId);
+            if (!parent) return jsonResponse({ error: "Parent comment not found." }, 400);
+            normalizedParentId = parent.parentId ? parent.parentId : parent.id;
+        }
+
+        const comment: Comment = {
+            id: generateId(),
+            photoId: threadId, // owner id, reusing the field name
+            parentId: normalizedParentId,
+            author,
+            body,
+            createdAt: new Date().toISOString(),
+        };
+        existing.push(comment);
+        await saveThreadComments(bucket, threadId, existing);
+
+        const label = contextLabel || threadId;
+        const kind = normalizedParentId ? "reply" : "comment";
+        const pageUrl = `https://brendoslife.com/watersedge/style#thread-${threadId}`;
+        const alertText =
+            `${author} posted a new ${kind} on the Waters Edge Style Guide.\n\n` +
+            `Section: ${label}\n` +
+            `${author}: ${body}\n\n` +
+            `View: ${pageUrl}\n`;
+        const alertHtml =
+            `<p><strong>${escapeHtml(author)}</strong> posted a new ${kind} on the <strong>Waters Edge Style Guide</strong>.</p>` +
+            `<p><strong>Section:</strong> ${escapeHtml(label)}</p>` +
+            `<blockquote style="border-left:3px solid #C4973B;margin:0;padding:6px 12px;color:#0A1628;background:#FBF9F4;">` +
+            escapeHtml(body).replace(/\n/g, "<br>") +
+            `</blockquote>` +
+            `<p><a href="${pageUrl}">Open the style guide</a></p>`;
+        ctx.waitUntil(
+            sendAlert(`New Style Guide ${kind} from ${author} — ${label}`, alertText, alertHtml)
+        );
+
+        return jsonResponse({ success: true, comment }, 201);
+    }
+
+    return jsonResponse({ error: "Method not allowed" }, 405);
 }
 
 // ---------------------------------------------------------------------------
@@ -674,6 +805,11 @@ export default {
       // 1. Photo Library API routes
       if (pathname.startsWith("/api/photos")) {
               return handlePhotosApi(request, env, ctx, pathname);
+      }
+
+      // 1b. Generic comment thread routes (style guide, future pages)
+      if (pathname.startsWith("/api/threads")) {
+              return handleThreadsApi(request, env, ctx, pathname);
       }
 
       // 2. Basic Auth for protected paths

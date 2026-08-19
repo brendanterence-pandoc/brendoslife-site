@@ -18,10 +18,6 @@ export interface Env {
     // Optional alert-fan-out secrets. Any of these unset -> that channel is skipped.
     SLACK_WEBHOOK_URL?: string;
     TEAMS_WEBHOOK_URL?: string;
-    TWILIO_ACCOUNT_SID?: string;
-    TWILIO_AUTH_TOKEN?: string;
-    TWILIO_FROM_NUMBER?: string;
-    TWILIO_TO_NUMBER?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -141,6 +137,10 @@ const MAX_FILE_SIZE = 15 * 1024 * 1024; // 15MB
 const MAX_COMMENT_LENGTH = 2000;
 const ALLOWED_AUTHORS = ["Brendan", "Jessica", "Marcela"];
 const ALERT_RECIPIENTS = ["brendo@outlook.com", "brendanterence@gmail.com"];
+// Carrier email-to-SMS gateway (AT&T only; Verizon retired vtext.com in 2024).
+// Sent as a separate MailChannels envelope with a compact subject-only body so it
+// renders as a real SMS instead of an email attachment.
+const ALERT_SMS_RECIPIENTS = ["9414223421@txt.att.net"];
 const ALERT_FROM = "alerts@brendoslife.com";
 const ALERT_FROM_NAME = "Waters Edge";
 
@@ -222,6 +222,38 @@ async function sendEmailAlert(subject: string, textBody: string, htmlBody: strin
     }
 }
 
+// Carrier email-to-SMS gateway. Sends a compact single-line message so it lands
+// as one SMS instead of a multi-part MMS. AT&T's txt.att.net accepts a plain
+// text/plain body; the subject line is used as the SMS content on some carriers,
+// so we keep both fields short and identical-ish.
+async function sendCarrierSmsAlert(subject: string, textBody: string, linkUrl: string): Promise<void> {
+    if (ALERT_SMS_RECIPIENTS.length === 0) return;
+    // Keep well under 160 chars so AT&T doesn't split into MMS.
+    const smsBody = (subject + " \u2014 " + textBody.split("\n")[0] + " " + linkUrl).replace(/\s+/g, " ").slice(0, 155);
+    try {
+        const payload = {
+            personalizations: [
+                { to: ALERT_SMS_RECIPIENTS.map((email) => ({ email })) },
+            ],
+            from: { email: ALERT_FROM, name: ALERT_FROM_NAME },
+            subject: smsBody,
+            content: [
+                { type: "text/plain", value: smsBody },
+            ],
+        };
+        const res = await fetch("https://api.mailchannels.net/tx/v1/send", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        });
+        if (!res.ok) {
+            console.warn("MailChannels SMS-gateway send failed", res.status, await res.text());
+        }
+    } catch (err) {
+        console.warn("MailChannels SMS-gateway send threw", err);
+    }
+}
+
 // Slack Incoming Webhook post. Formatted with mrkdwn + a click-through link.
 async function sendSlackAlert(webhookUrl: string, subject: string, textBody: string, linkUrl: string): Promise<void> {
     try {
@@ -289,38 +321,6 @@ async function sendTeamsAlert(webhookUrl: string, subject: string, textBody: str
     }
 }
 
-// Twilio SMS. Standard REST endpoint with HTTP Basic auth (SID:token).
-// SMS bodies are trimmed to a single ≈320-char message to avoid pointless fragmentation.
-async function sendSmsAlert(env: Env, subject: string, textBody: string, linkUrl: string): Promise<void> {
-    const sid = env.TWILIO_ACCOUNT_SID;
-    const token = env.TWILIO_AUTH_TOKEN;
-    const from = env.TWILIO_FROM_NUMBER;
-    const to = env.TWILIO_TO_NUMBER;
-    if (!sid || !token || !from || !to) return;
-
-    const smsBody = (subject + "\n\n" + textBody + "\n" + linkUrl).slice(0, 320);
-    try {
-        const url = `https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`;
-        const form = new URLSearchParams();
-        form.set("To", to);
-        form.set("From", from);
-        form.set("Body", smsBody);
-        const res = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Authorization": "Basic " + btoa(`${sid}:${token}`),
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: form.toString(),
-        });
-        if (!res.ok) {
-            console.warn("Twilio SMS failed", res.status, await res.text());
-        }
-    } catch (err) {
-        console.warn("Twilio SMS threw", err);
-    }
-}
-
 // Fan-out alert. Sends to every channel that has credentials configured.
 // Any single channel failure is isolated — the others still fire.
 async function sendAlert(
@@ -330,12 +330,12 @@ async function sendAlert(
     htmlBody: string,
     linkUrl: string
 ): Promise<void> {
-    const jobs: Promise<void>[] = [ sendEmailAlert(subject, textBody, htmlBody) ];
+    const jobs: Promise<void>[] = [
+        sendEmailAlert(subject, textBody, htmlBody),
+        sendCarrierSmsAlert(subject, textBody, linkUrl),
+    ];
     if (env.SLACK_WEBHOOK_URL) jobs.push(sendSlackAlert(env.SLACK_WEBHOOK_URL, subject, textBody, linkUrl));
     if (env.TEAMS_WEBHOOK_URL) jobs.push(sendTeamsAlert(env.TEAMS_WEBHOOK_URL, subject, textBody, linkUrl));
-    if (env.TWILIO_ACCOUNT_SID && env.TWILIO_AUTH_TOKEN && env.TWILIO_FROM_NUMBER && env.TWILIO_TO_NUMBER) {
-        jobs.push(sendSmsAlert(env, subject, textBody, linkUrl));
-    }
     await Promise.allSettled(jobs);
 }
 

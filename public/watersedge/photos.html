@@ -499,6 +499,35 @@
       display: none;
     }
     .comment-error.visible { display: block; }
+
+    /* Delete-photo button inside the lightbox */
+    .lightbox-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 4px 8px 12px;
+    }
+    .photo-delete-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(153, 27, 27, 0.92);
+      color: #FBF9F4;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 4px;
+      padding: 8px 14px;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      min-height: 40px;
+      transition: background 0.15s;
+    }
+    .photo-delete-btn:hover { background: #b91c1c; }
+    .photo-delete-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
     .comments-empty {
       color: var(--muted);
       font-size: 0.9rem;
@@ -584,6 +613,12 @@
       </div>
       <div class="lightbox-caption" id="lightboxCaption"></div>
 
+      <div class="lightbox-actions">
+        <button type="button" class="photo-delete-btn" id="photoDeleteBtn" aria-label="Delete this photo and all its comments">
+          &#128465; Delete photo
+        </button>
+      </div>
+
       <section class="comments-panel" aria-label="Photo discussion">
         <h3>Discussion</h3>
         <div id="commentsList" class="comments-list" aria-live="polite">
@@ -624,6 +659,7 @@
       const lightboxCaption = document.getElementById("lightboxCaption");
       const lightboxClose = document.getElementById("lightboxClose");
       const commentsList = document.getElementById("commentsList");
+      const photoDeleteBtn = document.getElementById("photoDeleteBtn");
       const commentForm = document.getElementById("commentForm");
       const commentAuthor = document.getElementById("commentAuthor");
       const commentBody = document.getElementById("commentBody");
@@ -957,6 +993,8 @@
         lightboxImg.src = "";
         document.body.style.overflow = "";
         currentPhotoId = null;
+        photoDeleteBtn.disabled = false;
+        photoDeleteBtn.innerHTML = "&#128465; Delete photo";
         const stray = document.querySelector(".reply-form");
         if (stray) stray.remove();
         // Refresh badge counts on the gallery after closing.
@@ -977,6 +1015,41 @@
           }
         });
       }
+      // Delete photo (with confirm)
+      photoDeleteBtn.addEventListener("click", async function () {
+        if (!currentPhotoId) return;
+        const caption = lightboxCaption.textContent || "this photo";
+        const ok = window.confirm(
+          "Delete \"" + caption + "\"?\n\n" +
+          "This removes the photo and every comment on it. This cannot be undone."
+        );
+        if (!ok) return;
+
+        photoDeleteBtn.disabled = true;
+        const originalLabel = photoDeleteBtn.innerHTML;
+        photoDeleteBtn.textContent = "Deleting\u2026";
+        try {
+          const res = await fetch(API_BASE + "/" + encodeURIComponent(currentPhotoId), {
+            method: "DELETE"
+          });
+          if (!res.ok) {
+            let msg = "Unable to delete photo.";
+            try { const d = await res.json(); if (d && d.error) msg = d.error; } catch (e) {}
+            window.alert(msg);
+            photoDeleteBtn.disabled = false;
+            photoDeleteBtn.innerHTML = originalLabel;
+            return;
+          }
+          delete commentCounts[currentPhotoId];
+          closeLightbox();
+          loadGallery();
+        } catch (err) {
+          window.alert("Network error. Please try again.");
+          photoDeleteBtn.disabled = false;
+          photoDeleteBtn.innerHTML = originalLabel;
+        }
+      });
+
       lightboxClose.addEventListener("click", closeLightbox);
       lightbox.addEventListener("click", function (e) {
         if (e.target === lightbox) closeLightbox();

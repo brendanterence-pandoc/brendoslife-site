@@ -15,6 +15,13 @@ export interface Env {
     MEDIA_PASSWORD: string;
     PHOTOS_BUCKET: R2Bucket;
     PHOTOS_PASSWORD: string;
+    // Optional alert-fan-out secrets. Any of these unset -> that channel is skipped.
+    SLACK_WEBHOOK_URL?: string;
+    TEAMS_WEBHOOK_URL?: string;
+    TWILIO_ACCOUNT_SID?: string;
+    TWILIO_AUTH_TOKEN?: string;
+    TWILIO_FROM_NUMBER?: string;
+    TWILIO_TO_NUMBER?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -187,7 +194,7 @@ function escapeHtml(s: string): string {
 
 // Fire-and-forget email via Cloudflare MailChannels. Never blocks the response — the caller
 // wraps this in ctx.waitUntil so a slow or failing send doesn't hurt the user's request.
-async function sendAlert(subject: string, textBody: string, htmlBody: string): Promise<void> {
+async function sendEmailAlert(subject: string, textBody: string, htmlBody: string): Promise<void> {
     try {
         const payload = {
             personalizations: [
@@ -208,12 +215,128 @@ async function sendAlert(subject: string, textBody: string, htmlBody: string): P
             body: JSON.stringify(payload),
         });
         if (!res.ok) {
-            // Best-effort logging; observability enabled in wrangler.jsonc
             console.warn("MailChannels send failed", res.status, await res.text());
         }
     } catch (err) {
         console.warn("MailChannels send threw", err);
     }
+}
+
+// Slack Incoming Webhook post. Formatted with mrkdwn + a click-through link.
+async function sendSlackAlert(webhookUrl: string, subject: string, textBody: string, linkUrl: string): Promise<void> {
+    try {
+        const payload = {
+            text: subject,
+            blocks: [
+                {
+                    type: "section",
+                    text: { type: "mrkdwn", text: "*" + subject + "*\n" + textBody },
+                },
+                {
+                    type: "actions",
+                    elements: [
+                        {
+                            type: "button",
+                            text: { type: "plain_text", text: "Open in Waters Edge" },
+                            url: linkUrl,
+                        },
+                    ],
+                },
+            ],
+        };
+        const res = await fetch(webhookUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        });
+        if (!res.ok) {
+            console.warn("Slack webhook failed", res.status, await res.text());
+        }
+    } catch (err) {
+        console.warn("Slack webhook threw", err);
+    }
+}
+
+// Microsoft Teams Incoming Webhook. Uses a simple MessageCard so it renders in
+// any Teams channel connector without needing full Adaptive Card auth.
+async function sendTeamsAlert(webhookUrl: string, subject: string, textBody: string, linkUrl: string): Promise<void> {
+    try {
+        const payload = {
+            "@type": "MessageCard",
+            "@context": "https://schema.org/extensions",
+            themeColor: "C4973B",
+            summary: subject,
+            title: subject,
+            text: textBody.replace(/\n/g, "  \n"),
+            potentialAction: [
+                {
+                    "@type": "OpenUri",
+                    name: "Open in Waters Edge",
+                    targets: [{ os: "default", uri: linkUrl }],
+                },
+            ],
+        };
+        const res = await fetch(webhookUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        });
+        if (!res.ok) {
+            console.warn("Teams webhook failed", res.status, await res.text());
+        }
+    } catch (err) {
+        console.warn("Teams webhook threw", err);
+    }
+}
+
+// Twilio SMS. Standard REST endpoint with HTTP Basic auth (SID:token).
+// SMS bodies are trimmed to a single ≈320-char message to avoid pointless fragmentation.
+async function sendSmsAlert(env: Env, subject: string, textBody: string, linkUrl: string): Promise<void> {
+    const sid = env.TWILIO_ACCOUNT_SID;
+    const token = env.TWILIO_AUTH_TOKEN;
+    const from = env.TWILIO_FROM_NUMBER;
+    const to = env.TWILIO_TO_NUMBER;
+    if (!sid || !token || !from || !to) return;
+
+    const smsBody = (subject + "\n\n" + textBody + "\n" + linkUrl).slice(0, 320);
+    try {
+        const url = `https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`;
+        const form = new URLSearchParams();
+        form.set("To", to);
+        form.set("From", from);
+        form.set("Body", smsBody);
+        const res = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Authorization": "Basic " + btoa(`${sid}:${token}`),
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: form.toString(),
+        });
+        if (!res.ok) {
+            console.warn("Twilio SMS failed", res.status, await res.text());
+        }
+    } catch (err) {
+        console.warn("Twilio SMS threw", err);
+    }
+}
+
+// Fan-out alert. Sends to every channel that has credentials configured.
+// Any single channel failure is isolated — the others still fire.
+async function sendAlert(
+    env: Env,
+    subject: string,
+    textBody: string,
+    htmlBody: string,
+    linkUrl: string
+): Promise<void> {
+    const jobs: Promise<void>[] = [ sendEmailAlert(subject, textBody, htmlBody) ];
+    if (env.SLACK_WEBHOOK_URL) jobs.push(sendSlackAlert(env.SLACK_WEBHOOK_URL, subject, textBody, linkUrl));
+    if (env.TEAMS_WEBHOOK_URL) jobs.push(sendTeamsAlert(env.TEAMS_WEBHOOK_URL, subject, textBody, linkUrl));
+    if (env.TWILIO_ACCOUNT_SID && env.TWILIO_AUTH_TOKEN && env.TWILIO_FROM_NUMBER && env.TWILIO_TO_NUMBER) {
+        jobs.push(sendSmsAlert(env, subject, textBody, linkUrl));
+    }
+    await Promise.allSettled(jobs);
 }
 
 function jsonResponse(data: unknown, status = 200): Response {
@@ -395,7 +518,7 @@ async function handlePhotosApi(
           (caption ? `<strong>Caption:</strong> ${escapeHtml(caption)}<br>` : "") +
           `<strong>File:</strong> ${escapeHtml(file.name)}</p>` +
           `<p><a href="${photoUrl}">Open the photo library</a></p>`;
-      ctx.waitUntil(sendAlert(`New Waters Edge photo from ${uploadedByLabel}`, alertText, alertHtml));
+      ctx.waitUntil(sendAlert(env, `New Waters Edge photo from ${uploadedByLabel}`, alertText, alertHtml, photoUrl));
 
       return jsonResponse({ success: true, photo: meta }, 201);
   }
@@ -491,9 +614,11 @@ async function handlePhotosApi(
               `<p><a href="${photoUrl}">Open the photo library</a></p>`;
           ctx.waitUntil(
               sendAlert(
+                  env,
                   `New Waters Edge ${kind} from ${author}`,
                   alertText,
-                  alertHtml
+                  alertHtml,
+                  photoUrl
               )
           );
 
@@ -501,7 +626,7 @@ async function handlePhotosApi(
       }
   }
 
-  // DELETE /api/photos/:id — delete a photo (open)
+  // DELETE /api/photos/:id — delete a photo AND its comment thread (open, confirm-gated on the client)
   if (pathname.startsWith("/api/photos/") && request.method === "DELETE") {
       const id = pathname.slice("/api/photos/".length);
       const index = await getPhotosIndex(bucket);
@@ -509,8 +634,12 @@ async function handlePhotosApi(
       if (photoIdx === -1) return jsonResponse({ error: "Not found" }, 404);
 
       const photo = index[photoIdx];
-      await bucket.delete(photo.fullKey);
-      await bucket.delete(photo.thumbKey);
+      // Best-effort: remove the full image, thumbnail, and any comments thread.
+      await Promise.all([
+          bucket.delete(photo.fullKey),
+          bucket.delete(photo.thumbKey),
+          bucket.delete(commentsKey(id)),
+      ]);
       index.splice(photoIdx, 1);
       await savePhotosIndex(bucket, index);
 
@@ -622,7 +751,7 @@ async function handleThreadsApi(
             `</blockquote>` +
             `<p><a href="${pageUrl}">Open the style guide</a></p>`;
         ctx.waitUntil(
-            sendAlert(`New Style Guide ${kind} from ${author} — ${label}`, alertText, alertHtml)
+            sendAlert(env, `New Style Guide ${kind} from ${author} — ${label}`, alertText, alertHtml, pageUrl)
         );
 
         return jsonResponse({ success: true, comment }, 201);

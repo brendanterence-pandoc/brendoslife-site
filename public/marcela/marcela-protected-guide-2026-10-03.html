@@ -1,0 +1,907 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <title>Marcela’s Day 3 Shoulder Arthroscopy Recovery Guide</title>
+
+  <style>
+    :root {
+      --navy: #0a1628;
+      --navy-soft: #102139;
+      --blue: #285d80;
+      --blue-pale: #e9f1f5;
+      --gold: #c4973b;
+      --gold-light: #ead18b;
+      --cream: #fbfaf6;
+      --paper: #ffffff;
+      --ink: #203240;
+      --muted: #64727c;
+      --line: #dce4e8;
+      --danger: #983f3d;
+      --danger-bg: #fff2f0;
+      --warning: #866017;
+      --warning-bg: #fff8e9;
+      --shadow: 0 15px 34px rgba(10, 27, 45, 0.10);
+      --radius: 16px;
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--cream);
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 4% 0%, rgba(220, 235, 241, 0.75), transparent 31rem),
+        linear-gradient(180deg, #f7fbfc 0%, var(--cream) 530px);
+      font-family: var(--sans);
+      line-height: 1.62;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      min-height: 67px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(10, 22, 40, 0.12);
+      background: rgba(10, 22, 40, 0.96);
+      backdrop-filter: blur(12px);
+    }
+
+    .header-inner {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--cream);
+      text-decoration: none;
+    }
+
+    .brand img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+    }
+
+    .brand span {
+      color: var(--gold);
+      font-family: var(--serif);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.19em;
+      text-transform: uppercase;
+    }
+
+    .header-link {
+      color: #f5f4ef;
+      font-size: 0.76rem;
+      font-weight: 750;
+      letter-spacing: 0.14em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .header-link:hover,
+    .header-link:focus-visible {
+      color: var(--gold-light);
+      outline: none;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(101deg, rgba(6, 23, 43, 0.98), rgba(11, 45, 72, 0.94) 62%, rgba(29, 93, 123, 0.79));
+      color: #fff;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -150px;
+      bottom: -260px;
+      width: 620px;
+      height: 620px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 38px rgba(255, 255, 255, 0.05),
+        0 0 0 80px rgba(255, 255, 255, 0.035);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, calc(100% - 40px));
+      min-height: 365px;
+      margin: 0 auto;
+      padding: 69px 0 62px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 210px;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      margin: 0 0 16px;
+      color: #d4e6ef;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.17em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 32px;
+      height: 2px;
+      background: var(--gold-light);
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--serif);
+      line-height: 1.15;
+    }
+
+    .hero h1 {
+      max-width: 790px;
+      margin: 0;
+      color: #fff;
+      font-size: clamp(2.3rem, 5.4vw, 4.6rem);
+      font-weight: 400;
+      letter-spacing: -0.045em;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 21px;
+      margin: 23px 0 0;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 0.98rem;
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-meta span::before {
+      content: "•";
+      color: var(--gold-light);
+      font-size: 1.2rem;
+    }
+
+    .hero-logo {
+      width: 198px;
+      height: 198px;
+      display: grid;
+      place-items: center;
+      justify-self: end;
+      padding: 23px;
+      border: 5px solid rgba(255, 255, 255, 0.88);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.97);
+      box-shadow: 0 21px 44px rgba(0, 0, 0, 0.27);
+    }
+
+    .hero-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .layout {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 42px 0 78px;
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 37px;
+      align-items: start;
+    }
+
+    .side-panel {
+      position: sticky;
+      top: 90px;
+      padding: 21px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 10px 26px rgba(16, 52, 76, 0.06);
+    }
+
+    .side-panel h2 {
+      margin: 0 0 12px;
+      color: var(--navy);
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .side-panel nav {
+      display: grid;
+      gap: 2px;
+    }
+
+    .side-panel nav a {
+      padding: 8px 9px;
+      border-radius: 7px;
+      color: #4d5d68;
+      font-size: 0.88rem;
+      font-weight: 650;
+      text-decoration: none;
+    }
+
+    .side-panel nav a:hover,
+    .side-panel nav a:focus-visible {
+      color: var(--navy);
+      background: var(--blue-pale);
+      outline: none;
+    }
+
+    .side-note {
+      margin: 19px -21px -21px;
+      padding: 18px 21px;
+      border-radius: 0 0 var(--radius) var(--radius);
+      background: var(--navy);
+      color: #d6e6ee;
+      font-size: 0.81rem;
+      line-height: 1.55;
+    }
+
+    .intro-card {
+      padding: 27px 29px;
+      border-left: 5px solid var(--gold);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .intro-card p {
+      margin: 0;
+      color: #334753;
+      font-size: 1.07rem;
+    }
+
+    .intro-card strong {
+      color: var(--navy);
+    }
+
+    .section {
+      margin-top: 35px;
+      scroll-margin-top: 92px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin: 0 0 16px;
+    }
+
+    .section-heading::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      color: var(--navy);
+      font-size: clamp(1.55rem, 2.6vw, 2.04rem);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .card {
+      padding: 27px 29px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: 0 8px 21px rgba(16, 55, 80, 0.045);
+    }
+
+    .checklist {
+      display: grid;
+      gap: 13px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .checklist li {
+      position: relative;
+      padding: 2px 0 2px 35px;
+    }
+
+    .checklist li::before {
+      content: "";
+      position: absolute;
+      top: 0.29rem;
+      left: 0;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #8495a0;
+      border-radius: 4px;
+      background: #fff;
+    }
+
+    .lead {
+      margin: 0;
+    }
+
+    .lead + .lead {
+      margin-top: 16px;
+    }
+
+    .lead strong {
+      color: var(--navy);
+    }
+
+    .medication-checks {
+      margin-top: 22px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+    }
+
+    .guidance {
+      margin-top: 22px;
+      padding: 17px 20px;
+      border: 1px solid #efd8aa;
+      border-radius: 12px;
+      background: var(--warning-bg);
+    }
+
+    .guidance h3 {
+      margin: 0 0 7px;
+      color: var(--warning);
+      font-family: var(--sans);
+      font-size: 0.96rem;
+      font-weight: 850;
+    }
+
+    .guidance p {
+      margin: 0;
+      color: #5f4e29;
+    }
+
+    .schedule-note {
+      margin: 0 0 16px;
+      padding: 15px 17px;
+      border-left: 4px solid var(--blue);
+      border-radius: 0 10px 10px 0;
+      background: var(--blue-pale);
+      color: #244d68;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 660px;
+      border-collapse: collapse;
+      background: #fff;
+    }
+
+    thead {
+      background: var(--navy);
+      color: #fff;
+    }
+
+    th,
+    td {
+      padding: 15px 17px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    td {
+      font-size: 0.93rem;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #fbfdfe;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .time {
+      color: var(--navy);
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .done {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      border: 2px solid #81929d;
+      border-radius: 4px;
+    }
+
+    .callout-danger {
+      margin-top: 20px;
+      padding: 23px 26px;
+      border: 1px solid #eebfbb;
+      border-radius: var(--radius);
+      background: var(--danger-bg);
+    }
+
+    .callout-danger h3 {
+      margin: 0 0 10px;
+      color: var(--danger);
+      font-family: var(--sans);
+      font-size: 1.05rem;
+      font-weight: 850;
+    }
+
+    .callout-danger p {
+      margin: 0;
+      color: #6d3432;
+    }
+
+    .source-box {
+      padding: 22px 26px;
+      border-top: 3px solid var(--gold);
+      border-radius: 0 0 var(--radius) var(--radius);
+      background: #f4f8fa;
+      color: #52646e;
+      font-size: 0.89rem;
+    }
+
+    .source-box strong {
+      color: var(--navy);
+    }
+
+    .footer {
+      padding: 31px 20px 37px;
+      border-top: 1px solid rgba(10, 22, 40, 0.10);
+      background: var(--navy);
+      color: rgba(255, 255, 255, 0.70);
+      font-size: 0.82rem;
+      text-align: center;
+    }
+
+    .footer a {
+      color: #fff;
+      font-weight: 750;
+      text-decoration-color: var(--gold);
+      text-underline-offset: 3px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: minmax(0, 1fr) 165px;
+        gap: 27px;
+      }
+
+      .hero-logo {
+        width: 155px;
+        height: 155px;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .side-panel {
+        position: static;
+      }
+
+      .side-panel nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .header-inner,
+      .hero-inner,
+      .layout {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .brand span {
+        font-size: 0.72rem;
+        letter-spacing: 0.13em;
+      }
+
+      .header-link {
+        font-size: 0.67rem;
+        letter-spacing: 0.09em;
+      }
+
+      .hero-inner {
+        min-height: auto;
+        padding: 50px 0 46px;
+        grid-template-columns: 1fr;
+      }
+
+      .hero-logo {
+        justify-self: start;
+        width: 130px;
+        height: 130px;
+      }
+
+      .section-heading h2 {
+        white-space: normal;
+      }
+
+      .intro-card,
+      .card {
+        padding: 22px 20px;
+      }
+
+      .side-panel nav {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      .site-header,
+      .side-panel,
+      .footer {
+        display: none;
+      }
+
+      body {
+        background: #fff;
+      }
+
+      .hero {
+        color: #000;
+        background: #fff;
+      }
+
+      .hero h1,
+      .hero-meta {
+        color: #000;
+      }
+
+      .hero-inner {
+        width: 100%;
+        min-height: 0;
+        padding: 0 0 22px;
+        display: block;
+      }
+
+      .hero-logo {
+        display: none;
+      }
+
+      .layout {
+        width: 100%;
+        display: block;
+        padding: 0;
+      }
+
+      .section {
+        break-inside: avoid;
+      }
+
+      .intro-card,
+      .card {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/marcela/" aria-label="Back to Marcela private area">
+        <img src="/brendoslife-mark.png" alt="">
+        <span>Brendo’s Life</span>
+      </a>
+
+      <a class="header-link" href="/marcela/">Marcela’s Space</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-inner">
+        <div>
+          <p class="eyebrow">Postoperative care guide</p>
+          <h1 id="page-title">Marcela’s Day 3 Shoulder Arthroscopy Recovery Guide</h1>
+
+          <div class="hero-meta" aria-label="Guide and surgery dates">
+            <span>Saturday, October 3, 2026</span>
+            <span>Surgery: October 1, 2026</span>
+          </div>
+        </div>
+
+        <div class="hero-logo" aria-label="Marcela Arenas Real Estate Advisor">
+          <img src="/marcela-emblem.png" alt="Marcela Arenas emblem">
+        </div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="side-panel" aria-label="Guide sections">
+        <h2>Today’s guide</h2>
+
+        <nav>
+          <a href="#goal">Today’s goal</a>
+          <a href="#rules">Four rules</a>
+          <a href="#medications">Pain medicine</a>
+          <a href="#schedule">Medication timetable</a>
+          <a href="#shoulder-care">Shoulder care</a>
+          <a href="#dressing">Dressing &amp; shower</a>
+          <a href="#contact">When to call</a>
+          <a href="#tomorrow">After 72 hours</a>
+        </nav>
+
+        <div class="side-note">
+          This guide supports, but does not replace, the specific instructions
+          provided by the surgeon and surgical center.
+        </div>
+      </aside>
+
+      <div>
+        <section class="intro-card" id="goal">
+          <p>
+            <strong>Today’s goal:</strong> Keep pain controlled, protect the
+            shoulder, keep the dressing clean and dry until the 72-hour point,
+            continue the antibiotic, and watch for signs of infection.
+          </p>
+        </section>
+
+        <section class="section" id="rules">
+          <div class="section-heading">
+            <h2>The four rules for Day 3</h2>
+          </div>
+
+          <div class="card">
+            <ul class="checklist">
+              <li>Take pain medicine when pain is developing rather than waiting until it becomes severe. Use only the prescribed dose and interval.</li>
+              <li>No lifting with the operative shoulder/hand and no overhead activity. Use the sling for comfort.</li>
+              <li>Keep the dressing clean and dry until the full 72-hour point after surgery.</li>
+              <li>Take cefadroxil twice daily for the full 7-day course unless the surgeon tells you otherwise.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="section" id="medications">
+          <div class="section-heading">
+            <h2>Pain medicine and stomach comfort</h2>
+          </div>
+
+          <div class="card">
+            <p class="lead">
+              <strong>Oxycodone prescription:</strong> 5 mg, 1–2 tablets every
+              6 hours as needed for pain. The label allows up to 10 mg at a
+              dosing time, but the goal is the lowest dose that controls the pain.
+            </p>
+
+            <div class="medication-checks">
+              <ul class="checklist">
+                <li>Take oxycodone with food or a small snack. The discharge packet specifically recommends pain medicine with food.</li>
+                <li>Drink fluids regularly unless another clinician has told her to restrict fluids.</li>
+                <li>If the pain is controlled, she does not need to take oxycodone just because a dosing time is available.</li>
+                <li>Do not take another opioid such as Vicodin/hydrocodone at the same time as oxycodone unless Dr. Page specifically instructed that combination.</li>
+                <li>Do not add Tylenol/acetaminophen unless you know exactly what is in any other prescribed pain medicine and the surgeon/pharmacist has confirmed it is appropriate.</li>
+                <li>No alcohol, driving, or machinery while taking narcotic pain medicine.</li>
+              </ul>
+            </div>
+
+            <div class="guidance">
+              <h3>Cefadroxil and stomach upset</h3>
+              <p>
+                The surgeon ordered cefadroxil twice daily for one week. Taking
+                it with a meal is a practical way to reduce stomach upset. If
+                you develop repeated vomiting, severe diarrhea, hives,
+                facial/lip swelling, or trouble breathing, contact a clinician
+                promptly; trouble breathing or facial/throat swelling is an emergency.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="schedule">
+          <div class="section-heading">
+            <h2>Day 3 medication timetable</h2>
+          </div>
+
+          <p class="schedule-note">
+            Use this schedule only if she has <strong>not</strong> taken
+            oxycodone within the previous 6 hours. If she already took a dose
+            later than 3:00 AM, move the oxycodone times forward so each dose
+            is at least 6 hours after the prior dose. Do not wake her overnight
+            solely to take oxycodone if she is sleeping comfortably.
+          </p>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Time</th>
+                  <th scope="col">Medication / action</th>
+                  <th scope="col">How to take it</th>
+                  <th scope="col">Done</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="time">9:00 AM</td>
+                  <td><strong>Cefadroxil</strong></td>
+                  <td>Prescribed dose, with breakfast</td>
+                  <td><span class="done" aria-label="Medication completed"></span></td>
+                </tr>
+                <tr>
+                  <td class="time">9:00 AM</td>
+                  <td><strong>Oxycodone 5 mg</strong></td>
+                  <td>1 tablet if needed; 2 only if needed and within prescription</td>
+                  <td><span class="done" aria-label="Medication completed"></span></td>
+                </tr>
+                <tr>
+                  <td class="time">3:00 PM</td>
+                  <td><strong>Oxycodone 5 mg</strong></td>
+                  <td>Only if pain needs treatment and at least 6 hours since last dose</td>
+                  <td><span class="done" aria-label="Medication completed"></span></td>
+                </tr>
+                <tr>
+                  <td class="time">9:00 PM</td>
+                  <td><strong>Cefadroxil</strong></td>
+                  <td>Prescribed dose, with dinner/evening snack</td>
+                  <td><span class="done" aria-label="Medication completed"></span></td>
+                </tr>
+                <tr>
+                  <td class="time">9:00 PM</td>
+                  <td><strong>Oxycodone 5 mg</strong></td>
+                  <td>Only if pain needs treatment and at least 6 hours since last dose</td>
+                  <td><span class="done" aria-label="Medication completed"></span></td>
+                </tr>
+                <tr>
+                  <td class="time">3:00 AM</td>
+                  <td><strong>Oxycodone 5 mg</strong></td>
+                  <td>Only if awake with pain and at least 6 hours since last dose</td>
+                  <td><span class="done" aria-label="Medication completed"></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section" id="shoulder-care">
+          <div class="section-heading">
+            <h2>Shoulder care today</h2>
+          </div>
+
+          <div class="card">
+            <ul class="checklist">
+              <li>Sling for comfort.</li>
+              <li>No overhead activity.</li>
+              <li>No lifting anything with the operative shoulder or hand until follow-up.</li>
+              <li>Gentle elbow motion is allowed when the sling is removed.</li>
+              <li>Squeezing a small ball with the hand is encouraged.</li>
+              <li>Dr. Page’s sheet says ice for 2 days, then try heat. If using either, protect the skin and use comfort as the guide.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="section" id="dressing">
+          <div class="section-heading">
+            <h2>Dressing and shower</h2>
+          </div>
+
+          <div class="card">
+            <p class="lead">
+              Dr. Page’s shoulder-specific instructions say to wait 72 hours
+              before changing to a lighter dressing and showering. Until that
+              time, keep the dressing clean and dry.
+            </p>
+            <p class="lead">
+              After 72 hours, place Band-Aids over the small portal sites and
+              larger clean dressings over larger incisions as needed. Do not
+              bathe, swim, use a hot tub, or submerge the wounds.
+            </p>
+          </div>
+        </section>
+
+        <section class="section" id="contact">
+          <div class="section-heading">
+            <h2>Call Dr. Page if you see</h2>
+          </div>
+
+          <div class="card">
+            <ul class="checklist">
+              <li>Pain that is becoming markedly worse instead of gradually improving.</li>
+              <li>Increasing redness, swelling, foul odor/drainage, or temperature over 100°F.</li>
+              <li>Excessive or bright-red bleeding.</li>
+              <li>A cold, discolored, unusually numb/tingling hand or increasing arm/hand pain.</li>
+              <li>Persistent nausea or vomiting that prevents her from keeping medicines or fluids down.</li>
+            </ul>
+          </div>
+
+          <div class="callout-danger">
+            <h3>Emergency evaluation</h3>
+            <p>
+              Severe or prolonged shortness of breath, very slow or shallow
+              breathing, inability to wake normally, or facial/throat swelling
+              warrants emergency evaluation.
+            </p>
+          </div>
+        </section>
+
+        <section class="section" id="tomorrow">
+          <div class="section-heading">
+            <h2>Tomorrow / after the 72-hour point</h2>
+          </div>
+
+          <div class="card">
+            <ul class="checklist">
+              <li>Change the original dressing to a lighter clean dressing.</li>
+              <li>Band-Aids may cover the small arthroscopy portal sites; use larger dressings for larger incisions.</li>
+              <li>Showering is allowed after 72 hours. If a wound/dressing gets wet, dry it and replace it with a clean dressing.</li>
+              <li>Continue no lifting, no overhead activity, antibiotic twice daily, and pain medicine only as needed.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="section" aria-label="Source basis">
+          <div class="source-box">
+            <strong>Source basis:</strong> Premier Surgery Center of Sarasota
+            postoperative instructions and Dr. Steven Page’s shoulder
+            arthroscopy instructions dated 10/01/2026. Where practical
+            medication advice goes beyond the packet—for example, taking
+            cefadroxil with a meal to reduce stomach upset—it is identified as
+            general medication guidance.
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <a href="/marcela/">Marcela’s private resource area</a>
+    &nbsp;•&nbsp;
+    Day 3 Shoulder Arthroscopy Recovery Guide
+  </footer>
+</body>
+</html>

@@ -15,6 +15,7 @@ export interface Env {
     MEDIA_PASSWORD: string;
     PHOTOS_BUCKET: R2Bucket;
     PHOTOS_PASSWORD: string;
+    WATERSEDGE_PASSWORD?: string;
     // Optional alert-fan-out secrets. Any of these unset -> that channel is skipped.
     SLACK_WEBHOOK_URL?: string;
     TEAMS_WEBHOOK_URL?: string;
@@ -103,6 +104,137 @@ async function isAuthorized(
         timingSafeEqual(username, expectedUsername) &&
         timingSafeEqual(password, expectedPassword)
       );
+}
+
+// ---------------------------------------------------------------------------
+// Waters Edge password gate (cookie-based, phone friendly)
+// ---------------------------------------------------------------------------
+// Protects /watersedge/* plus the APIs those pages call (/api/photos/*,
+// /api/threads/*). Visitors see a branded sign-in page; a correct password
+// sets an HttpOnly cookie for 90 days. Fails closed if the secret is unset.
+
+const WE_COOKIE = "we_auth";
+const WE_LOGIN_PATH = "/watersedge-login";
+const WE_COOKIE_MAX_AGE = 60 * 60 * 24 * 90;
+
+function isWatersEdgeProtected(p: string): boolean {
+    return (
+        p === "/watersedge" ||
+        p.startsWith("/watersedge/") ||
+        p.startsWith("/api/photos") ||
+        p.startsWith("/api/threads")
+    );
+}
+
+async function watersEdgeToken(password: string): Promise<string> {
+    const data = new TextEncoder().encode(`brendoslife-watersedge:v1:${password}`);
+    const digest = await crypto.subtle.digest("SHA-256", data);
+    return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+function readCookie(request: Request, name: string): string {
+    const header = request.headers.get("Cookie") || "";
+    for (const part of header.split(";")) {
+        const [k, ...v] = part.trim().split("=");
+        if (k === name) return v.join("=");
+    }
+    return "";
+}
+
+async function hasWatersEdgeAccess(request: Request, env: Env): Promise<boolean> {
+    if (!env.WATERSEDGE_PASSWORD) return false;
+    const cookie = readCookie(request, WE_COOKIE);
+    if (!cookie) return false;
+    return timingSafeEqual(cookie, await watersEdgeToken(env.WATERSEDGE_PASSWORD));
+}
+
+function safeNext(next: string | null): string {
+    if (!next || !next.startsWith("/") || next.startsWith("//")) return "/watersedge";
+    return next;
+}
+
+function watersEdgeLoginPage(next: string, error: string): Response {
+    const html = `<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waters Edge | Sign in</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,500;1,8..60,500&family=Inter:wght@400;500;600&display=swap">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;font-family:Inter,system-ui,sans-serif;color:#f7f6f2;background:#0a1628;background-image:radial-gradient(900px 500px at 75% 5%,rgba(196,151,59,.08),transparent 70%),radial-gradient(800px 500px at 10% 80%,rgba(58,107,140,.08),transparent 70%)}
+.card{width:100%;max-width:400px;padding:36px 32px;border:1px solid rgba(212,209,202,.18);border-radius:10px;background:rgba(255,255,255,.03);text-align:center}
+.chip{width:64px;height:64px;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;background:#F7F2E7;border:1px solid #EADFC8;border-radius:10px}
+.chip img{width:46px;height:46px;object-fit:contain}
+.eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#c4973b;margin-bottom:8px}
+h1{font-family:"Source Serif 4",Georgia,serif;font-weight:500;font-size:1.9rem;margin-bottom:8px}
+p{color:#b9b6ad;font-size:.95rem;margin-bottom:22px}
+label{display:block;text-align:left;font-size:.8rem;color:#b9b6ad;margin-bottom:6px}
+input{width:100%;padding:13px 14px;font-size:16px;border-radius:6px;border:1px solid rgba(212,209,202,.3);background:rgba(10,22,40,.6);color:#f7f6f2}
+input:focus{outline:2px solid #c4973b;outline-offset:1px;border-color:#c4973b}
+button{margin-top:14px;width:100%;padding:13px;font-size:1rem;font-weight:600;border:0;border-radius:6px;background:#c4973b;color:#0a1628;cursor:pointer}
+button:hover{background:#d6ab52}
+.err{margin-top:14px;color:#f0a39a;font-size:.88rem}
+a.home{display:inline-block;margin-top:22px;color:#b9b6ad;font-size:.82rem;text-decoration:none}
+a.home:hover{color:#c4973b}
+</style></head><body>
+<main class="card">
+  <div class="chip"><img src="/watersedge/icon-lakewoodranch-sm.png" alt=""></div>
+  <div class="eyebrow">Private area</div>
+  <h1>Waters Edge</h1>
+  <p>Enter the password to view the home hub, style guide and photos.</p>
+  <form method="POST" action="${WE_LOGIN_PATH}">
+    <input type="hidden" name="next" value="${escapeHtml(next)}">
+    <label for="pw">Password</label>
+    <input id="pw" name="password" type="password" autocomplete="current-password" required autofocus>
+    <button type="submit">Enter</button>
+    ${error ? `<div class="err" role="alert">${escapeHtml(error)}</div>` : ""}
+  </form>
+  <a class="home" href="/">&larr; Back to Brendo's Life</a>
+</main></body></html>`;
+    return new Response(html, {
+        status: error ? 401 : 200,
+        headers: {
+            "Content-Type": "text/html; charset=UTF-8",
+            "Cache-Control": "no-store",
+            "X-Robots-Tag": "noindex, nofollow, noarchive",
+        },
+    });
+}
+
+async function handleWatersEdgeLogin(request: Request, env: Env, url: URL): Promise<Response> {
+    if (request.method === "POST") {
+        const form = await request.formData();
+        const password = String(form.get("password") || "");
+        const next = safeNext(String(form.get("next") || ""));
+        if (!env.WATERSEDGE_PASSWORD) {
+            return watersEdgeLoginPage(next, "The Waters Edge password has not been configured yet.");
+        }
+        if (!timingSafeEqual(password, env.WATERSEDGE_PASSWORD)) {
+            return watersEdgeLoginPage(next, "That password didn't match. Please try again.");
+        }
+        const token = await watersEdgeToken(env.WATERSEDGE_PASSWORD);
+        return new Response(null, {
+            status: 303,
+            headers: {
+                Location: next,
+                "Set-Cookie": `${WE_COOKIE}=${token}; Path=/; Max-Age=${WE_COOKIE_MAX_AGE}; HttpOnly; Secure; SameSite=Lax`,
+                "Cache-Control": "no-store",
+            },
+        });
+    }
+    if (url.searchParams.has("logout")) {
+        return new Response(null, {
+            status: 303,
+            headers: {
+                Location: "/",
+                "Set-Cookie": `${WE_COOKIE}=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Lax`,
+            },
+        });
+    }
+    return watersEdgeLoginPage(safeNext(url.searchParams.get("next")), "");
 }
 
 // ---------------------------------------------------------------------------
@@ -917,6 +1049,27 @@ export default {
               pathname = pathname.slice(0, -1);
       }
 
+      // 0. Waters Edge password gate (pages + the APIs they call)
+      if (pathname === WE_LOGIN_PATH) {
+              return handleWatersEdgeLogin(request, env, url);
+      }
+      if (isWatersEdgeProtected(pathname) && !(await hasWatersEdgeAccess(request, env))) {
+              if (pathname.startsWith("/api/")) {
+                      return new Response(JSON.stringify({ error: "Authentication required" }), {
+                              status: 401,
+                              headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
+                      });
+              }
+              const next = url.pathname + url.search;
+              return new Response(null, {
+                      status: 302,
+                      headers: {
+                              Location: `${WE_LOGIN_PATH}?next=${encodeURIComponent(next)}`,
+                              "Cache-Control": "no-store",
+                      },
+              });
+      }
+
       // 1. Photo Library API routes
       if (pathname.startsWith("/api/photos")) {
               return handlePhotosApi(request, env, ctx, pathname);
@@ -963,6 +1116,9 @@ export default {
       // 5. Add X-Robots-Tag to every response (defense in depth on the noindex meta).
       const headers = new Headers(response.headers);
           headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+          if (isWatersEdgeProtected(pathname) && !pathname.startsWith("/api/")) {
+                  headers.set("Cache-Control", "private, no-cache");
+          }
 
       return new Response(response.body, {
               status: response.status,

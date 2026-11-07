@@ -22,6 +22,17 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
+      - name: Sync Worker secrets
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          WATERSEDGE_PASSWORD: ${{ secrets.WATERSEDGE_PASSWORD }}
+        run: |
+          if [ -n "$WATERSEDGE_PASSWORD" ]; then
+            printf '%s' "$WATERSEDGE_PASSWORD" | npx wrangler secret put WATERSEDGE_PASSWORD
+          else
+            echo "WATERSEDGE_PASSWORD repo secret not set; skipping"
+          fi
+
       - name: Deploy Worker
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

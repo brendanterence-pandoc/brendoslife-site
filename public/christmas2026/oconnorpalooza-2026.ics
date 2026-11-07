@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Brendos Life//OConnorpalooza 2026//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:oconnorpalooza-2026@brendoslife.com
+DTSTAMP:20261107T120000Z
+DTSTART:20261218T220000Z
+DTEND:20261219T020000Z
+SUMMARY:O'Connorpalooza: Christmas Edition
+DESCRIPTION:Betsy and Brendan invite you to a friendly Christmas drop-in. Food\, drinks\, music and jocularity. Show the gate QR code at brendoslife.com/christmas2026. Regrets only: brendo@outlook.com
+LOCATION:6506 Waters Edge Way\, Lakewood Ranch\, FL 34202
+URL:https://brendoslife.com/christmas2026
+END:VEVENT
+END:VCALENDAR

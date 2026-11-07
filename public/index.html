@@ -133,6 +133,8 @@
       align-items: center;
     }
 
+    .content-grid > * { min-width: 0; }
+
     .links {
       display: flex;
       flex-direction: column;
@@ -210,7 +212,7 @@
     .portrait img {
       display: block;
       width: 100%;
-      max-width: 360px;
+      max-width: 520px;
       max-height: 64vh;
       height: auto;
       object-fit: contain;
@@ -243,6 +245,19 @@
       display: block;
     }
 
+    /* Christmas card: deep green chip with the pinecone */
+    .link-card-icon--xmas-chip {
+      flex: 0 0 50px;
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(214, 178, 94, 0.7);
+      background: #0f3a22;
+    }
+    .link-card-icon--xmas-chip img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .link-card--xmas { border-color: rgba(214, 178, 94, 0.35); }
+
     @media (max-width: 960px) {
       .wrap {
         padding: 24px 24px 48px;
@@ -255,7 +270,7 @@
         gap: 32px;
       }
       .portrait { order: -1; }
-      .portrait img { max-width: 320px; max-height: 45vh; }
+      .portrait img { max-width: 100%; max-height: none; }
       h1 { font-size: clamp(2rem, 7vw, 2.8rem); }
     }
     @media (max-width: 480px) {
@@ -299,16 +314,6 @@
           <span class="link-card-arrow" aria-hidden="true">&rarr;</span>
         </a>
 
-        <a class="link-card" href="/media.html">
-          <span class="link-card-icon" aria-hidden="true">
-            <img src="/brendoslife-mark.png" alt="" />
-          </span>
-          <span class="link-card-text">
-            <span class="link-card-title">Media Campaign Tracker</span>
-            <span class="link-card-host">brendoslife.com/media.html</span>
-          </span>
-          <span class="link-card-arrow" aria-hidden="true">&rarr;</span>
-        </a>
 
         <a class="link-card" href="/watersedge">
           <span class="link-card-icon link-card-icon--palm-chip" aria-hidden="true">
@@ -320,13 +325,23 @@
           </span>
           <span class="link-card-arrow" aria-hidden="true">&rarr;</span>
         </a>
+
+        <a class="link-card link-card--xmas" href="/christmas2026">
+          <span class="link-card-icon link-card-icon--xmas-chip" aria-hidden="true">
+            <img src="/christmas2026/icon-pinecone.jpg" alt="" width="50" height="50" />
+          </span>
+          <span class="link-card-text">
+            <span class="link-card-title">O'Connorpalooza Christmas Drop In</span>
+            <span class="link-card-host">brendoslife.com/christmas2026</span>
+          </span>
+          <span class="link-card-arrow" aria-hidden="true">&rarr;</span>
+        </a>
       </nav>
 
       <aside class="portrait" aria-label="Photograph">
-        <img src="/Betsy-with-Rose.jpg" alt="Betsy the dog holding a red rose" loading="eager" />
+        <img src="/waters-edge-home.jpg" alt="Illustration of the new home at Waters Edge, with palm trees, the dog on the lawn, and two cars in the driveway" width="1073" height="717" loading="eager" />
       </aside>
     </div>
   </main>
 </body>
 </html>
-                                                                                          

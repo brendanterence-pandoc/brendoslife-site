@@ -52,6 +52,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     html, body { height: 100%; }
+    html { -webkit-text-size-adjust: 100%; }
 
     body {
       font-family: var(--font-body);
@@ -269,12 +270,15 @@
         grid-template-columns: 1fr;
         gap: 32px;
       }
-      .portrait { order: -1; }
+      .portrait { order: 1; }
       .portrait img { max-width: 100%; max-height: none; }
       h1 { font-size: clamp(2rem, 7vw, 2.8rem); }
     }
     @media (max-width: 480px) {
-      .link-card { padding: 12px 16px; }
+      .wrap { padding: 20px 16px 40px; }
+      .link-card { padding: 12px 14px; gap: 12px; min-height: 64px; }
+      .link-card-host { letter-spacing: 0.04em; font-size: 0.68rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .link-card-arrow { flex: none; }
       .link-card-title { font-size: 1rem; }
       .link-card-icon { flex: 0 0 52px; width: 52px; height: 38px; }
     }

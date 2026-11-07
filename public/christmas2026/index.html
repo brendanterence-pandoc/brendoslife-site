@@ -254,6 +254,50 @@
     .menu span { font-size: 0.85rem; color: var(--cream-muted); }
     .menu i { display: block; font-style: normal; font-size: 1.5rem; margin-bottom: 6px; color: var(--gold-soft); }
 
+
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .greeting {
+      font-family: var(--font-serif); font-style: italic; font-weight: 600;
+      font-size: clamp(1.02rem, 2.2vw, 1.35rem); color: var(--gold-soft);
+      margin: 0 auto 26px; max-width: 46ch; line-height: 1.4;
+    }
+    .br-m { display: none; }
+    .announcing { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 14px; }
+    .announcing-word {
+      font-family: var(--font-serif); font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.42em; padding-left: 0.42em;
+      font-size: clamp(0.9rem, 2vw, 1.25rem); color: var(--cream);
+      text-shadow: 0 0 14px rgba(255, 214, 140, 0.45);
+    }
+    .flourish { width: clamp(40px, 9vw, 110px); height: 12px; position: relative; }
+    .flourish::before { content: ""; position: absolute; left: 0; right: 10px; top: 5px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold)); }
+    .flourish::after { content: ""; position: absolute; right: 0; top: 1px; width: 8px; height: 8px; background: var(--cranberry); border: 1.5px solid var(--gold); transform: rotate(45deg); }
+    .flourish--r { transform: scaleX(-1); }
+    .marquee-art { margin: 0 auto; max-width: 1060px; }
+    .marquee-art img { width: 100%; height: auto; filter: drop-shadow(0 12px 26px rgba(0, 0, 0, 0.5)); }
+
+    .drive {
+      margin-top: 28px; padding: 30px 32px;
+      border: 1.5px solid rgba(214, 178, 94, 0.6); border-radius: 14px;
+      background: linear-gradient(180deg, rgba(22, 74, 51, 0.55), rgba(11, 42, 26, 0.75));
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    }
+    .drive-title { font-family: var(--font-serif); font-style: italic; font-weight: 700; font-size: clamp(1.4rem, 3vw, 1.9rem); color: var(--gold-soft); margin-bottom: 8px; }
+    .drive-lead, .drive-text { color: var(--cream); font-size: 1.02rem; margin-top: 10px; }
+    .drive-text strong { color: var(--gold-soft); }
+    .warn {
+      display: flex; gap: 16px; align-items: flex-start; margin: 18px 0 8px;
+      padding: 18px 20px; border-radius: 10px;
+      background: linear-gradient(180deg, #c92a33, #8f161e);
+      border: 2px solid #f4c542; box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+    }
+    .warn-icon { flex: none; width: 40px; height: 40px; }
+    .warn-head { font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; font-size: 1.05rem; color: #fff; }
+    .warn-body { font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; font-size: 0.95rem; color: #fff3d6; margin-top: 4px; line-height: 1.45; }
+    .drive-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+    .drive-note { color: var(--cream-muted); font-size: 0.85rem; margin-top: 12px; }
+    .foot-greet { font-family: var(--font-serif); font-style: italic; font-size: 1.1rem; color: var(--cream); max-width: 40ch; margin: 0 auto; }
+
     footer {
       position: relative; z-index: 1; text-align: center; padding: 30px 28px 56px;
       color: var(--cream-muted); font-size: 0.85rem;
@@ -266,6 +310,10 @@
       .menu { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 520px) {
+      .br-m { display: inline; }
+      .drive { padding: 22px 18px; }
+      .warn { padding: 14px; gap: 12px; }
+      .warn-icon { width: 32px; height: 32px; }
       .topbar { padding: 14px 18px; }
       .hero { padding: 16px 18px 28px; }
       .marquee { -webkit-text-stroke: 1.2px var(--cranberry); }
@@ -293,8 +341,18 @@
 
   <main>
     <section class="hero" aria-labelledby="title">
-      <h1 id="title" class="marquee">O'Connorpalooza</h1>
-      <div class="ribbon">Christmas Edition</div>
+      <p class="greeting">Merry Christmas and Happy Holidays from<br class="br-m" /> Betsy, Brendan, Quinn (23) and Donovan (19)</p>
+
+      <div class="announcing" aria-hidden="true">
+        <span class="flourish"></span><span class="announcing-word">Announcing</span><span class="flourish flourish--r"></span>
+      </div>
+      <h1 id="title" class="marquee-art">
+        <span class="sr-only">Announcing O'Connorpalooza: Christmas Edition</span>
+        <picture>
+          <source srcset="/christmas2026/title-marquee.webp" type="image/webp" />
+          <img src="/christmas2026/title-marquee.png" width="1600" height="318" alt="" />
+        </picture>
+      </h1>
 
       <p class="invite-line">Betsy and Brendan invite you to a <em>Friendly Christmas Drop-In</em></p>
 
@@ -314,9 +372,9 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
           Add to calendar
         </a>
-        <a class="btn" href="https://www.google.com/maps/search/?api=1&query=6506+Waters+Edge+Way,+Lakewood+Ranch,+FL+34202" target="_blank" rel="noopener">
+        <a class="btn" href="#driving">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
-          Directions
+          Driving tips
         </a>
         <a class="btn" href="#gate">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg>
@@ -361,7 +419,7 @@
             <span class="row-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></span>
             <div>
               <h3>6506 Waters Edge Way<br />Lakewood Ranch, FL 34202</h3>
-              <p><a href="https://www.google.com/maps/search/?api=1&query=6506+Waters+Edge+Way,+Lakewood+Ranch,+FL+34202" target="_blank" rel="noopener">Open in Google Maps</a> &middot; <a href="https://maps.apple.com/?q=6506+Waters+Edge+Way,+Lakewood+Ranch,+FL+34202" target="_blank" rel="noopener">Apple Maps</a></p>
+              <p>Use the Waterview Boulevard entrance. <a href="#driving">See driving tips</a></p>
             </div>
           </div>
           <div class="row">
@@ -395,6 +453,32 @@
         </div>
       </div>
 
+
+      <div class="drive" id="driving" aria-labelledby="drive-title">
+        <h2 class="drive-title" id="drive-title">Driving &amp; Navigation Tips</h2>
+        <p class="drive-lead">My home is approximately 2 miles east of I-75 (Exit 213) on University Parkway.</p>
+
+        <div class="warn" role="alert">
+          <svg class="warn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 1.5 21h21L12 2.5z" fill="#f4c542" stroke="#7e1219" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 9v5.5" stroke="#1a1a1a" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="17.6" r="1.3" fill="#1a1a1a"/></svg>
+          <div>
+            <p class="warn-head">Important: GPS directions are incorrect!</p>
+            <p class="warn-body">Do not follow GPS to the back gate on Waters Edge Way. Guests cannot enter through that gate.</p>
+          </div>
+        </div>
+
+        <p class="drive-text">Instead, enter the community from <strong>University Parkway via Waterview Boulevard</strong>, which is the correct entrance for guests.</p>
+        <p class="drive-text"><strong>Address:</strong> 6506 Waters Edge Way, Lakewood Ranch, FL 34202</p>
+
+        <div class="drive-actions">
+          <a class="btn btn--primary" href="https://www.google.com/maps/dir/?api=1&destination=27.386750,-82.424000&travelmode=driving" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            Navigate to the Waterview Blvd entrance (Google)
+          </a>
+          <a class="btn" href="https://maps.apple.com/?daddr=27.386750,-82.424000&dirflg=d" target="_blank" rel="noopener">Apple Maps</a>
+        </div>
+        <p class="drive-note">These buttons take you to the guest entrance, not the house. Show the gate QR code there, then follow Waterview Boulevard in.</p>
+      </div>
+
       <div class="menu" aria-label="What to expect">
         <div><i aria-hidden="true">&#10052;</i><b>Food</b><span>Something festive to graze on</span></div>
         <div><i aria-hidden="true">&#9733;</i><b>Drinks</b><span>Holiday cheer, poured generously</span></div>
@@ -406,7 +490,7 @@
 
   <footer>
     <img class="pine" src="/christmas2026/icon-pinecone.jpg" alt="" aria-hidden="true" style="width:72px;border-radius:50%;border:2px solid rgba(214,178,94,.6)" />
-    <p>Merry Christmas from Betsy and Brendan</p>
+    <p class="foot-greet">Merry Christmas and Happy Holidays from Betsy, Brendan, Quinn (23) and Donovan (19)</p>
     <p style="margin-top:6px"><a href="/">brendoslife.com</a></p>
   </footer>
 

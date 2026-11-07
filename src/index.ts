@@ -188,7 +188,7 @@ a.home:hover{color:#c4973b}
   <form method="POST" action="${WE_LOGIN_PATH}">
     <input type="hidden" name="next" value="${escapeHtml(next)}">
     <label for="pw">Password</label>
-    <input id="pw" name="password" type="password" autocomplete="current-password" required autofocus>
+    <input id="pw" name="password" type="password" inputmode="tel" autocomplete="current-password" required autofocus>
     <button type="submit">Enter</button>
     ${error ? `<div class="err" role="alert">${escapeHtml(error)}</div>` : ""}
   </form>
@@ -212,7 +212,10 @@ async function handleWatersEdgeLogin(request: Request, env: Env, url: URL): Prom
         if (!env.WATERSEDGE_PASSWORD) {
             return watersEdgeLoginPage(next, "The Waters Edge password has not been configured yet.");
         }
-        if (!timingSafeEqual(password, env.WATERSEDGE_PASSWORD)) {
+        // Digits-only passwords (e.g. a phone number) accept any formatting: (425) 269-5044, 425.269.5044, etc.
+        const expected = env.WATERSEDGE_PASSWORD;
+        const candidate = /^\d+$/.test(expected) ? password.replace(/\D/g, "") : password.trim();
+        if (!timingSafeEqual(candidate, expected)) {
             return watersEdgeLoginPage(next, "That password didn't match. Please try again.");
         }
         const token = await watersEdgeToken(env.WATERSEDGE_PASSWORD);

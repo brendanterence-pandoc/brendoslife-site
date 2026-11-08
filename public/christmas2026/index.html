@@ -204,6 +204,8 @@
       box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
     }
     .frame img { border-radius: 8px; width: 100%; height: auto; }
+    .house { max-width: 760px; margin: 28px auto 0; }
+    .house img { display: block; }
 
     .flip { perspective: 1800px; max-width: 980px; margin: 0 auto; }
     .flip-inner { position: relative; transition: transform 800ms cubic-bezier(0.4, 0.1, 0.2, 1); transform-style: preserve-3d; }
@@ -405,7 +407,11 @@
         <div><b data-unit="h">--</b><small>Hours</small></div>
         <div><b data-unit="m">--</b><small>Minutes</small></div>
       </div>
-      <p class="countdown-note" id="countdown-note">Until the doors open</p>
+      <p class="countdown-note" id="countdown-note">Until the bar opens</p>
+
+      <figure class="house frame">
+        <img src="/christmas2026/christmas-house.jpg" width="1312" height="877" loading="eager" alt="Holiday illustration of the O'Connor home at Waters Edge decked out in Christmas lights, with Santa and reindeer on the roof, the dog on the lawn, and two cars in the driveway" />
+      </figure>
 
       <div class="actions">
         <a class="btn btn--primary" href="/christmas2026/oconnorpalooza-2026.ics" download>

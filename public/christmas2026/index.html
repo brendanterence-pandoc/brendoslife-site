@@ -7,19 +7,23 @@
   <meta name="description" content="Betsy and Brendan invite you to a friendly Christmas drop-in. Friday, December 18, 5 to 9 PM at 6506 Waters Edge Way, Lakewood Ranch." />
   <meta name="robots" content="noindex, nofollow, noarchive" />
   <meta name="theme-color" content="#0b2a1a" />
-  <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/christmas2026/favicon-xmas-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/christmas2026/apple-touch-icon-xmas.png" />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Brendo's Life" />
-  <meta property="og:title" content="O'Connorpalooza: Christmas Edition" />
+  <meta property="og:title" content="You're invited: O'Connorpalooza, Christmas Edition" />
   <meta property="og:description" content="A friendly Christmas drop-in. Friday, December 18, 5 to 9 PM. Food, drinks, music and jocularity." />
-  <meta property="og:url" content="https://brendoslife.com/christmas2026" />
-  <meta property="og:image" content="https://brendoslife.com/christmas2026/og-image.jpg" />
+  <meta property="og:url" content="https://brendoslife.com/christmas2026/" />
+  <meta property="og:image" content="https://brendoslife.com/christmas2026/og-christmas-2026.jpg" />
+  <meta property="og:image:secure_url" content="https://brendoslife.com/christmas2026/og-christmas-2026.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:alt" content="O'Connorpalooza Christmas Edition: a friendly Christmas drop-in, Friday, December 18, 5 to 9 PM" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://brendoslife.com/christmas2026/og-image.jpg" />
+  <meta name="twitter:image" content="https://brendoslife.com/christmas2026/og-christmas-2026.jpg" />
+  <meta name="twitter:title" content="O'Connorpalooza: Christmas Edition" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -76,7 +80,12 @@
     }
     .topbar a { text-decoration: none; color: var(--cream-muted); }
     .topbar a:hover { color: var(--gold); }
-    .topbar .brand { color: var(--gold); font-weight: 600; }
+    .topbar .brand { color: var(--gold); font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
+    .topbar .brand img { width: 26px; height: 26px; }
+    .medallion { display: block; width: 150px; height: 150px; margin: 0 auto 14px; filter: drop-shadow(0 8px 22px rgba(0,0,0,.45)); animation: bob 5s ease-in-out infinite; }
+    @keyframes bob { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-5px) rotate(2deg); } }
+    @media (prefers-reduced-motion: reduce) { .medallion { animation: none; } }
+    @media (max-width: 480px) { .medallion { width: 112px; height: 112px; margin-bottom: 10px; } }
 
     main { position: relative; z-index: 1; }
 
@@ -309,7 +318,7 @@
       position: relative; z-index: 1; text-align: center; padding: 30px 28px 56px;
       color: var(--cream-muted); font-size: 0.85rem;
     }
-    footer .pine { width: 220px; margin: 0 auto 14px; opacity: 0.95; }
+    footer .pine { width: 84px; margin: 0 auto 14px; opacity: 0.95; }
     footer a { color: var(--gold-soft); }
 
     @media (max-width: 360px) {
@@ -366,11 +375,12 @@
 
   <div class="topbar">
     <a href="/">&larr; Brendo's Life</a>
-    <span class="brand">Christmas 2026</span>
+    <span class="brand"><img src="/christmas2026/icon-betsy-160.png" alt="" width="26" height="26" />Christmas 2026</span>
   </div>
 
   <main>
     <section class="hero" aria-labelledby="title">
+      <img class="medallion" src="/christmas2026/icon-betsy.webp" alt="Betsy the dog in a Santa hat" width="150" height="150" />
       <p class="greeting">Merry Christmas and Happy Holidays from Betsy, Brendan, Quinn (23) and Donovan (19)</p>
 
       <div class="announcing" aria-hidden="true">
@@ -520,7 +530,7 @@
   </main>
 
   <footer>
-    <img class="pine" src="/christmas2026/icon-pinecone.jpg" alt="" aria-hidden="true" style="width:72px;border-radius:50%;border:2px solid rgba(214,178,94,.6)" />
+    <img class="pine" src="/christmas2026/icon-betsy-160.png" alt="" aria-hidden="true" width="84" height="84" style="width:84px;height:84px" />
     <p class="foot-greet">Merry Christmas and Happy Holidays from Betsy, Brendan, Quinn (23) and Donovan (19)</p>
     <p style="margin-top:6px"><a href="/">brendoslife.com</a></p>
   </footer>

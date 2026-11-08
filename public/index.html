@@ -246,17 +246,16 @@
       display: block;
     }
 
-    /* Christmas card: deep green chip with the pinecone */
+    /* Christmas card: deep green chip with Betsy medallion */
     .link-card-icon--xmas-chip {
       flex: 0 0 50px;
       width: 50px;
       height: 50px;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid rgba(214, 178, 94, 0.7);
-      background: #0f3a22;
+      border-radius: 50%;
+      overflow: visible;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
     }
-    .link-card-icon--xmas-chip img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .link-card-icon--xmas-chip img { width: 100%; height: 100%; object-fit: contain; display: block; }
     .link-card--xmas { border-color: rgba(214, 178, 94, 0.35); }
 
     @media (max-width: 960px) {
@@ -281,6 +280,7 @@
       .link-card-arrow { flex: none; }
       .link-card-title { font-size: 1rem; }
       .link-card-icon { flex: 0 0 52px; width: 52px; height: 38px; }
+      .link-card-icon--xmas-chip { flex: 0 0 52px; width: 52px; height: 52px; }
     }
   </style>
 </head>
@@ -298,7 +298,7 @@
       <nav class="links" aria-label="Primary links">
         <a class="link-card link-card--xmas" href="/christmas2026">
           <span class="link-card-icon link-card-icon--xmas-chip" aria-hidden="true">
-            <img src="/christmas2026/icon-pinecone.jpg" alt="" width="50" height="50" />
+            <img src="/christmas2026/icon-betsy-160.png" alt="" width="50" height="50" />
           </span>
           <span class="link-card-text">
             <span class="link-card-title">O'Connorpalooza Christmas Drop In</span>

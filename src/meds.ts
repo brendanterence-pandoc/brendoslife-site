@@ -7,12 +7,20 @@
 // Access model (fails closed until a passcode is enrolled):
 //   - Browser: passcode sign-in sets an HttpOnly session cookie scoped to /meds.
 //   - Automation: the same passcode sent as the X-Meds-Key header.
+//
+// Reminders: devices that turn reminders on register a Web Push subscription.
+// A Durable Object alarm wakes at each scheduled time and notifies them. The
+// push signing key is generated here on first use and stored only in the object.
+//
 //   - Setup: X-Meds-Admin carries a one-off setup key. Only its SHA-256 is
 //     stored below, so this file can be public. To reset a forgotten passcode,
 //     generate a new random key, replace the hash, deploy, and call
 //     POST /meds/api/auth/enroll with the new key.
 import { DurableObject } from "cloudflare:workers";
 import { createApi, type ApiResponse, type SqlDb } from "../medtrack/server/core";
+import type { AppState, Item, Log } from "../medtrack/shared/schema";
+import { addDays } from "../medtrack/shared/schedule";
+import { PUSH_HOST, createVapid, localStamp, planReminders, reminderMessage, sendPush, validZone, type PushSub, type ReminderSettings, type Vapid } from "./meds-push";
 
 export interface MedsEnv {
     MEDTRACK: DurableObjectNamespace;
@@ -116,6 +124,133 @@ export class MedTrackDO extends DurableObject {
         sql.exec(`CREATE TABLE IF NOT EXISTS auth_kv (key TEXT PRIMARY KEY, value TEXT NOT NULL)`);
         sql.exec(`CREATE TABLE IF NOT EXISTS auth_sessions (token_hash TEXT PRIMARY KEY, created INTEGER NOT NULL, expires INTEGER NOT NULL, refreshed INTEGER NOT NULL)`);
         sql.exec(`CREATE TABLE IF NOT EXISTS auth_fails (ip TEXT PRIMARY KEY, count INTEGER NOT NULL, last INTEGER NOT NULL, lock_until INTEGER NOT NULL DEFAULT 0)`);
+        sql.exec(`CREATE TABLE IF NOT EXISTS push_subs (endpoint TEXT PRIMARY KEY, p256dh TEXT NOT NULL, auth TEXT NOT NULL, label TEXT NOT NULL DEFAULT '', created INTEGER NOT NULL, last_status INTEGER NOT NULL DEFAULT 0, last_at INTEGER NOT NULL DEFAULT 0)`);
+        sql.exec(`CREATE TABLE IF NOT EXISTS push_sent (key TEXT PRIMARY KEY, at INTEGER NOT NULL)`);
+    }
+
+    // ── Reminders ───────────────────────────────────────────────────────────
+    private reminderSettings(): ReminderSettings {
+        const followup = this.kv("rem_followup");
+        return { followupMin: followup === "" ? 30 : Number(followup), showNames: this.kv("rem_names") === "1", tz: this.kv("rem_tz") || "UTC" };
+    }
+    private subs(): PushSub[] {
+        return this.sql.exec(`SELECT endpoint, p256dh, auth FROM push_subs ORDER BY created`).toArray()
+            .map((r) => ({ endpoint: String(r.endpoint), p256dh: String(r.p256dh), auth: String(r.auth) }));
+    }
+    private async vapid(): Promise<Vapid> {
+        const saved = this.kv("vapid");
+        if (saved) return JSON.parse(saved) as Vapid;
+        const fresh = await createVapid();
+        this.setKv("vapid", JSON.stringify(fresh));
+        return fresh;
+    }
+    private regimen(nowMs: number, tz: string): { items: Item[]; logs: Log[] } {
+        const today = localStamp(nowMs, tz).slice(0, 10);
+        const items = (this.api.handle("GET", "/api/state", {}, {}).json as AppState).items;
+        const logs = this.api.handle("GET", "/api/logs", { from: addDays(today, -1), to: addDays(today, 1) }, {}).json as Log[];
+        return { items, logs };
+    }
+    /** Sends one notification to every registered device and drops devices that no longer exist. */
+    private async deliver(payload: unknown, ttlSeconds: number): Promise<number[]> {
+        const vapid = await this.vapid();
+        const subject = this.kv("rem_subject") || "https://example.com/";
+        const statuses: number[] = [];
+        for (const sub of this.subs()) {
+            let status = 0;
+            try {
+                status = await sendPush(sub, payload, vapid, subject, ttlSeconds);
+            } catch (e) {
+                console.error("MedTrack reminder failed:", e);
+            }
+            if (status === 404 || status === 410) this.sql.exec(`DELETE FROM push_subs WHERE endpoint = ?`, sub.endpoint);
+            else this.sql.exec(`UPDATE push_subs SET last_status = ?, last_at = ? WHERE endpoint = ?`, status, Date.now(), sub.endpoint);
+            statuses.push(status);
+        }
+        return statuses;
+    }
+    /** Points the alarm at the next scheduled time, or clears it when no device wants reminders. */
+    private async planAlarm(): Promise<void> {
+        const now = Date.now();
+        if (!this.subs().length) {
+            await this.ctx.storage.deleteAlarm();
+            return;
+        }
+        const s = this.reminderSettings();
+        const { items, logs } = this.regimen(now, s.tz);
+        const { nextMs } = planReminders(items, logs, now, s, new Set());
+        await this.ctx.storage.setAlarm(nextMs ?? now + 24 * 60 * 60 * 1000);
+    }
+    async alarm(): Promise<void> {
+        const now = Date.now();
+        if (this.subs().length) {
+            const s = this.reminderSettings();
+            const { items, logs } = this.regimen(now, s.tz);
+            const sent = new Set(this.sql.exec(`SELECT key FROM push_sent`).toArray().map((r) => String(r.key)));
+            for (const r of planReminders(items, logs, now, s, sent).due) {
+                // Marked first, so a retry after a failure never sends the same reminder twice.
+                this.sql.exec(`INSERT OR IGNORE INTO push_sent(key, at) VALUES(?, ?)`, r.key, now);
+                if (r.open.length) await this.deliver(reminderMessage(r, s), 3600);
+            }
+            this.sql.exec(`DELETE FROM push_sent WHERE at < ?`, now - 3 * 24 * 60 * 60 * 1000);
+        }
+        await this.planAlarm();
+    }
+    private async pushRoute(path: string, method: string, body: any, origin: string): Promise<Response> {
+        const config = async () => {
+            const s = this.reminderSettings();
+            const last = this.sql.exec(`SELECT last_status, last_at FROM push_subs ORDER BY last_at DESC LIMIT 1`).toArray()[0];
+            return {
+                publicKey: (await this.vapid()).publicKey, followupMin: s.followupMin, showNames: s.showNames, tz: s.tz, devices: this.subs().length,
+                // Most recent delivery attempt, for troubleshooting. 201 means the push service accepted it.
+                lastStatus: last ? Number(last.last_status) : 0,
+                lastAt: last && Number(last.last_at) ? new Date(Number(last.last_at)).toISOString() : null,
+                nextAt: await this.ctx.storage.getAlarm().then((t) => (t ? new Date(t).toISOString() : null)),
+            };
+        };
+        if (path === "/push/config" && method === "GET") return json(200, await config());
+        if (path === "/push/subscribe" && method === "POST") {
+            const endpoint = String(body?.subscription?.endpoint ?? "");
+            const p256dh = String(body?.subscription?.keys?.p256dh ?? "").replace(/=+$/, "");
+            const auth = String(body?.subscription?.keys?.auth ?? "").replace(/=+$/, "");
+            if (!PUSH_HOST.test(endpoint) || endpoint.length > 1000 || !/^[A-Za-z0-9_-]{87}$/.test(p256dh) || !/^[A-Za-z0-9_-]{22,64}$/.test(auth))
+                return json(400, { message: "This device could not be registered for reminders." });
+            const known = this.sql.exec(`SELECT 1 FROM push_subs WHERE endpoint = ?`, endpoint).toArray().length > 0;
+            if (!known && this.subs().length >= 10) return json(400, { message: "Ten devices already get reminders. Turn one off first." });
+            this.sql.exec(
+                `INSERT INTO push_subs(endpoint, p256dh, auth, label, created) VALUES(?, ?, ?, ?, ?)
+                 ON CONFLICT(endpoint) DO UPDATE SET p256dh = excluded.p256dh, auth = excluded.auth, label = excluded.label`,
+                endpoint, p256dh, auth, String(body?.label ?? "").slice(0, 60), Date.now(),
+            );
+            if (typeof body?.tz === "string" && validZone(body.tz)) this.setKv("rem_tz", body.tz);
+            this.setKv("rem_subject", `${origin}/meds/`);
+            await this.planAlarm();
+            return json(200, await config());
+        }
+        if (path === "/push/unsubscribe" && method === "POST") {
+            this.sql.exec(`DELETE FROM push_subs WHERE endpoint = ?`, String(body?.endpoint ?? ""));
+            await this.planAlarm();
+            return json(200, await config());
+        }
+        if (path === "/push/settings" && method === "PUT") {
+            if (body?.followupMin !== undefined) {
+                const n = Number(body.followupMin);
+                if (!Number.isInteger(n) || n < 0 || n > 240) return json(400, { message: "The second reminder can be 0 to 240 minutes later." });
+                this.setKv("rem_followup", String(n));
+            }
+            if (body?.showNames !== undefined) this.setKv("rem_names", body.showNames ? "1" : "0");
+            if (body?.tz !== undefined) {
+                if (typeof body.tz !== "string" || !validZone(body.tz)) return json(400, { message: "Unknown time zone." });
+                this.setKv("rem_tz", body.tz);
+            }
+            await this.planAlarm();
+            return json(200, await config());
+        }
+        if (path === "/push/test" && method === "POST") {
+            if (!this.subs().length) return json(400, { message: "Turn on reminders on a device first." });
+            const statuses = await this.deliver({ title: "Reminders are on", body: "This is a test from MedTrack.", tag: "test", url: "./" }, 300);
+            return json(200, { ok: statuses.some((x) => x >= 200 && x < 300), statuses, devices: this.subs().length });
+        }
+        return json(404, { message: "Not found" });
     }
 
     // ── Small key/value helpers ─────────────────────────────────────────────
@@ -283,6 +418,8 @@ export class MedTrackDO extends DurableObject {
             return json(200, { ok: true }, { "Set-Cookie": sessionCookie("", 0) });
         }
 
+        if (path.startsWith("/push/")) return this.pushRoute(path, method, body, url.origin);
+
         const query: Record<string, string> = {};
         url.searchParams.forEach((v, k) => (query[k] = v));
 
@@ -301,6 +438,9 @@ export class MedTrackDO extends DurableObject {
                 out = { status: 400, json: { message: e instanceof Error ? e.message : "Request failed" } };
             }
         }
+
+        // A regimen change can move the next reminder.
+        if (method !== "GET" && out.status < 400) await this.planAlarm().catch((e) => console.error("MedTrack alarm planning failed:", e));
 
         const extra: Record<string, string> = setCookie ? { "Set-Cookie": setCookie } : {};
         if (out.text == null) return json(out.status, out.json ?? {}, extra);

@@ -50,10 +50,23 @@ Everything is under `/meds/api`. Send a `User-Agent` header, because the site ch
 | `GET /health?from&to`, `POST /health/bulk` | Apple Health daily metrics |
 | `GET /export/report.html`, `daily.csv`, `medisafe.csv`, `backup.json` | Reports and exports |
 | `POST /import/medisafe`, `POST /import/backup` | Medisafe history and backup restore |
+| `GET /push/config`, `PUT /push/settings`, `POST /push/test` | Reminder settings, delivery status, test notification |
+| `POST /push/subscribe`, `POST /push/unsubscribe` | Register or remove a device (the app does this) |
 
 Write requests take `today` (`YYYY-MM-DD`) and `now` (`YYYY-MM-DDTHH:MM`) in the user's local time, because the server does not assume a timezone.
 
 `PATCH /items/:id` keeps history by default: a schedule or dose change closes the old version and starts a new one from `today`, and writes a change-log entry. Send `"mode": "correct"` to fix a typo in place without a change-log entry.
+
+## Reminders
+
+Reminders are standard Web Push notifications, sent by the site itself. No outside service or account is involved.
+
+- A device opts in from the Data tab. On iPhone this only works from the Home Screen app (Share, then Add to Home Screen), on iOS 16.4 or later.
+- The Durable Object sets an alarm for the next scheduled time. When it fires, each registered device gets one notification for that time slot, and a second one later if anything in the slot is still not logged. Slots that are fully logged send nothing.
+- `PUT /push/settings` takes `followupMin` (0 turns the second reminder off), `showNames` (false sends counts only, so names stay off the lock screen), and `tz`. The app updates `tz` from the phone each time it opens.
+- `GET /push/config` reports `devices`, `nextAt` (next wake-up), and `lastStatus` with `lastAt` for the most recent delivery. `201` means the push service accepted it. Devices whose subscription has ended are removed automatically.
+- The signing key pair is created inside the Durable Object on first use and stays there. Nothing secret is in this repo.
+- Code: `src/meds-push.ts` (delivery and timing), `client/public/sw.js` (shows the notification), `client/src/components/Reminders.tsx`.
 
 ## Access
 

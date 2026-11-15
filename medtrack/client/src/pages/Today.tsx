@@ -12,6 +12,7 @@ import { tone, useTheme } from "@/lib/theme";
 import { cn } from "@/lib/utils";
 import { Empty, ErrorNote, ItemIcon, Panel, SectionTitle } from "@/components/bits";
 import { CheckinSheet, DoseSheet, ExtraLogSheet, NoteSheet, PrnSheet } from "@/components/sheets";
+import { ReminderPrompt } from "@/components/Reminders";
 
 type SheetState =
   | { t: "dose"; entry: Entry }
@@ -84,6 +85,7 @@ export default function Today() {
 
   return (
     <div className="mx-auto max-w-2xl">
+      <ReminderPrompt />
       {/* Day header + week strip */}
       <div className="flex items-center justify-between gap-2">
         <div>

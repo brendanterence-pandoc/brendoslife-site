@@ -16,6 +16,7 @@ async function signOut(kind: "logout" | "logout-all") {
   }
 }
 import { ErrorNote, Field, fieldCls, Panel, SectionTitle } from "@/components/bits";
+import Reminders from "@/components/Reminders";
 
 const ASKS = [
   "Add a new medication at 8 AM and 8 PM starting tomorrow",
@@ -23,6 +24,7 @@ const ASKS = [
   "Move an evening dose to 9 PM",
   "Add a sleep quality tracker, 0 to 10, every morning",
   "Sync my Apple Health data",
+  "Change my second reminder to 15 minutes",
   "Build a 30-day report for my next appointment",
 ];
 
@@ -87,6 +89,8 @@ export default function Data() {
       <p className="text-sm text-muted-foreground" data-testid="text-data-summary">
         {firstDate ? `Entries stored from ${fmtDay(firstDate, { year: true })} to today.` : "No entries stored yet."}
       </p>
+
+      <Reminders />
 
       <SectionTitle>Make changes by asking</SectionTitle>
       <Panel className="p-4">

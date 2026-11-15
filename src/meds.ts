@@ -253,6 +253,7 @@ export class MedTrackDO extends DurableObject {
                 return json(200, { ok: true, configured: false });
             }
             const passcode = String(keyHeader || body?.passcode || "").trim();
+            if (!passcode) return json(400, { message: "No passcode was sent." });
             if (passcode.length < 8 || passcode.length > 200) return json(400, { message: "The passcode must be 8 to 200 characters." });
             const salt = randomHex(16);
             this.setKv("pass_salt", salt);

@@ -6,9 +6,17 @@
 //   3. HTMLRewriter injects a shared site header (brand + nav) into every HTML page.
 //   4. HTMLRewriter injects a noindex meta tag into every HTML page.
 //   5. Response sets X-Robots-Tag: noindex, nofollow, noarchive on every response.
+//   6. MedTrack API (/meds/api/*) backed by a Durable Object. See src/meds.ts.
+
+import { handleMeds, isMedsApi, MedTrackDO } from "./meds";
+
+// Durable Object classes must be exported from the Worker entry module.
+export { MedTrackDO };
 
 export interface Env {
     ASSETS: Fetcher;
+    // MedTrack data store (SQLite-backed Durable Object). See src/meds.ts.
+    MEDTRACK: DurableObjectNamespace;
     MARCELA_USERNAME: string;
     MARCELA_PASSWORD: string;
     MEDIA_USERNAME: string;
@@ -1050,6 +1058,11 @@ export default {
       // Normalize: strip trailing slash (except root)
       if (pathname.length > 1 && pathname.endsWith("/")) {
               pathname = pathname.slice(0, -1);
+      }
+
+      // MedTrack API (/meds/api/*). Has its own sign-in; see src/meds.ts.
+      if (isMedsApi(pathname)) {
+              return handleMeds(request, env);
       }
 
       // 0. Waters Edge password gate (pages + the APIs they call)

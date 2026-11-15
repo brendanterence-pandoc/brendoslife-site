@@ -51,3 +51,13 @@ if (url.pathname.startsWith('/api/')) {
 ```
 
 Then add the corresponding bindings in `wrangler.jsonc` and regenerate types with `npm run cf-typegen`.
+
+## MedTrack (`/meds`)
+
+A private medication and symptom tracker.
+
+- `medtrack/` holds the app source (React client, shared logic, portable API). See `medtrack/README.md`.
+- `public/meds/` is the built client. Rebuild it with `npm run build:site` inside `medtrack/` and commit the result.
+- `src/meds.ts` serves `/meds/api/*` from a SQLite-backed Durable Object and handles sign-in.
+
+No tracker data is stored in this repository. It lives only in the Durable Object.

@@ -2,9 +2,9 @@ import { useCallback, useEffect, useState, type FormEvent, type ReactNode } from
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/AppShell";
 import { fieldCls } from "@/components/bits";
-import { API_BASE, AUTH_ENABLED, SIGNED_OUT_EVENT, queryClient } from "@/lib/queryClient";
+import { API_BASE, AUTH_ENABLED, SECURITY_CHECK_EVENT, SIGNED_OUT_EVENT, isSecurityCheck, queryClient } from "@/lib/queryClient";
 
-type Phase = "checking" | "in" | "out" | "unset" | "offline";
+type Phase = "checking" | "in" | "out" | "unset" | "offline" | "check";
 
 /** Passcode sign-in for the hosted copy. The preview build has no sign-in and renders straight through. */
 export default function AuthGate({ children }: { children: ReactNode }) {
@@ -16,6 +16,7 @@ export default function AuthGate({ children }: { children: ReactNode }) {
   const check = useCallback(async () => {
     try {
       const res = await fetch(`${API_BASE}/api/auth/status`);
+      if (isSecurityCheck(res)) return setPhase("check");
       if (!res.ok) throw new Error();
       const s = (await res.json()) as { configured: boolean; signedIn: boolean };
       setPhase(s.signedIn ? "in" : s.configured ? "out" : "unset");
@@ -31,8 +32,13 @@ export default function AuthGate({ children }: { children: ReactNode }) {
       queryClient.clear();
       setPhase("out");
     };
+    const onSecurityCheck = () => setPhase("check");
     window.addEventListener(SIGNED_OUT_EVENT, onSignedOut);
-    return () => window.removeEventListener(SIGNED_OUT_EVENT, onSignedOut);
+    window.addEventListener(SECURITY_CHECK_EVENT, onSecurityCheck);
+    return () => {
+      window.removeEventListener(SIGNED_OUT_EVENT, onSignedOut);
+      window.removeEventListener(SECURITY_CHECK_EVENT, onSecurityCheck);
+    };
   }, [check]);
 
   if (phase === "in") return <>{children}</>;
@@ -48,6 +54,7 @@ export default function AuthGate({ children }: { children: ReactNode }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ passcode }),
       });
+      if (isSecurityCheck(res)) return setPhase("check");
       if (res.ok) {
         setPasscode("");
         queryClient.clear();
@@ -80,6 +87,13 @@ export default function AuthGate({ children }: { children: ReactNode }) {
             <p className="text-sm font-medium">Could not reach the tracker</p>
             <p className="mt-1 text-sm text-muted-foreground">Check your connection and try again.</p>
             <Button className="mt-4 min-h-12 w-full" onClick={() => { setPhase("checking"); check(); }} data-testid="button-auth-retry">Try again</Button>
+          </div>
+        )}
+        {phase === "check" && (
+          <div className="mt-6" role="alert" data-testid="text-auth-security-check">
+            <h1 className="text-xl font-semibold tracking-tight">Quick security check</h1>
+            <p className="mt-2 text-sm text-muted-foreground">The site wants to confirm this is a real browser. Reload to continue. Your entries are safe.</p>
+            <Button className="mt-4 min-h-12 w-full" onClick={() => window.location.reload()} data-testid="button-auth-reload">Reload</Button>
           </div>
         )}
         {phase === "unset" && (

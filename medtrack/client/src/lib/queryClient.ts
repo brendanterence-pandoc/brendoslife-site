@@ -8,13 +8,21 @@ export const AUTH_ENABLED = SITE_BASE !== "";
 export const API_BASE = SITE_BASE || ("__PORT_5000__".startsWith("__") ? "" : "__PORT_5000__");
 export const SIGNED_OUT_EVENT = "medtrack:signed-out";
 
+/** The site's security layer sometimes asks the browser to prove it is not a bot. Only a full page load can answer that. */
+export const isSecurityCheck = (res: Response) => res.status === 403 && res.headers.get("cf-mitigated") === "challenge";
+export const SECURITY_CHECK_EVENT = "medtrack:security-check";
+
 async function throwIfResNotOk(res: Response) {
   if (res.status === 401 && AUTH_ENABLED) window.dispatchEvent(new Event(SIGNED_OUT_EVENT));
+  if (isSecurityCheck(res)) {
+    window.dispatchEvent(new Event(SECURITY_CHECK_EVENT));
+    throw new Error("The site needs a quick security check. Reload the page and try again.");
+  }
   if (!res.ok) {
     const text = (await res.text()) || res.statusText;
-    let message = text;
+    let message = /^\s*</.test(text) ? `Request failed (${res.status}). Try again.` : text;
     try {
-      message = JSON.parse(text).message ?? text;
+      message = JSON.parse(text).message ?? message;
     } catch {}
     throw new Error(message);
   }

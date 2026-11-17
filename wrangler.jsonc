@@ -36,11 +36,14 @@
   // Serves /meds/api/*. The app shell is static under public/meds/.
   "durable_objects": {
     "bindings": [
-      { "name": "MEDTRACK", "class_name": "MedTrackDO" }
+      { "name": "MEDTRACK", "class_name": "MedTrackDO" },
+      // Home Projects record store. Serves /api/home/*; pages are static under public/watersedge/home/.
+      { "name": "HOMEPROJECTS", "class_name": "HomeProjectsDO" }
     ]
   },
   "migrations": [
-    { "tag": "v1", "new_sqlite_classes": ["MedTrackDO"] }
+    { "tag": "v1", "new_sqlite_classes": ["MedTrackDO"] },
+    { "tag": "v2", "new_sqlite_classes": ["HomeProjectsDO"] }
   ],
 
   // ── Observability ─────────────────────────────────────────────────────────

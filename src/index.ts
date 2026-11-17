@@ -7,8 +7,12 @@
 //   4. HTMLRewriter injects a noindex meta tag into every HTML page.
 //   5. Response sets X-Robots-Tag: noindex, nofollow, noarchive on every response.
 //   6. MedTrack API (/meds/api/*) backed by a Durable Object. See src/meds.ts.
+//   7. Home Projects API (/api/home/*) for Waters Edge, backed by a Durable Object
+//      plus the photos R2 bucket. See src/home.ts.
 
 import { handleMeds, isMedsApi, MedTrackDO } from "./meds";
+import { handleHome, isHomeApi } from "./home";
+export { HomeProjectsDO } from "./home";
 
 // Durable Object classes must be exported from the Worker entry module.
 export { MedTrackDO };
@@ -24,6 +28,7 @@ export interface Env {
     PHOTOS_BUCKET: R2Bucket;
     PHOTOS_PASSWORD: string;
     WATERSEDGE_PASSWORD?: string;
+    HOMEPROJECTS: DurableObjectNamespace;
     // Optional alert-fan-out secrets. Any of these unset -> that channel is skipped.
     SLACK_WEBHOOK_URL?: string;
     TEAMS_WEBHOOK_URL?: string;
@@ -118,7 +123,7 @@ async function isAuthorized(
 // Waters Edge password gate (cookie-based, phone friendly)
 // ---------------------------------------------------------------------------
 // Protects /watersedge/* plus the APIs those pages call (/api/photos/*,
-// /api/threads/*). Visitors see a branded sign-in page; a correct password
+// /api/threads/*, /api/home/*). Visitors see a branded sign-in page; a correct password
 // sets an HttpOnly cookie for 90 days. Fails closed if the secret is unset.
 
 const WE_COOKIE = "we_auth";
@@ -130,7 +135,8 @@ function isWatersEdgeProtected(p: string): boolean {
         p === "/watersedge" ||
         p.startsWith("/watersedge/") ||
         p.startsWith("/api/photos") ||
-        p.startsWith("/api/threads")
+        p.startsWith("/api/threads") ||
+        isHomeApi(p)
     );
 }
 
@@ -1094,6 +1100,11 @@ export default {
       // 1b. Generic comment thread routes (style guide, future pages)
       if (pathname.startsWith("/api/threads")) {
               return handleThreadsApi(request, env, ctx, pathname);
+      }
+
+      // 1c. Home Projects API (rooms, items, measurements, photos)
+      if (isHomeApi(pathname)) {
+              return handleHome(request, env, pathname);
       }
 
       // 2. Basic Auth for protected paths

@@ -615,7 +615,7 @@
     <section class="section" id="rsvp" aria-labelledby="rsvp-title">
       <h2 class="section-title" id="rsvp-title">RSVP</h2>
       <p class="section-sub">Let us know if you can make it. You can also reach Brendan at <a href="mailto:brendo@outlook.com?subject=O'Connorpalooza%20RSVP">brendo@outlook.com</a> or <a href="sms:+14252695044">425-269-5044</a>.</p>
-      <form class="rsvp panel" id="rsvp-form" novalidate>
+      <form class="rsvp panel" id="rsvp-form" method="POST" action="/api/rsvp" novalidate>
         <fieldset class="rsvp-choice">
           <legend>Will you be there?</legend>
           <label class="choice"><input type="radio" name="attending" value="yes" required /><span>Yes, count me in</span></label>
@@ -705,6 +705,25 @@
         guestsField.classList.toggle("is-hidden", !!c && c.value === "no");
       }
       form.querySelectorAll('input[name="attending"]').forEach(function (r) { r.addEventListener("change", syncGuests); });
+      function showDone(answer, first) {
+        form.classList.add("is-done");
+        msg.className = "rsvp-msg";
+        var who = first ? ", " + first : "";
+        msg.textContent = answer === "yes"
+          ? "Thanks" + who + ". See you on the 18th."
+          : "Thanks for letting us know" + who + ". You'll be missed.";
+        var again = document.createElement("button");
+        again.type = "button"; again.className = "rsvp-again"; again.textContent = "Change my answer";
+        again.addEventListener("click", function () { form.classList.remove("is-done"); msg.textContent = ""; again.remove(); });
+        msg.after(again);
+      }
+      var qs = new URLSearchParams(location.search);
+      if (qs.get("rsvp") === "yes" || qs.get("rsvp") === "no") {
+        showDone(qs.get("rsvp"), qs.get("n") || "");
+      } else if (qs.get("rsvp") === "error") {
+        msg.textContent = "That didn't go through. Please try again, or text 425-269-5044.";
+        msg.classList.add("err");
+      }
       form.addEventListener("submit", function (e) {
         e.preventDefault();
         msg.className = "rsvp-msg";
@@ -726,16 +745,15 @@
             website: form.elements.website.value
           })
         }).then(function (r) {
+          var ct = r.headers.get("Content-Type") || "";
+          if (r.headers.get("cf-mitigated") === "challenge" || ct.indexOf("application/json") === -1) {
+            // Site security check intercepted the quick submit. Send it as a normal form post instead.
+            HTMLFormElement.prototype.submit.call(form);
+            return new Promise(function () {});
+          }
           return r.json().catch(function () { return {}; }).then(function (d) { if (!r.ok) throw new Error(d.error || "x"); return d; });
         }).then(function () {
-          form.classList.add("is-done");
-          msg.textContent = att.value === "yes"
-            ? "Thanks, " + name.split(" ")[0] + ". See you on the 18th."
-            : "Thanks for letting us know, " + name.split(" ")[0] + ". You'll be missed.";
-          var again = document.createElement("button");
-          again.type = "button"; again.className = "rsvp-again"; again.textContent = "Change my answer";
-          again.addEventListener("click", function () { form.classList.remove("is-done"); msg.textContent = ""; again.remove(); });
-          msg.after(again);
+          showDone(att.value, name.split(" ")[0]);
         }).catch(function (err) {
           msg.textContent = (err && err.message && err.message !== "x" ? err.message : "That didn't go through.") + " You can also text 425-269-5044.";
           msg.classList.add("err");

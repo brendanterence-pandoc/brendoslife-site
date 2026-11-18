@@ -50,20 +50,46 @@ function json(data: unknown, status = 200): Response {
 export async function handleRsvpSubmit(request: Request, env: RsvpEnv): Promise<Response> {
     if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
+    // Two ways in: fetch() with JSON from the page script, or a plain form POST
+    // (fallback when the edge security check intercepts fetch). The plain POST
+    // gets a redirect back to the party page instead of JSON.
+    const ctype = request.headers.get("Content-Type") || "";
+    const isForm = ctype.includes("application/x-www-form-urlencoded") || ctype.includes("multipart/form-data");
+    const back = (q: string) =>
+        new Response(null, { status: 303, headers: { Location: `/christmas2026/?${q}#rsvp`, "Cache-Control": "no-store" } });
+
     let body: Record<string, unknown>;
     try {
-        body = (await request.json()) as Record<string, unknown>;
+        if (isForm) {
+            const fd = await request.formData();
+            body = Object.fromEntries([...fd.entries()].map(([k, v]) => [k, typeof v === "string" ? v : ""]));
+        } else {
+            body = (await request.json()) as Record<string, unknown>;
+        }
     } catch {
-        return json({ error: "Please try again." }, 400);
+        return isForm ? back("rsvp=error") : json({ error: "Please try again." }, 400);
     }
+    if (isForm) {
+        const res = await saveRsvp(body, env);
+        if ("error" in res) return back("rsvp=error");
+        return back(`rsvp=${res.attending}&n=${encodeURIComponent(res.first)}`);
+    }
+    const res = await saveRsvp(body, env);
+    if ("error" in res) return json({ error: res.error }, 400);
+    return json({ ok: true, attending: res.attending });
+}
 
-    // Honeypot: real guests never fill this hidden field.
-    if (clean(body.website, 200)) return json({ ok: true });
+async function saveRsvp(
+    body: Record<string, unknown>,
+    env: RsvpEnv
+): Promise<{ error: string } | { attending: string; first: string }> {
 
     const name = clean(body.name, 80);
     const attending = body.attending === "yes" ? "yes" : body.attending === "no" ? "no" : "";
-    if (!name) return json({ error: "Please add your name." }, 400);
-    if (!attending) return json({ error: "Please choose yes or no." }, 400);
+    // Honeypot: real guests never fill this hidden field. Pretend success.
+    if (clean(body.website, 200)) return { attending: attending || "yes", first: name.split(" ")[0] };
+    if (!name) return { error: "Please add your name." };
+    if (!attending) return { error: "Please choose yes or no." };
 
     let guests = Math.round(Number(body.guests) || 0);
     if (attending === "no") guests = 0;
@@ -83,7 +109,7 @@ export async function handleRsvpSubmit(request: Request, env: RsvpEnv): Promise<
         httpMetadata: { contentType: "application/json" },
     });
 
-    return json({ ok: true, attending });
+    return { attending, first: name.split(" ")[0] };
 }
 
 async function loadAll(env: RsvpEnv): Promise<Rsvp[]> {

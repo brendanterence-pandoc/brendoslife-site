@@ -316,6 +316,47 @@
     .warn-body { font-size: 0.98rem; color: var(--cream-muted); margin-top: 6px; line-height: 1.5; }
     .drive-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
     .drive-note { color: var(--cream-muted); font-size: 0.85rem; margin-top: 12px; }
+    .drive-steps { margin: 10px 0 0 1.4em; color: var(--cream); font-size: 1rem; line-height: 1.55; }
+    .drive-steps li { margin-top: 6px; padding-left: 4px; }
+    .drive-steps strong { color: var(--gold-soft); }
+
+    /* RSVP */
+    .section-sub a { color: var(--gold-soft); text-underline-offset: 3px; }
+    a[href^="sms:"], a[href^="mailto:"] { white-space: nowrap; }
+    .rsvp { max-width: 720px; margin: 22px auto 0; padding: 26px 28px 24px; }
+    .rsvp-choice { border: 0; display: flex; flex-wrap: wrap; gap: 12px; }
+    .rsvp-choice legend { font-family: var(--font-serif); font-style: italic; font-weight: 700; font-size: 1.25rem; color: var(--cream); margin-bottom: 12px; }
+    .choice { flex: 1 1 200px; position: relative; cursor: pointer; }
+    .choice input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+    .choice span {
+      display: flex; align-items: center; justify-content: center; min-height: 52px; padding: 12px 16px;
+      border: 1.5px solid var(--gold); border-radius: 999px; color: var(--cream); font-weight: 600;
+      background: rgba(0, 0, 0, 0.18); transition: background 160ms ease, color 160ms ease;
+    }
+    .choice input:checked + span { background: var(--gold); color: var(--evergreen); }
+    .choice input:focus-visible + span { outline: 2px solid var(--cream); outline-offset: 3px; }
+    .rsvp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 16px; margin-top: 20px; }
+    .field { display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; color: var(--cream-muted); }
+    .field--wide { grid-column: 1 / -1; }
+    .field input, .field select, .field textarea {
+      font: inherit; font-size: 16px; color: var(--cream); padding: 12px 14px; border-radius: 10px;
+      border: 1px solid rgba(214, 178, 94, 0.5); background: rgba(0, 0, 0, 0.28); width: 100%;
+    }
+    .field select option { color: #111; }
+    .field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--gold); outline-offset: 1px; }
+    .field.is-hidden { display: none; }
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    .rsvp-submit { margin-top: 20px; border: 0; cursor: pointer; font-family: inherit; }
+    .rsvp-submit[disabled] { opacity: 0.6; cursor: wait; }
+    .rsvp-msg { margin-top: 14px; font-size: 0.98rem; color: var(--cream); min-height: 1.4em; }
+    .rsvp-msg.err { color: #ffb4a8; }
+    .rsvp.is-done .rsvp-choice, .rsvp.is-done .rsvp-grid, .rsvp.is-done .rsvp-submit { display: none; }
+    .rsvp.is-done .rsvp-msg { font-family: var(--font-serif); font-style: italic; font-size: 1.25rem; text-align: center; margin: 6px 0; }
+    .rsvp-again { display: block; margin: 12px auto 0; background: none; border: 0; color: var(--gold-soft); text-decoration: underline; font: inherit; font-size: 0.9rem; cursor: pointer; }
+    @media (max-width: 560px) {
+      .rsvp { padding: 20px 18px; }
+      .rsvp-grid { grid-template-columns: 1fr; }
+    }
     .foot-greet { font-family: var(--font-serif); font-style: italic; font-size: 1.1rem; color: var(--cream); max-width: 40ch; margin: 0 auto; }
 
     .zoom-links { text-align: center; margin-top: 14px; font-size: 0.88rem; color: var(--cream-muted); }
@@ -405,7 +446,7 @@
       </h1>
 
       <p class="invite-line">Betsy and Brendan invite you to a <em>Friendly Christmas Drop&#8209;In</em></p>
-      <p class="invite-sub"><span>Come meet your new neighbors.</span> <span>Bring the kids if that&rsquo;s easier.</span></p>
+      <p class="invite-sub"><span>Drop in, say hello, and meet your new neighbor.</span> <span>Bring the kids if that&rsquo;s easier.</span></p>
 
       <div class="when" aria-label="Date and time">
         <span>Friday</span><span>December 18</span><span>5&ndash;9 PM</span>
@@ -423,7 +464,11 @@
       </figure>
 
       <div class="actions">
-        <a class="btn btn--primary" href="/christmas2026/oconnorpalooza-2026.ics" download>
+        <a class="btn btn--primary" href="#rsvp">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          RSVP
+        </a>
+        <a class="btn" href="/christmas2026/oconnorpalooza-2026.ics" download>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
           Add to calendar
         </a>
@@ -502,8 +547,8 @@
           <div class="row">
             <span class="row-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
             <div>
-              <h3>RSVP: regrets only</h3>
-              <p>Can't make it? Let us know at <a href="mailto:brendo@outlook.com?subject=O'Connorpalooza%20regrets">brendo@outlook.com</a>.</p>
+              <h3>RSVP</h3>
+              <p><a href="mailto:brendo@outlook.com?subject=O'Connorpalooza%20RSVP">brendo@outlook.com</a> or <a href="sms:+14252695044">425-269-5044</a>, or use the <a href="#rsvp">RSVP form</a> below.</p>
             </div>
           </div>
         </div>
@@ -532,16 +577,22 @@
         </div>
 
         <p class="drive-text">Instead, enter the community from <strong>University Parkway via Waterview Boulevard</strong>, which is the correct entrance for guests.</p>
+        <p class="drive-text"><strong>Ended up at the back gate?</strong> No problem, it's a two minute drive to the front gate:</p>
+        <ol class="drive-steps">
+          <li>Head back out to <strong>Lakewood Ranch Blvd</strong> and turn <strong>left</strong> (south).</li>
+          <li>At <strong>University Parkway</strong>, turn <strong>left</strong> (east) and go about half a mile.</li>
+          <li>Turn <strong>left</strong> onto <strong>Waterview Blvd</strong>. The front gate is just ahead. Show your gate QR code there.</li>
+        </ol>
         <p class="drive-text"><strong>Address:</strong> 6506 Waters Edge Way, Lakewood Ranch, FL 34202</p>
 
         <div class="drive-actions">
-          <a class="btn btn--primary" href="https://www.google.com/maps/dir/?api=1&destination=27.386750,-82.424000&travelmode=driving" target="_blank" rel="noopener">
+          <a class="btn btn--primary" href="https://www.google.com/maps/dir/?api=1&origin=27.39083,-82.43250&destination=27.38790,-82.42395&travelmode=driving" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
-            Navigate to the Waterview Blvd entrance (Google)
+            Back gate to front gate (Google)
           </a>
-          <a class="btn" href="https://maps.apple.com/?daddr=27.386750,-82.424000&dirflg=d" target="_blank" rel="noopener">Apple Maps</a>
+          <a class="btn" href="https://maps.apple.com/?saddr=27.39083,-82.43250&daddr=27.38790,-82.42395&dirflg=d" target="_blank" rel="noopener">Apple Maps</a>
         </div>
-        <p class="drive-note">These buttons take you to the guest entrance, not the house. Show the gate QR code there, then follow Waterview Boulevard in.</p>
+        <p class="drive-note">These buttons map the route from the back gate on Lakewood Ranch Blvd to the front gate on Waterview Blvd. Show the gate QR code at the front gate, then follow Waterview Boulevard in.</p>
       </div>
 
       <div class="menu" aria-label="What to expect">
@@ -550,6 +601,41 @@
         <div><i aria-hidden="true">&#9835;</i><b>Music</b><span>Carols and classics</span></div>
         <div><i aria-hidden="true">&#10086;</i><b>Jocularity</b><span>Bring your best story</span></div>
       </div>
+    </section>
+
+    <section class="section" id="rsvp" aria-labelledby="rsvp-title">
+      <h2 class="section-title" id="rsvp-title">RSVP</h2>
+      <p class="section-sub">Let us know if you can make it. You can also reach Brendan at <a href="mailto:brendo@outlook.com?subject=O'Connorpalooza%20RSVP">brendo@outlook.com</a> or <a href="sms:+14252695044">425-269-5044</a>.</p>
+      <form class="rsvp panel" id="rsvp-form" novalidate>
+        <fieldset class="rsvp-choice">
+          <legend>Will you be there?</legend>
+          <label class="choice"><input type="radio" name="attending" value="yes" required /><span>Yes, count me in</span></label>
+          <label class="choice"><input type="radio" name="attending" value="no" /><span>Sorry, can't make it</span></label>
+        </fieldset>
+        <div class="rsvp-grid">
+          <label class="field">
+            <span>Your name</span>
+            <input type="text" name="name" autocomplete="name" maxlength="80" required />
+          </label>
+          <label class="field" id="guests-field">
+            <span>How many in your party?</span>
+            <select name="guests">
+              <option value="1">1</option><option value="2" selected>2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8 or more</option>
+            </select>
+          </label>
+          <label class="field field--wide">
+            <span>Phone or email (optional)</span>
+            <input type="text" name="contact" autocomplete="email" maxlength="120" />
+          </label>
+          <label class="field field--wide">
+            <span>Note (optional)</span>
+            <textarea name="note" rows="2" maxlength="500"></textarea>
+          </label>
+        </div>
+        <label class="hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+        <button type="submit" class="btn btn--primary rsvp-submit">Send RSVP</button>
+        <p class="rsvp-msg" id="rsvp-msg" role="status" aria-live="polite"></p>
+      </form>
     </section>
   </main>
 
@@ -599,6 +685,54 @@
       inner.addEventListener("click", function () { show(flip.classList.contains("is-back") ? "front" : "back"); });
       inner.addEventListener("keydown", function (e) {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); inner.click(); }
+      });
+
+      // RSVP form
+      var form = document.getElementById("rsvp-form");
+      var msg = document.getElementById("rsvp-msg");
+      var guestsField = document.getElementById("guests-field");
+      function syncGuests() {
+        var c = form.querySelector('input[name="attending"]:checked');
+        guestsField.classList.toggle("is-hidden", !!c && c.value === "no");
+      }
+      form.querySelectorAll('input[name="attending"]').forEach(function (r) { r.addEventListener("change", syncGuests); });
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        msg.className = "rsvp-msg";
+        var att = form.querySelector('input[name="attending"]:checked');
+        var name = form.elements.name.value.trim();
+        if (!att) { msg.textContent = "Please choose yes or no."; msg.classList.add("err"); return; }
+        if (!name) { msg.textContent = "Please add your name."; msg.classList.add("err"); form.elements.name.focus(); return; }
+        var btn = form.querySelector(".rsvp-submit");
+        btn.disabled = true; btn.textContent = "Sending...";
+        fetch("/api/rsvp", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            attending: att.value,
+            name: name,
+            guests: form.elements.guests.value,
+            contact: form.elements.contact.value,
+            note: form.elements.note.value,
+            website: form.elements.website.value
+          })
+        }).then(function (r) {
+          return r.json().catch(function () { return {}; }).then(function (d) { if (!r.ok) throw new Error(d.error || "x"); return d; });
+        }).then(function () {
+          form.classList.add("is-done");
+          msg.textContent = att.value === "yes"
+            ? "Thanks, " + name.split(" ")[0] + ". See you on the 18th."
+            : "Thanks for letting us know, " + name.split(" ")[0] + ". You'll be missed.";
+          var again = document.createElement("button");
+          again.type = "button"; again.className = "rsvp-again"; again.textContent = "Change my answer";
+          again.addEventListener("click", function () { form.classList.remove("is-done"); msg.textContent = ""; again.remove(); });
+          msg.after(again);
+        }).catch(function (err) {
+          msg.textContent = (err && err.message && err.message !== "x" ? err.message : "That didn't go through.") + " You can also text 425-269-5044.";
+          msg.classList.add("err");
+        }).finally(function () {
+          btn.disabled = false; btn.textContent = "Send RSVP";
+        });
       });
 
       // Light snowfall

@@ -9,6 +9,7 @@
 //   6. MedTrack API (/meds/api/*) backed by a Durable Object. See src/meds.ts.
 
 import { handleMeds, isMedsApi, MedTrackDO } from "./meds";
+import { handleRsvpList, handleRsvpSubmit } from "./rsvp";
 
 // Durable Object classes must be exported from the Worker entry module.
 export { MedTrackDO };
@@ -1084,6 +1085,14 @@ export default {
                               "Cache-Control": "no-store",
                       },
               });
+      }
+
+      // 0b. Christmas party RSVPs: public submit, private list (gated above)
+      if (pathname === "/api/rsvp") {
+              return handleRsvpSubmit(request, env);
+      }
+      if (pathname === "/watersedge/rsvps") {
+              return handleRsvpList(request, env);
       }
 
       // 1. Photo Library API routes

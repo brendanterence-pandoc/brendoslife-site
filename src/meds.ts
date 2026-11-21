@@ -27,7 +27,7 @@ export interface MedsEnv {
 }
 
 const API_PREFIX = "/meds/api";
-const SETUP_KEY_SHA256 = "83f914967ae1197505cb916e43ab33c94c73b076e91e26c5ef8bc31ac3c98238";
+const SETUP_KEY_SHA256 = "3cffb70eb4de086681b00c36bcd75fd2624607a2b16abb435f6a8ab4bd27aa98";
 
 const COOKIE = "meds_session";
 const SESSION_MS = 365 * 24 * 60 * 60 * 1000;

@@ -5,6 +5,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/lib/theme";
+import { LogTimeProvider } from "@/lib/logTime";
 import AppShell from "@/components/AppShell";
 import AuthGate from "@/components/AuthGate";
 import Today from "@/pages/Today";
@@ -34,9 +35,11 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <AuthGate>
-            <Router hook={useHashLocation}>
-              <AppRouter />
-            </Router>
+            <LogTimeProvider>
+              <Router hook={useHashLocation}>
+                <AppRouter />
+              </Router>
+            </LogTimeProvider>
           </AuthGate>
         </TooltipProvider>
       </ThemeProvider>

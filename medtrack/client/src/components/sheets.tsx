@@ -5,17 +5,15 @@ import type { Item, Log } from "@shared/schema";
 import { fmtDay, fmtStampTime, fmtTime, type Entry } from "@shared/schedule";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { nowStamp, useDeleteLog, useSaveLogs, useUpdateLog, useWrite, type NewLog } from "@/lib/api";
+import { useDeleteLog, useSaveLogs, useUpdateLog, useWrite, type NewLog } from "@/lib/api";
 import { tone, useTheme } from "@/lib/theme";
+import { useLogTime } from "@/lib/logTime";
 import { cn } from "@/lib/utils";
 import { BottomSheet, Field, fieldCls } from "./bits";
 
 const stampFor = (date: string, time: string) => `${date}T${time}`;
-/** Default time for a new entry: the current time when logging today, otherwise the scheduled time. */
-const defaultTime = (date: string, slot: string | null) => {
-  const now = nowStamp();
-  return date === now.slice(0, 10) ? now.slice(11, 16) : slot ?? "12:00";
-};
+/** Default time for a new entry follows the Logging time setting at the top of Today. */
+const useDefaultTime = () => useLogTime().timeFor;
 
 function useFail() {
   const { toast } = useToast();
@@ -24,6 +22,7 @@ function useFail() {
 
 // ── Scheduled dose ───────────────────────────────────────────────────────────
 export function DoseSheet({ entry, onClose }: { entry: Entry; onClose: () => void }) {
+  const defaultTime = useDefaultTime();
   const { item, log, slot, date } = entry;
   const [time, setTime] = useState(log ? log.at.slice(11, 16) : defaultTime(date, slot));
   const [note, setNote] = useState(log?.note ?? "");
@@ -105,6 +104,7 @@ export function ScalePicker({ item, value, onChange }: { item: Item; value: numb
 export function CheckinSheet({
   date, slot, rows, onClose,
 }: { date: string; slot: string | null; rows: { item: Item; log: Log | null }[]; onClose: () => void }) {
+  const defaultTime = useDefaultTime();
   const [vals, setVals] = useState<Record<number, number | null>>(() => Object.fromEntries(rows.map((r) => [r.item.id, r.log?.value ?? null])));
   const [notes, setNotes] = useState<Record<number, string>>(() => Object.fromEntries(rows.map((r) => [r.item.id, r.log?.note ?? ""])));
   const [noteOpen, setNoteOpen] = useState<Record<number, boolean>>(() => Object.fromEntries(rows.map((r) => [r.item.id, !!r.log?.note])));
@@ -171,6 +171,7 @@ export function CheckinSheet({
 
 // ── As-needed dose ───────────────────────────────────────────────────────────
 export function PrnSheet({ item, date, recent, onClose }: { item: Item; date: string; recent: Log[]; onClose: () => void }) {
+  const defaultTime = useDefaultTime();
   const [time, setTime] = useState(defaultTime(date, null));
   const [note, setNote] = useState("");
   const save = useSaveLogs();
@@ -251,6 +252,7 @@ export function ExtraLogSheet({ item, log, onClose }: { item: Item; log: Log; on
 
 // ── Diary note ───────────────────────────────────────────────────────────────
 export function NoteSheet({ date, onClose }: { date: string; onClose: () => void }) {
+  const defaultTime = useDefaultTime();
   const [text, setText] = useState("");
   const add = useWrite<{ date: string; at: string; text: string }>("POST", "/api/notes");
   const fail = useFail();

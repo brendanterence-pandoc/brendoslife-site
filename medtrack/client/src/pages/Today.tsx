@@ -7,7 +7,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
-import { nowStamp, useAppState, useLogs, useNow, useSaveLogs, useWrite } from "@/lib/api";
+import { useAppState, useLogs, useNow, useSaveLogs, useWrite } from "@/lib/api";
+import { useLogTime } from "@/lib/logTime";
+import { LogTimeBar } from "@/components/LogTimeBar";
 import { tone, useTheme } from "@/lib/theme";
 import { cn } from "@/lib/utils";
 import { Empty, ErrorNote, ItemIcon, Panel, SectionTitle } from "@/components/bits";
@@ -37,6 +39,7 @@ export default function Today() {
   const delNote = useWrite<{ id: number }>("DELETE", (b) => `/api/notes/${b.id}`);
   const { toast } = useToast();
   const { dark } = useTheme();
+  const logTime = useLogTime();
 
   const items = state.data?.items ?? [];
   const logs = logsQ.data ?? [];
@@ -73,7 +76,7 @@ export default function Today() {
   const lastPrn = (id: number) => logs.filter((l) => l.itemId === id && !l.slot && l.status === "taken").sort((a, b) => b.at.localeCompare(a.at));
   const fail = (e: unknown) => toast({ title: "Not saved", description: e instanceof Error ? e.message : "Please try again.", variant: "destructive" });
 
-  const stampNow = (slot: string) => (date === today ? nowStamp() : `${date}T${slot}`);
+  const stampNow = (slot: string) => logTime.stampFor(date, slot);
   const quickTake = (e: Entry) => save.mutate([{ itemId: e.item.id, date, slot: e.slot, status: "taken", at: stampNow(e.slot) }], { onError: fail });
   const takeAll = (es: Entry[]) =>
     save.mutate(es.filter((e) => !e.log).map((e) => ({ itemId: e.item.id, date, slot: e.slot, status: "taken" as const, at: stampNow(e.slot) })), { onError: fail });
@@ -86,6 +89,7 @@ export default function Today() {
   return (
     <div className="mx-auto max-w-2xl">
       <ReminderPrompt />
+      {!future && <LogTimeBar date={date} today={today} />}
       {/* Day header + week strip */}
       <div className="flex items-center justify-between gap-2">
         <div>
